@@ -1,12 +1,11 @@
 ﻿  test.cpp
-C:\Users\Amadeus\Desktop\Files\Code\C++\game\SDL\test\box.h(10,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 'Vector2' 왼쪽은 무시됩니다.
-C:\Users\Amadeus\Desktop\Files\Code\C++\game\SDL\test\box.h(9,32): warning C4244: '초기화 중': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\Amadeus\Desktop\Files\Code\C++\game\SDL\test\box.h(9,39): warning C4244: '초기화 중': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\Amadeus\Desktop\Files\Code\C++\game\SDL\test\test.cpp(91,35): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\Amadeus\Desktop\Files\Code\C++\game\SDL\test\test.cpp(92,35): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\Amadeus\Desktop\Files\Code\C++\game\SDL\test\test.cpp(96,39): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\Amadeus\Desktop\Files\Code\C++\game\SDL\test\test.cpp(120,9): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\Amadeus\Desktop\Files\Code\C++\game\SDL\test\test.cpp(121,9): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\Amadeus\Desktop\Files\Code\C++\game\SDL\test\test.cpp(179,50): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\Amadeus\Desktop\Files\Code\C++\game\SDL\test\test.cpp(179,36): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  test.vcxproj -> C:\Users\Amadeus\Desktop\Files\Code\C++\game\SDL\x64\Debug\test.exe
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\box.h(15,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 'Vector2' 왼쪽은 무시됩니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\test.cpp(72,51): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\test.cpp(72,37): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\test.cpp(155,9): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\test.cpp(156,9): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\test.cpp(177,25): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\test.cpp(178,25): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\test.cpp(232,73): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\test.cpp(232,52): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  test.vcxproj -> C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\x64\Debug\test.exe

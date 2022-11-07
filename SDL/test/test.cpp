@@ -34,7 +34,7 @@ SDL_Texture* bullet1 = NULL;
 int main(int argv, char** args) {
     bool running = initAll();
     obj.player.init(500, 300, loadTexture("src/Player.png"));
-    bullet1 = loadTexture("src/bullet.png");
+    obj.bullet.image = loadTexture("src/bullet.png");
     if (running) {
         SDL_Event event;
         while (running) {
@@ -59,73 +59,52 @@ int main(int argv, char** args) {
     return 0;
 }
 
-//Object::function
-void Object::move(float _x, float _y) {
-    x += _x;
-    y += _y;
-}
-
-void Object::objDraw(float _dir) {
-    if (_dir == 0) {
-        drawTexture(renderer, (int)x, (int)y, image);
+//update functions
+//main update function
+void update() {
+    if (keys[(int)'w']) obj.player.y--;
+    if (keys[(int)'s']) obj.player.y++;
+    if (keys[(int)'a']) obj.player.x--;
+    if (keys[(int)'d']) obj.player.x++;
+    if (mouse.click[0] && !mouse.clicked[0]) {
+        printf("!");
+        mouse.clicked[0] = true;
+        obj.bullet.Create(obj.player.x, obj.player.y, 1);
     }
-    else drawTextureEx(renderer, (int)x, (int)y, _dir, image);
+    //obj.bulletCalculation();
+    obj.player.dirUpdate();
+    obj.bullet.Calc();
 }
 
-//OBJManager::function
-
-//Player::function
-void Player::init(int _x, int _y, SDL_Texture* _texture) {
-    x = _x;
-    y = _y;
-    image = _texture;
-    dir = 0.0f;
-}
-
-void Player::dirUpdate() {
-    float dx = mouse.pos.x - x;
-    float dy = mouse.pos.y - y;
-    dir = atan2(dy, dx) * RADIAN;
-}
-
-//Bullet::function
-void Bullet::Create(int _x, int _y, int _speed, SDL_Texture* _texture) {
-    if (obj.bulletCnt < BULLETSIZE) {
-        int bulletNum = 0;
-        int x, y;
-        while (obj.bullet[bulletNum].active) {
-            bulletNum++;
+void inputCal(SDL_Event event) {
+    switch (event.type) {
+    case SDL_KEYDOWN:
+        keys[event.key.keysym.sym] = true;
+        break;
+    case SDL_KEYUP:
+        keys[event.key.keysym.sym] = false;
+        break;
+    case SDL_MOUSEMOTION:
+        mouse.pos.x = event.motion.x;
+        mouse.pos.y = event.motion.y;
+        break;
+    case SDL_MOUSEBUTTONDOWN:
+        if (event.button.button == SDL_BUTTON_LEFT) mouse.click[0] = true;
+        else if (event.button.button == SDL_BUTTON_RIGHT) mouse.click[1] = true;
+        break;
+    case SDL_MOUSEBUTTONUP:
+        if (event.button.button == SDL_BUTTON_LEFT) {
+            mouse.click[0] = false;
+            mouse.clicked[0] = false;
         }
-        obj.bullet[bulletNum].active = true;
-        obj.bullet[bulletNum].image = _texture;
-        obj.bullet[bulletNum].x = _x;
-        obj.bullet[bulletNum].y = _y;
-        x = (mouse.pos.x - _x) / _speed;
-        y = (mouse.pos.y - _y) / _speed;
-        obj.bullet[bulletNum].dir = Vector2(x * x, y * y);
-        obj.bullet[bulletNum].speed = _speed;
-        obj.bulletCnt++;
-    }
-}
-
-void Bullet::Reset(int _bulletNum) {
-    obj.bullet[_bulletNum].x = 0;
-    obj.bullet[_bulletNum].y = 0;
-    obj.bullet[_bulletNum].speed = 0;
-    obj.bullet[_bulletNum].dir = Vector2(0, 0);
-    obj.bullet[_bulletNum].active = false;
-}
-
-void Bullet::Calc() {
-    for (int i = 0; i < BULLETSIZE; i++) {
-        if (obj.bullet[i].active) {
-            obj.bullet[i].x += obj.bullet[i].dir.x * obj.bullet[i].speed;
-            obj.bullet[i].y += obj.bullet[i].dir.y * obj.bullet[i].speed;
+        else if (event.button.button == SDL_BUTTON_RIGHT) {
+            mouse.click[1] = false;
+            mouse.clicked[1] = false;
         }
+        break;
     }
 }
 
-//main::function
 bool initAll() {
     // initialize video
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -163,62 +142,101 @@ bool closeAll() {
     return 1;
 }
 
-void update() {
-    if (keys[(int)'w']) obj.player.y--;
-    if (keys[(int)'s']) obj.player.y++;
-    if (keys[(int)'a']) obj.player.x--;
-    if (keys[(int)'d']) obj.player.x++;
-    if (mouse.click[0] && !mouse.clicked[0]) {
-        mouse.clicked[0] = true;
-        obj.bulletCreate(obj.player.x, obj.player.y, 1, bullet1);
-    }
-    //obj.bulletCalculation();
-    obj.player.dirUpdate();
+//Object update function
+void Object::move(float _x, float _y) {
+    x += _x;
+    y += _y;
 }
 
-void draw() {
-    SDL_RenderClear(renderer);
-    for (int i = 0; i < BULLETSIZE; i++) {
-        if (obj.bullet[i].active) {
-            obj.bullet[i].objDraw();
+//OBJManager update function
+
+//Player update function
+void Player::init(int _x, int _y, SDL_Texture* _texture) {
+    x = _x;
+    y = _y;
+    image = _texture;
+    dir = 0.0f;
+}
+
+void Player::dirUpdate() {
+    float dx = mouse.pos.x - x;
+    float dy = mouse.pos.y - y;
+    dir = atan2(dy, dx) * RADIAN;
+}
+
+//Bullet update function
+void Bullet::Create(int _x, int _y, int _speed) {
+    if (obj.bullet.bulletNum < BULLETSIZE) {
+        obj.bullet.bulletNum++;
+        int tmpNum = 0;
+        float x, y, len;
+        while (obj.bullet.active[tmpNum]) { tmpNum++; }
+        obj.bullet.active[tmpNum] = true;
+        obj.bullet.speed[tmpNum] = 1;
+        obj.bullet.pos[tmpNum] = Vector2(obj.player.x, obj.player.y);
+        x = mouse.pos.x - _x;
+        y = mouse.pos.y - _y;
+        len = sqrt(x * x + y * y);
+        x /= len;
+        y /= len;
+        obj.bullet.dir[tmpNum] = Vector2(x * x * Sign(x), y * y * Sign(y));
+    }
+}
+
+void Bullet::Reset(int _bulletNum) {
+    obj.bullet.active[_bulletNum] = false;
+    obj.bullet.bulletNum--;
+}
+
+void Bullet::Calc() {
+    for (int i = 0; i <= BULLETSIZE; i++) {
+        if (obj.bullet.active[i]) {
+            if (OutOfDisplay(obj.bullet.pos[i])) {
+                obj.bullet.Reset(i);
+                printf("!\n");
+            }
+            else obj.bullet.pos[i] = VecAdd(obj.bullet.pos[i], obj.bullet.dir[i]);
         }
     }
-    obj.bullet[0].objDraw(obj.player.dir);
+}
+
+
+//drawing function
+//main draw function
+void draw() {
+    SDL_RenderClear(renderer);
     obj.player.objDraw(obj.player.dir);
+    obj.bullet.bulletDraw();
     SDL_RenderPresent(renderer);
 }
 
-void inputCal(SDL_Event event) {
-    switch (event.type) {
-    case SDL_KEYDOWN:
-        keys[event.key.keysym.sym] = true;
-        break;
-    case SDL_KEYUP:
-        keys[event.key.keysym.sym] = false;
-        break;
-    case SDL_MOUSEMOTION:
-        mouse.pos.x = event.motion.x;
-        mouse.pos.y = event.motion.y;
-        break;
-    case SDL_MOUSEBUTTONDOWN:
-        if (event.button.button == SDL_BUTTON_LEFT) mouse.click[0] = true;
-        else if (event.button.button == SDL_BUTTON_RIGHT) mouse.click[1] = true;
-        break;
-    case SDL_MOUSEBUTTONUP:
-        if (event.button.button == SDL_BUTTON_LEFT) {
-            mouse.click[0] = false;
-            mouse.clicked[0] = false;
+//object update function
+void Object::objDraw(float _dir) {
+    if (_dir == 0) {
+        drawTexture(renderer, (int)x, (int)y, image);
+    }
+    else drawTextureEx(renderer, (int)x, (int)y, _dir, image);
+}
+
+//OBJManager draw function
+
+//Player draw function
+
+//Bullet draw function
+void Bullet::bulletDraw() {
+    int sum = 0;
+    for (int i = 0; i <= BULLETSIZE; i++) {
+        if (obj.bullet.active[i]) {
+            sum++;
+            //printf("%f, %f\n", obj.bullet.dir[i].x, obj.bullet.dir[i].y);
+            drawTexture(renderer, obj.bullet.pos[i].x, obj.bullet.pos[i].y, obj.bullet.image);
         }
-        else if (event.button.button == SDL_BUTTON_RIGHT) {
-            mouse.click[1] = false;
-            mouse.clicked[1] = false;
-        }
-        break;
+        if (sum == obj.bullet.bulletNum) return;
     }
 }
 
+//SDL drawing function
 void drawTexture(SDL_Renderer* renderer, int x, int y, SDL_Texture* texture) {
-    printf("%p\n", texture);
     SDL_Rect src;
     SDL_Rect dst;
 

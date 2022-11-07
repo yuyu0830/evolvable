@@ -116,12 +116,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Amadeus\Desktop\Files\Code\C++\game\SDL\lib\SDL2-2.24.2\include;C:\Users\Amadeus\Desktop\Files\Code\C++\game\SDL\lib\SDL2_image-2.6.2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\lib\SDL2-2.24.2\include;$(SolutionDir)\lib\SDL2_image-2.6.2\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Amadeus\Desktop\Files\Code\C++\game\SDL\lib\SDL2-2.24.2\lib\x64;C:\Users\Amadeus\Desktop\Files\Code\C++\game\SDL\lib\SDL2_image-2.6.2\lib\x64</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\lib\SDL2-2.24.2\lib\x64;$(SolutionDir)\lib\SDL2_image-2.6.2\lib\x64</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
