@@ -3,28 +3,16 @@
 #include "object.h"
 #include "box.h"
 
-class Bullet {
+class Bullet : public Object{
 public:
-	int bulletNum;
+	bool active;
 	float speed;
-	bool active[BULLETSIZE];
-	Vector2 pos[BULLETSIZE];
-	Vector2 dir[BULLETSIZE];
-	SDL_Texture* image = NULL;
+	Vector2 dir;
 
-	Bullet() {
-		bulletNum = 0;
-		speed = 0.0f;
-		Vector2 empty = Vector2(0, 0);
-		for (int i = 0; i < BULLETSIZE; i++) {
-			active[i] = 0;
-			pos[i] = empty;
-			dir[i] = empty;
-		}
-	}
+	Bullet() {};
 
-	void Reset(int _bulletNum);
-	void Create(Vector2 _pos, int _speed);
-	void Calc();
-	void bulletDraw();
+	//void Reset(int _bulletNum);
+	//void Create(Vector2 _pos, int _speed);
+	//void Calc();
+	//void bulletDraw();
 };

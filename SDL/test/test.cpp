@@ -7,6 +7,7 @@
 #include "player.h"
 #include "object.h"
 #include "bullet.h"
+#include "camera.h"
 #include "OBJManager.h"
 
 using namespace std;
@@ -23,33 +24,32 @@ void draw();
 void inputCal(SDL_Event e);
 void drawTexture(SDL_Renderer* renderer, int x, int y, SDL_Texture* texture);
 void drawTextureEx(SDL_Renderer* renderer, int x, int y, float angle, SDL_Texture* texture);
+void drawBackground(SDL_Renderer* renderer, int startx, int starty, SDL_Texture* texture);
 SDL_Texture* loadTexture(const char* file);
 
 //global var
 bool keys[255] = { 0, };
 Mouse mouse;
 OBJManager obj;
+//Camera camera;
 SDL_Texture* bullet1 = NULL;
+SDL_Texture* backgroundIMG = NULL;
+vector<int> activeBulletNum;
 
 int main(int argv, char** args) {
     bool running = initAll();
-    obj.player.init(Vector2(500, 300), 1.0f, loadTexture("src/Player.png"));
-    obj.bullet.image = loadTexture("src/bullet.png");
+    obj.player.init(Vector2(500, 300), 3.0f, loadTexture("src/Player.png"));
+    bullet1 = loadTexture("src/bullet.png");
+    backgroundIMG = loadTexture("src/background.png");
     if (running) {
         SDL_Event event;
         while (running) {
-            // calculate input
             while (SDL_PollEvent(&event)) {
                 if (event.type == SDL_QUIT) running = false;
                 else inputCal(event);
             }
             update();
             draw();
-            //printf("%d, %d\n", (int) obj.player.x, (int) obj.player.y);
-            /*printf("[");
-            for (int i = 0; i < 255; i++)  if (keys[i]) printf("%c ", (char)i);
-            printf("]\n");*/
-            //printf("[%f %f]\n", obj.bullet[0].x, obj.bullet[0].y);
         }
     }
     else {
@@ -62,17 +62,27 @@ int main(int argv, char** args) {
 //update functions
 //main update function
 void update() {
-    if (keys[(int)'w']) obj.player.move(Vector2(0, obj.player.speed * -1));
-    if (keys[(int)'s']) obj.player.move(Vector2(0, obj.player.speed));
-    if (keys[(int)'a']) obj.player.move(Vector2(obj.player.speed * -1, 0));
-    if (keys[(int)'d']) obj.player.move(Vector2(obj.player.speed, 0));
+    int playerX = 0, playerY = 0;
+    if (keys[(int)'w']) {
+        playerY -= 1;
+    }
+    if (keys[(int)'s']) {
+        playerY += 1;
+    }
+    if (keys[(int)'a']) {
+        playerX -= 1;
+    }
+    if (keys[(int)'d']) {
+        playerX += 1;
+    }
+    obj.player.move(Vector2(obj.player.speed * x, obj.player.speed * y));
     if (mouse.click[0] && !mouse.clicked[0]) {
         mouse.clicked[0] = true;
-        obj.bullet.Create(obj.player.pos, 1);
+        obj.BulletCreate();
     }
-    //obj.bulletCalculation();
+    obj.BulletCalc();
     obj.player.dirUpdate();
-    obj.bullet.Calc();
+    //obj.BulletCalc();
 }
 
 void inputCal(SDL_Event event) {
@@ -150,63 +160,62 @@ void Object::init(Vector2 _pos, float _speed, SDL_Texture* _image) {
 }
 
 void Object::move(Vector2 _des) {
-    pos = VecAdd(pos, _des);
+    pos = VecAdd(pos, _des, speed);
 }
 
 //OBJManager update function
+void OBJManager::BulletCreate() {
+    if (bulletNum < BULLETSIZE) {
+        int tmpNum = 0;
+        while (bullet[tmpNum].active) {
+            tmpNum++;
+        }
+        bullet[tmpNum].active = true;
+        bullet[tmpNum].init(player.pos, 2.5, bullet1);
+
+        float x, y, len;
+        x = mouse.pos.x - bullet[tmpNum].pos.x;
+        y = mouse.pos.y - bullet[tmpNum].pos.y;
+        len = sqrt(x * x + y * y);
+        x /= len;
+        y /= len;
+        bullet[tmpNum].dir = Vector2(x * x * Sign(x), y * y * Sign(y));
+        bulletNum++;
+    }
+}
+
+void OBJManager::BulletCalc() {
+    int sum = 0;
+    for (int i = 0; i < BULLETSIZE; i++) {
+        if (bullet[i].active) {
+            bullet[i].move(bullet[i].dir);
+            if (OutOfDisplay(bullet[i].pos, bullet[i].w, bullet[i].h)) {
+                bullet[i].active = false;
+                //printf("Bullet %d disabled!\n", i);
+            }
+            sum++;
+            activeBulletNum.push_back(i);
+            if (sum >= bulletNum) return;
+        }
+    }
+}
 
 //Player update function
-
-
 void Player::dirUpdate() {
     float dx = mouse.pos.x - pos.x;
     float dy = mouse.pos.y - pos.y;
     dir = atan2(dy, dx) * RADIAN;
 }
 
-//Bullet update function
-void Bullet::Create(Vector2 _pos, int _speed) {
-    if (obj.bullet.bulletNum < BULLETSIZE) {
-        obj.bullet.bulletNum++;
-        obj.bullet.speed = _speed;
-        int tmpNum = 0;
-        float x, y, len;
-        while (obj.bullet.active[tmpNum]) { tmpNum++; }
-        obj.bullet.active[tmpNum] = true;
-        obj.bullet.pos[tmpNum] = Vector2(obj.player.pos.x, obj.player.pos.y);
-        x = mouse.pos.x - _pos.x;
-        y = mouse.pos.y - _pos.y;
-        len = sqrt(x * x + y * y);
-        x /= len;
-        y /= len;
-        obj.bullet.dir[tmpNum] = Vector2(x * x * Sign(x), y * y * Sign(y));
-    }
-}
-
-void Bullet::Reset(int _bulletNum) {
-    active[_bulletNum] = false;
-    bulletNum--;
-}
-
-void Bullet::Calc() {
-    for (int i = 0; i <= BULLETSIZE; i++) {
-        if (obj.bullet.active[i]) {
-            if (OutOfDisplay(obj.bullet.pos[i])) {
-                obj.bullet.Reset(i);
-                printf("!\n");
-            }
-            else obj.bullet.pos[i] = VecAdd(obj.bullet.pos[i], obj.bullet.dir[i]);
-        }
-    }
-}
+////Bullet update function
 
 
 //drawing function
 //main draw function
 void draw() {
     SDL_RenderClear(renderer);
-    obj.player.objDraw(obj.player.dir);
-    obj.bullet.bulletDraw();
+    //obj.player.objDraw(obj.player.dir);
+    //obj.BulletDraw();
     SDL_RenderPresent(renderer);
 }
 
@@ -219,21 +228,15 @@ void Object::objDraw(float _dir) {
 }
 
 //OBJManager draw function
-
+void OBJManager::BulletDraw() {
+    for (int i : activeBulletNum) {
+        bullet[i].objDraw();
+    }
+    activeBulletNum.clear();
+}
 //Player draw function
 
-//Bullet draw function
-void Bullet::bulletDraw() {
-    int sum = 0;
-    for (int i = 0; i <= BULLETSIZE; i++) {
-        if (obj.bullet.active[i]) {
-            sum++;
-            //printf("%f, %f\n", obj.bullet.dir[i].x, obj.bullet.dir[i].y);
-            drawTexture(renderer, obj.bullet.pos[i].x, obj.bullet.pos[i].y, obj.bullet.image);
-        }
-        if (sum == obj.bullet.bulletNum) return;
-    }
-}
+////Bullet draw function
 
 //SDL drawing function
 void drawTexture(SDL_Renderer* renderer, int x, int y, SDL_Texture* texture) {
@@ -250,6 +253,23 @@ void drawTexture(SDL_Renderer* renderer, int x, int y, SDL_Texture* texture) {
     dst.h = src.h;
 
     SDL_RenderCopy(renderer, texture, NULL, &dst);
+}
+
+void drawBackground(SDL_Renderer* renderer, int startx, int starty, SDL_Texture* texture) {
+    SDL_Rect src;
+    SDL_Rect dst;
+
+    src.x = startx;
+    src.y = starty;
+    src.w = WINDOW_WIDTH;
+    src.h = WINDOW_HEIGHT;
+
+    dst.x = 0;
+    dst.y = 0;
+    dst.w = WINDOW_WIDTH;
+    dst.h = WINDOW_HEIGHT;
+
+    SDL_RenderCopy(renderer, texture, &src, &dst);
 }
 
 void drawTextureEx(SDL_Renderer* renderer, int x, int y, float angle, SDL_Texture* texture) {

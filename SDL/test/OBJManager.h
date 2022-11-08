@@ -7,7 +7,11 @@
 class OBJManager {
 public:
 	Player player;
-	Bullet bullet;
+	Bullet bullet[100];
+	int bulletNum = 0;
 
 	OBJManager() {};
+	void BulletCreate();
+	void BulletCalc();
+	void BulletDraw();
 };

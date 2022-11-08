@@ -9,6 +9,8 @@ public:
 
 	SDL_Texture* image = NULL;
 
+	Object() {}
+
 	void init(Vector2 _pos, float _speed, SDL_Texture* _image);
 	void move(Vector2 _des);
 	void objDraw(float dir = 0);

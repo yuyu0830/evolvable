@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClInclude Include="box.h" />
     <ClInclude Include="bullet.h" />
+    <ClInclude Include="camera.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="OBJManager.h" />
     <ClInclude Include="player.h" />

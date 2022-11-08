@@ -20,9 +20,9 @@ struct Mouse {
     bool clicked[2] = { 0, };
 };
 
-Vector2 VecAdd(Vector2 a, Vector2 b) { return Vector2(a.x + b.x, a.y + b.y); }
+Vector2 VecAdd(Vector2 a, Vector2 b, float speed = 1) { return Vector2(a.x + (b.x * speed), a.y + (b.y * speed)); }
 float Sign(float x) { if (x < 0) return -1; return 1; }
-bool OutOfDisplay(Vector2 pos) {
-    if (pos.x < 0 || pos.y < 0 || pos.x > WINDOW_WIDTH || pos.y > WINDOW_HEIGHT) return true;
+bool OutOfDisplay(Vector2 pos, int w, int h) {
+    if (pos.x + (w / 2) < 0 || pos.y + (h / 2) < 0 || pos.x - (w / 2) > WINDOW_WIDTH || pos.y - (h / 2) > WINDOW_HEIGHT) return true;
     return false;
 }
