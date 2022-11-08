@@ -33,7 +33,7 @@ SDL_Texture* bullet1 = NULL;
 
 int main(int argv, char** args) {
     bool running = initAll();
-    obj.player.init(500, 300, loadTexture("src/Player.png"));
+    obj.player.init(Vector2(500, 300), 1.0f, loadTexture("src/Player.png"));
     obj.bullet.image = loadTexture("src/bullet.png");
     if (running) {
         SDL_Event event;
@@ -62,14 +62,13 @@ int main(int argv, char** args) {
 //update functions
 //main update function
 void update() {
-    if (keys[(int)'w']) obj.player.y--;
-    if (keys[(int)'s']) obj.player.y++;
-    if (keys[(int)'a']) obj.player.x--;
-    if (keys[(int)'d']) obj.player.x++;
+    if (keys[(int)'w']) obj.player.move(Vector2(0, obj.player.speed * -1));
+    if (keys[(int)'s']) obj.player.move(Vector2(0, obj.player.speed));
+    if (keys[(int)'a']) obj.player.move(Vector2(obj.player.speed * -1, 0));
+    if (keys[(int)'d']) obj.player.move(Vector2(obj.player.speed, 0));
     if (mouse.click[0] && !mouse.clicked[0]) {
-        printf("!");
         mouse.clicked[0] = true;
-        obj.bullet.Create(obj.player.x, obj.player.y, 1);
+        obj.bullet.Create(obj.player.pos, 1);
     }
     //obj.bulletCalculation();
     obj.player.dirUpdate();
@@ -143,39 +142,40 @@ bool closeAll() {
 }
 
 //Object update function
-void Object::move(float _x, float _y) {
-    x += _x;
-    y += _y;
+void Object::init(Vector2 _pos, float _speed, SDL_Texture* _image) {
+    pos = _pos;
+    speed = _speed;
+    image = _image;
+    SDL_QueryTexture(_image, NULL, NULL, &w, &h);
+}
+
+void Object::move(Vector2 _des) {
+    pos = VecAdd(pos, _des);
 }
 
 //OBJManager update function
 
 //Player update function
-void Player::init(int _x, int _y, SDL_Texture* _texture) {
-    x = _x;
-    y = _y;
-    image = _texture;
-    dir = 0.0f;
-}
+
 
 void Player::dirUpdate() {
-    float dx = mouse.pos.x - x;
-    float dy = mouse.pos.y - y;
+    float dx = mouse.pos.x - pos.x;
+    float dy = mouse.pos.y - pos.y;
     dir = atan2(dy, dx) * RADIAN;
 }
 
 //Bullet update function
-void Bullet::Create(int _x, int _y, int _speed) {
+void Bullet::Create(Vector2 _pos, int _speed) {
     if (obj.bullet.bulletNum < BULLETSIZE) {
         obj.bullet.bulletNum++;
+        obj.bullet.speed = _speed;
         int tmpNum = 0;
         float x, y, len;
         while (obj.bullet.active[tmpNum]) { tmpNum++; }
         obj.bullet.active[tmpNum] = true;
-        obj.bullet.speed[tmpNum] = 1;
-        obj.bullet.pos[tmpNum] = Vector2(obj.player.x, obj.player.y);
-        x = mouse.pos.x - _x;
-        y = mouse.pos.y - _y;
+        obj.bullet.pos[tmpNum] = Vector2(obj.player.pos.x, obj.player.pos.y);
+        x = mouse.pos.x - _pos.x;
+        y = mouse.pos.y - _pos.y;
         len = sqrt(x * x + y * y);
         x /= len;
         y /= len;
@@ -184,8 +184,8 @@ void Bullet::Create(int _x, int _y, int _speed) {
 }
 
 void Bullet::Reset(int _bulletNum) {
-    obj.bullet.active[_bulletNum] = false;
-    obj.bullet.bulletNum--;
+    active[_bulletNum] = false;
+    bulletNum--;
 }
 
 void Bullet::Calc() {
@@ -213,9 +213,9 @@ void draw() {
 //object update function
 void Object::objDraw(float _dir) {
     if (_dir == 0) {
-        drawTexture(renderer, (int)x, (int)y, image);
+        drawTexture(renderer, (int)pos.x - (w / 2), (int)pos.y - (h / 2), image);
     }
-    else drawTextureEx(renderer, (int)x, (int)y, _dir, image);
+    else drawTextureEx(renderer, (int)pos.x - (w / 2), (int)pos.y - (h / 2), _dir, image);
 }
 
 //OBJManager draw function

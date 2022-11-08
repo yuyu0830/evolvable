@@ -3,13 +3,13 @@
 
 class Object {
 public:
-	float x;
-	float y;
-	float w;
-	float h;
+	Vector2 pos;
+	int w, h;
+	float speed;
 
 	SDL_Texture* image = NULL;
 
-	void move(float _x, float _y);
+	void init(Vector2 _pos, float _speed, SDL_Texture* _image);
+	void move(Vector2 _des);
 	void objDraw(float dir = 0);
 };
