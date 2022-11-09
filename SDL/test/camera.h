@@ -1,14 +1,20 @@
 #pragma once
 #include <SDL_image.h>
+#include "box.h"
+
 class Camera {
+public:
 	SDL_Texture* backgroundIMG = NULL;
-	int w, h;
+	SDL_Texture* wall = NULL;
+	int imgWidth, imgHeight;
+	short map[75][75];
 	SDL_Point pos;
 
-	Camera(SDL_Texture* _backgroundIMG) {
-		backgroundIMG = _backgroundIMG;
-		SDL_QueryTexture(backgroundIMG, NULL, NULL, &w, &h);
-		pos = { 0, 0 };
-	}
-	
+	Camera() {};
+	void init(SDL_Texture* _backgroundIMG, SDL_Texture* _wall);
+	void drawBackground();
+	void drawWall();
+	void drawWalls();
+	void update();
+	void makeMap();
 };

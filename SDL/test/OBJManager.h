@@ -12,6 +12,6 @@ public:
 
 	OBJManager() {};
 	void BulletCreate();
-	void BulletCalc();
+	void BulletUpdate();
 	void BulletDraw();
 };

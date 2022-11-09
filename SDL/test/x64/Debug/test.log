@@ -1,3 +1,16 @@
 ﻿  test.cpp
-C:\Users\User\Documents\GitHub\evolvable\SDL\test\box.h(15,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 'Vector2' 왼쪽은 무시됩니다.
-  test.vcxproj -> C:\Users\User\Documents\GitHub\evolvable\SDL\x64\Debug\test.exe
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\box.h(15,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 'Vector2' 왼쪽은 무시됩니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\test.cpp(42,15): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\test.cpp(74,46): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\test.cpp(78,50): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\test.cpp(82,46): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\test.cpp(86,49): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\test.cpp(186,35): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\test.cpp(190,35): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\test.cpp(382,67): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\test.cpp(383,93): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\test.cpp(386,68): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\test.cpp(387,95): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\test.cpp(390,14): warning C4244: '초기화 중': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\test.cpp(391,14): warning C4244: '초기화 중': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  test.vcxproj -> C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\x64\Debug\test.exe

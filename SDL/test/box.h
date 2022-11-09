@@ -22,7 +22,8 @@ struct Mouse {
 
 Vector2 VecAdd(Vector2 a, Vector2 b, float speed = 1) { return Vector2(a.x + (b.x * speed), a.y + (b.y * speed)); }
 float Sign(float x) { if (x < 0) return -1; return 1; }
-bool OutOfDisplay(Vector2 pos, int w, int h) {
-    if (pos.x + (w / 2) < 0 || pos.y + (h / 2) < 0 || pos.x - (w / 2) > WINDOW_WIDTH || pos.y - (h / 2) > WINDOW_HEIGHT) return true;
-    return false;
-}
+//bool OutOfMap(Vector2 pos, int w, int h) {
+//    if (pos.x + (w / 2) < 0 || pos.y + (h / 2) < 0 || pos.x - (w / 2) > WINDOW_WIDTH || pos.y - (h / 2) > WINDOW_HEIGHT) return true;
+//    return false;
+//}
+

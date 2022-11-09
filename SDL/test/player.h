@@ -3,7 +3,6 @@
 
 class Player : public Object {
 public:
-	float dir;
 
-	void dirUpdate();
+	void draw();
 };

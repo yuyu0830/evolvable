@@ -1,8 +1,10 @@
 ﻿#include <SDL.h>
 #include <SDL_image.h>
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
+#include <time.h>
 #include "box.h"
 #include "player.h"
 #include "object.h"
@@ -17,6 +19,7 @@ SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
 
 //main::function
+bool OutOfMap(Vector2 pos, int w, int h);
 bool initAll();
 bool closeAll();
 void update();
@@ -24,23 +27,24 @@ void draw();
 void inputCal(SDL_Event e);
 void drawTexture(SDL_Renderer* renderer, int x, int y, SDL_Texture* texture);
 void drawTextureEx(SDL_Renderer* renderer, int x, int y, float angle, SDL_Texture* texture);
-void drawBackground(SDL_Renderer* renderer, int startx, int starty, SDL_Texture* texture);
 SDL_Texture* loadTexture(const char* file);
 
 //global var
 bool keys[255] = { 0, };
 Mouse mouse;
 OBJManager obj;
-//Camera camera;
 SDL_Texture* bullet1 = NULL;
-SDL_Texture* backgroundIMG = NULL;
+SDL_Texture* walls = NULL;
+Camera camera;
 vector<int> activeBulletNum;
 
 int main(int argv, char** args) {
+    srand(time(NULL));
     bool running = initAll();
-    obj.player.init(Vector2(500, 300), 3.0f, loadTexture("src/Player.png"));
+    obj.player.init(Vector2(500, 300), 1.5f, loadTexture("src/Player.png"));
     bullet1 = loadTexture("src/bullet.png");
-    backgroundIMG = loadTexture("src/background.png");
+    camera.init(loadTexture("src/background.png"), loadTexture("src/walls.png"));
+    camera.makeMap();
     if (running) {
         SDL_Event event;
         while (running) {
@@ -59,30 +63,35 @@ int main(int argv, char** args) {
     return 0;
 }
 
-//update functions
-//main update function
+
+//###########################################################################
+//#################################main######################################
 void update() {
     int playerX = 0, playerY = 0;
+    int camX = 0, camY = 0;
     if (keys[(int)'w']) {
-        playerY -= 1;
+        if (obj.player.pos.y > obj.player.h / 2) playerY -= 1;
+        else obj.player.pos.y = obj.player.h / 2;
     }
     if (keys[(int)'s']) {
-        playerY += 1;
+        if (obj.player.pos.y < camera.imgHeight - obj.player.h / 2) playerY += 1;
+        else obj.player.pos.y = camera.imgHeight - obj.player.h / 2;
     }
     if (keys[(int)'a']) {
-        playerX -= 1;
+        if (obj.player.pos.x > obj.player.w / 2) playerX -= 1;
+        else obj.player.pos.x = obj.player.w / 2;
     }
     if (keys[(int)'d']) {
-        playerX += 1;
+        if (obj.player.pos.x < camera.imgWidth - obj.player.w / 2) playerX += 1;
+        else obj.player.pos.x = camera.imgWidth - obj.player.w / 2;
     }
-    obj.player.move(Vector2(obj.player.speed * x, obj.player.speed * y));
+    obj.player.move(Vector2(obj.player.speed * playerX, obj.player.speed * playerY));
+    camera.update();
     if (mouse.click[0] && !mouse.clicked[0]) {
         mouse.clicked[0] = true;
         obj.BulletCreate();
     }
-    obj.BulletCalc();
-    obj.player.dirUpdate();
-    //obj.BulletCalc();
+    obj.BulletUpdate();
 }
 
 void inputCal(SDL_Event event) {
@@ -151,7 +160,149 @@ bool closeAll() {
     return 1;
 }
 
-//Object update function
+//draw
+void draw() {
+    SDL_RenderClear(renderer);
+    camera.drawBackground();
+    camera.drawWalls();
+    obj.player.draw();
+    obj.BulletDraw();
+    SDL_RenderPresent(renderer);
+}
+
+
+//###########################################################################
+//#################################camera####################################
+void Camera::init(SDL_Texture* _backgroundIMG, SDL_Texture* _wall) {
+    wall = _wall;
+    backgroundIMG = _backgroundIMG;
+    SDL_QueryTexture(_backgroundIMG, NULL, NULL, &imgWidth, &imgHeight);
+    pos = { 0, 0 };
+}
+
+void Camera::update() {
+    if (obj.player.pos.x < WINDOW_WIDTH / 2) pos.x = 0;
+    else if (obj.player.pos.x > imgWidth - WINDOW_WIDTH / 2) pos.x = imgWidth - WINDOW_WIDTH;
+    else pos.x = obj.player.pos.x - WINDOW_WIDTH / 2;
+
+    if (obj.player.pos.y < WINDOW_HEIGHT / 2) pos.y = 0;
+    else if (obj.player.pos.y > imgWidth - WINDOW_HEIGHT / 2) pos.y = imgWidth - WINDOW_HEIGHT;
+    else pos.y = obj.player.pos.y - WINDOW_HEIGHT / 2;
+}
+
+void Camera::makeMap() {
+    bool tempMap[77][77] = {0, };
+    for (int i = 1; i < 76; i++) {
+        for (int j = 1; j < 76; j++) {
+            if (i == 1 || j == 1 || i == 75 || j == 75) tempMap[i][j] = true;
+            else {
+                int a = rand() % 10;
+                if (a > 1) tempMap[i][j] = false;
+                else tempMap[i][j] = true;
+            }
+        }
+    }
+    for (int i = 1; i < 76; i++) {
+        for (int j = 1; j < 76; j++) {
+            if (tempMap[i][j]) {
+                if (tempMap[i][j + 1]) {
+                    if (tempMap[i][j - 1]) {
+                        if (tempMap[i + 1][j]) {
+                            if (tempMap[i - 1][j]) map[i-1][j-1] = 17;
+                            else map[i-1][j-1] = 15;
+                        }
+                        else {
+                            if (tempMap[i - 1][j]) map[i-1][j-1] = 14;
+                            else map[i-1][j-1] = 12;
+                        }
+                    }
+                    else {
+                        if (tempMap[i + 1][j]) {
+                            if (tempMap[i - 1][j]) map[i-1][j-1] = 16;
+                            else map[i-1][j-1] = 7;
+                        }
+                        else {
+                            if (tempMap[i - 1][j]) map[i-1][j-1] = 8;
+                            else map[i-1][j-1] = 4;
+                        }
+                    }
+                }
+                else {
+                    if (tempMap[i][j - 1]) {
+                        if (tempMap[i + 1][j]) {
+                            if (tempMap[i - 1][j]) map[i-1][j-1] = 13;
+                            else map[i-1][j-1] = 6;
+                        }
+                        else {
+                            if (tempMap[i - 1][j]) map[i-1][j-1] = 9;
+                            else map[i-1][j-1] = 2;
+                        }
+                    }
+                    else {
+                        if (tempMap[i + 1][j]) {
+                            if (tempMap[i - 1][j]) map[i-1][j-1] = 11;
+                            else map[i-1][j-1] = 3;
+                        }
+                        else {
+                            if (tempMap[i - 1][j]) map[i-1][j-1] = 5;
+                            else map[i-1][j-1] = 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return;
+};
+
+//draw
+void Camera::drawBackground() {
+    SDL_Rect src;
+    SDL_Rect dst;
+
+    src.x = pos.x;
+    src.y = pos.y;
+    src.w = WINDOW_WIDTH;
+    src.h = WINDOW_HEIGHT;
+
+    dst.x = 0;
+    dst.y = 0;
+    dst.w = WINDOW_WIDTH;
+    dst.h = WINDOW_HEIGHT;
+
+    SDL_RenderCopy(renderer, backgroundIMG, &src, &dst);
+}
+
+void Camera::drawWalls() {
+    SDL_Rect src;
+    SDL_Rect dst;
+    int cnt = 0;
+    short startX = pos.x / 40, endX = (pos.x + WINDOW_WIDTH + 39) / 40;
+    short startY = pos.y / 40, endY = (pos.y + WINDOW_WIDTH + 39) / 40;
+    for (int i = startX; i < endX; i++) {
+        for (int j = startY; j < endY; j++) {
+            if (map[i][j] != 0) {
+                src.x = ((map[i][j] - 1) % 5) * 40;
+                src.y = ((map[i][j] - 1) / 5) * 40;
+                src.w = 40;
+                src.h = 40;
+
+                dst.x = i * 40 - pos.x;
+                dst.y = j * 40 - pos.y;
+                dst.w = 40;
+                dst.h = 40;
+
+                SDL_RenderCopy(renderer, wall, &src, &dst);
+            }
+            cnt++;
+        }
+    }
+    printf("%d\n", cnt);
+}
+
+
+//###########################################################################
+//#################################object####################################
 void Object::init(Vector2 _pos, float _speed, SDL_Texture* _image) {
     pos = _pos;
     speed = _speed;
@@ -163,7 +314,19 @@ void Object::move(Vector2 _des) {
     pos = VecAdd(pos, _des, speed);
 }
 
-//OBJManager update function
+//draw
+void Object::drawObj(float _dir) {
+    if (pos.x > camera.pos.x && pos.x < camera.pos.x + WINDOW_WIDTH && pos.y > camera.pos.y && pos.y < camera.pos.y + WINDOW_HEIGHT) {
+        if (_dir == 0) {
+            drawTexture(renderer, (int)pos.x - (w / 2) - camera.pos.x, (int)pos.y - (h / 2) - camera.pos.y, image);
+        }
+        else drawTextureEx(renderer, (int)pos.x - (w / 2), (int)pos.y - (h / 2), _dir, image);
+    }
+}
+
+
+//###########################################################################
+//#################################OBJManager################################
 void OBJManager::BulletCreate() {
     if (bulletNum < BULLETSIZE) {
         int tmpNum = 0;
@@ -171,11 +334,11 @@ void OBJManager::BulletCreate() {
             tmpNum++;
         }
         bullet[tmpNum].active = true;
-        bullet[tmpNum].init(player.pos, 2.5, bullet1);
+        bullet[tmpNum].init(player.pos, 3.0f, bullet1);
 
         float x, y, len;
-        x = mouse.pos.x - bullet[tmpNum].pos.x;
-        y = mouse.pos.y - bullet[tmpNum].pos.y;
+        x = mouse.pos.x - bullet[tmpNum].pos.x + camera.pos.x;
+        y = mouse.pos.y - bullet[tmpNum].pos.y + camera.pos.y;
         len = sqrt(x * x + y * y);
         x /= len;
         y /= len;
@@ -184,14 +347,15 @@ void OBJManager::BulletCreate() {
     }
 }
 
-void OBJManager::BulletCalc() {
+void OBJManager::BulletUpdate() {
     int sum = 0;
     for (int i = 0; i < BULLETSIZE; i++) {
         if (bullet[i].active) {
             bullet[i].move(bullet[i].dir);
-            if (OutOfDisplay(bullet[i].pos, bullet[i].w, bullet[i].h)) {
+            if (OutOfMap(bullet[i].pos, bullet[i].w, bullet[i].h)) {
                 bullet[i].active = false;
-                //printf("Bullet %d disabled!\n", i);
+                printf("bullet %d disabled!\n", i);
+                bulletNum--;
             }
             sum++;
             activeBulletNum.push_back(i);
@@ -200,43 +364,44 @@ void OBJManager::BulletCalc() {
     }
 }
 
-//Player update function
-void Player::dirUpdate() {
-    float dx = mouse.pos.x - pos.x;
-    float dy = mouse.pos.y - pos.y;
-    dir = atan2(dy, dx) * RADIAN;
-}
-
-////Bullet update function
-
-
-//drawing function
-//main draw function
-void draw() {
-    SDL_RenderClear(renderer);
-    //obj.player.objDraw(obj.player.dir);
-    //obj.BulletDraw();
-    SDL_RenderPresent(renderer);
-}
-
-//object update function
-void Object::objDraw(float _dir) {
-    if (_dir == 0) {
-        drawTexture(renderer, (int)pos.x - (w / 2), (int)pos.y - (h / 2), image);
-    }
-    else drawTextureEx(renderer, (int)pos.x - (w / 2), (int)pos.y - (h / 2), _dir, image);
-}
-
-//OBJManager draw function
+//draw
 void OBJManager::BulletDraw() {
     for (int i : activeBulletNum) {
-        bullet[i].objDraw();
+        bullet[i].drawObj();
     }
     activeBulletNum.clear();
 }
-//Player draw function
 
-////Bullet draw function
+
+//###########################################################################
+//#################################Player####################################
+
+//draw
+void Player::draw() {
+    int tmpX, tmpY;
+    if (obj.player.pos.x < WINDOW_WIDTH / 2) tmpX = obj.player.pos.x;
+    else if (obj.player.pos.x > camera.imgWidth - WINDOW_WIDTH / 2) tmpX = obj.player.pos.x - (camera.imgWidth - WINDOW_WIDTH);
+    else tmpX = WINDOW_WIDTH / 2;
+
+    if (obj.player.pos.y < WINDOW_HEIGHT / 2) tmpY = obj.player.pos.y;
+    else if (obj.player.pos.y > camera.imgHeight - WINDOW_HEIGHT / 2) tmpY = obj.player.pos.y - (camera.imgHeight - WINDOW_HEIGHT);
+    else tmpY = WINDOW_HEIGHT / 2;
+
+    float dx = mouse.pos.x - tmpX;
+    float dy = mouse.pos.y - tmpY;
+    float dir = atan2(dy, dx) * RADIAN;
+
+    drawTextureEx(renderer, tmpX - (int)(w / 2), tmpY - (int)(h / 2), dir, image);
+}
+
+
+//###########################################################################
+//#################################Bullet####################################
+
+
+
+
+
 
 //SDL drawing function
 void drawTexture(SDL_Renderer* renderer, int x, int y, SDL_Texture* texture) {
@@ -253,23 +418,6 @@ void drawTexture(SDL_Renderer* renderer, int x, int y, SDL_Texture* texture) {
     dst.h = src.h;
 
     SDL_RenderCopy(renderer, texture, NULL, &dst);
-}
-
-void drawBackground(SDL_Renderer* renderer, int startx, int starty, SDL_Texture* texture) {
-    SDL_Rect src;
-    SDL_Rect dst;
-
-    src.x = startx;
-    src.y = starty;
-    src.w = WINDOW_WIDTH;
-    src.h = WINDOW_HEIGHT;
-
-    dst.x = 0;
-    dst.y = 0;
-    dst.w = WINDOW_WIDTH;
-    dst.h = WINDOW_HEIGHT;
-
-    SDL_RenderCopy(renderer, texture, &src, &dst);
 }
 
 void drawTextureEx(SDL_Renderer* renderer, int x, int y, float angle, SDL_Texture* texture) {
@@ -306,4 +454,9 @@ SDL_Texture* loadTexture(const char* file) {
     SDL_FreeSurface(surface);
 
     return texture;
+}
+
+bool OutOfMap(Vector2 pos, int w, int h) {
+    if (pos.x + (w / 2) < 0 || pos.y + (h / 2) < 0 || pos.x - (w / 2) > camera.imgWidth || pos.y - (h / 2) > camera.imgHeight) return true;
+    return false;
 }
