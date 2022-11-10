@@ -67,33 +67,7 @@ int main(int argv, char** args) {
 //###########################################################################
 //#################################main######################################
 void update() {
-    int playerX = 0, playerY = 0;
-    int camX = 0, camY = 0;
-    if (keys[(int)'w']) {
-        if (obj.player.pos.y > obj.player.h / 2) {
-            playerY -= 1;
-        }
-        else obj.player.pos.y = obj.player.h / 2;
-    }
-    if (keys[(int)'s']) {
-        if (obj.player.pos.y < camera.imgHeight - obj.player.h / 2) {
-            playerY += 1;
-        }
-        else obj.player.pos.y = camera.imgHeight - obj.player.h / 2;
-    }
-    if (keys[(int)'a']) {
-        if (obj.player.pos.x > obj.player.w / 2) {
-            playerX -= 1;
-        }
-        else obj.player.pos.x = obj.player.w / 2;
-    }
-    if (keys[(int)'d']) {
-        if (obj.player.pos.x < camera.imgWidth - obj.player.w / 2) {
-            playerX += 1;
-        }
-        else obj.player.pos.x = camera.imgWidth - obj.player.w / 2;
-    }
-    obj.player.move(Vector2(obj.player.speed * playerX, obj.player.speed * playerY));
+    obj.player.move();
     obj.player.update();
     camera.update();
     if (mouse.click[0] && !mouse.clicked[0]) {
@@ -396,13 +370,55 @@ void Player::update() {
     else inScreenPos.y = WINDOW_HEIGHT / 2;
 
     dir = atan2(mouse.pos.y - inScreenPos.y, mouse.pos.x - inScreenPos.x) * RADIAN;
-
-    printf("%d, %d\n", blockX, blockY);
+    blockX = pos.x / 40;
+    blockY = pos.y / 40;
 }
 
-//void Player::move() {
-//
-//}
+void Player::move() {
+    int playerX = 0, playerY = 0;
+    if (keys[(int)'w']) {
+        if (pos.y > h / 2) {
+            playerY -= 1;
+        }
+        else pos.y = h / 2;
+    }
+    if (keys[(int)'s']) {
+        if (pos.y < camera.imgHeight - h / 2) {
+            playerY += 1;
+        }
+        else pos.y = camera.imgHeight - h / 2;
+    }
+    if (keys[(int)'a']) {
+        if (pos.x > w / 2) {
+            playerX -= 1;
+        }
+        else pos.x = w / 2;
+    }
+    if (keys[(int)'d']) {
+        if (pos.x < camera.imgWidth - w / 2) {
+            playerX += 1;
+        }
+        else pos.x = camera.imgWidth - w / 2;
+    }
+    pos = VecAdd(pos, Vector2(playerX, playerY), speed);
+    //printf("    %d       %d %d     %.1f %.1f\n  %d  %d\n    %d\n", (int)((pos.y - (h / 2)) / 40), blockX, blockY, pos.x, pos.y, (int)((pos.x - (w / 2)) / 40), (int)((pos.x + (w / 2)) / 40), (int)((pos.y + (h / 2)) / 40));
+    int top = (int) ((pos.y - h / 2) / 40);
+    int bot = (int) ((pos.y + h / 2) / 40);
+    int left = (int) ((pos.x - w / 2) / 40);
+    int right = (int) ((pos.x + w / 2) / 40);
+    if (playerY < 0) {
+        if (camera.map[left][top] || camera.map[right][top]) pos.y = blockY * h + h / 2;
+    }
+    else if (playerY > 0) {
+        if (camera.map[left][bot] || camera.map[right][bot]) pos.y = blockY * h + h / 2;
+    }
+    if (playerX < 0) {
+        if (camera.map[left][top] || camera.map[left][bot]) pos.x = blockX * w + w / 2;
+    }
+    else if (playerX > 0) {
+        if (camera.map[right][top] || camera.map[right][bot]) pos.x = blockX * w + w / 2;
+    }
+}
 //draw
 void Player::draw() {
     drawTexture(renderer, (int) (inScreenPos.x - (w / 2)), (int) (inScreenPos.y - (h / 2)), image);

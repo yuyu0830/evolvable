@@ -10,6 +10,6 @@ public:
 
 	void init(Vector2 _pos, float _speed, SDL_Texture* _image, SDL_Texture* _aim);
 	void update();
-	//void move();
+	void move();
 	void draw();
 };
