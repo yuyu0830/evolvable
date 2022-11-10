@@ -41,7 +41,7 @@ vector<int> activeBulletNum;
 int main(int argv, char** args) {
     srand(time(NULL));
     bool running = initAll();
-    obj.player.init(Vector2(500, 300), 1.5f, loadTexture("src/Player.png"));
+    obj.player.init(Vector2(500, 300), 1.5f, loadTexture("src/Player.png"), loadTexture("src/aim.png"));
     bullet1 = loadTexture("src/bullet.png");
     camera.init(loadTexture("src/background.png"), loadTexture("src/walls.png"));
     camera.makeMap();
@@ -70,22 +70,31 @@ void update() {
     int playerX = 0, playerY = 0;
     int camX = 0, camY = 0;
     if (keys[(int)'w']) {
-        if (obj.player.pos.y > obj.player.h / 2) playerY -= 1;
+        if (obj.player.pos.y > obj.player.h / 2) {
+            playerY -= 1;
+        }
         else obj.player.pos.y = obj.player.h / 2;
     }
     if (keys[(int)'s']) {
-        if (obj.player.pos.y < camera.imgHeight - obj.player.h / 2) playerY += 1;
+        if (obj.player.pos.y < camera.imgHeight - obj.player.h / 2) {
+            playerY += 1;
+        }
         else obj.player.pos.y = camera.imgHeight - obj.player.h / 2;
     }
     if (keys[(int)'a']) {
-        if (obj.player.pos.x > obj.player.w / 2) playerX -= 1;
+        if (obj.player.pos.x > obj.player.w / 2) {
+            playerX -= 1;
+        }
         else obj.player.pos.x = obj.player.w / 2;
     }
     if (keys[(int)'d']) {
-        if (obj.player.pos.x < camera.imgWidth - obj.player.w / 2) playerX += 1;
+        if (obj.player.pos.x < camera.imgWidth - obj.player.w / 2) {
+            playerX += 1;
+        }
         else obj.player.pos.x = camera.imgWidth - obj.player.w / 2;
     }
     obj.player.move(Vector2(obj.player.speed * playerX, obj.player.speed * playerY));
+    obj.player.update();
     camera.update();
     if (mouse.click[0] && !mouse.clicked[0]) {
         mouse.clicked[0] = true;
@@ -165,8 +174,8 @@ void draw() {
     SDL_RenderClear(renderer);
     camera.drawBackground();
     camera.drawWalls();
-    obj.player.draw();
     obj.BulletDraw();
+    obj.player.draw();
     SDL_RenderPresent(renderer);
 }
 
@@ -297,7 +306,6 @@ void Camera::drawWalls() {
             cnt++;
         }
     }
-    printf("%d\n", cnt);
 }
 
 
@@ -330,19 +338,11 @@ void Object::drawObj(float _dir) {
 void OBJManager::BulletCreate() {
     if (bulletNum < BULLETSIZE) {
         int tmpNum = 0;
-        while (bullet[tmpNum].active) {
-            tmpNum++;
-        }
+        while (bullet[tmpNum].active) { tmpNum++; }
         bullet[tmpNum].active = true;
         bullet[tmpNum].init(player.pos, 3.0f, bullet1);
-
-        float x, y, len;
-        x = mouse.pos.x - bullet[tmpNum].pos.x + camera.pos.x;
-        y = mouse.pos.y - bullet[tmpNum].pos.y + camera.pos.y;
-        len = sqrt(x * x + y * y);
-        x /= len;
-        y /= len;
-        bullet[tmpNum].dir = Vector2(x * x * Sign(x), y * y * Sign(y));
+        float angle = obj.player.dir / RADIAN;
+        bullet[tmpNum].dir = Vector2(cos(angle), sin(angle));
         bulletNum++;
     }
 }
@@ -375,23 +375,38 @@ void OBJManager::BulletDraw() {
 
 //###########################################################################
 //#################################Player####################################
+void Player::init(Vector2 _pos, float _speed, SDL_Texture* _image, SDL_Texture* _aim){
+    pos = _pos;
+    speed = _speed;
+    image = _image;
+    aim = _aim;
+    inScreenPos = Vector2(0, 0);
+    blockX = 0;
+    blockY = 0;
+    SDL_QueryTexture(_image, NULL, NULL, &w, &h);
+}
 
+void Player::update() {
+    if (obj.player.pos.x < WINDOW_WIDTH / 2) inScreenPos.x = obj.player.pos.x;
+    else if (obj.player.pos.x > camera.imgWidth - WINDOW_WIDTH / 2) inScreenPos.x = obj.player.pos.x - (camera.imgWidth - WINDOW_WIDTH);
+    else inScreenPos.x = WINDOW_WIDTH / 2;
+
+    if (obj.player.pos.y < WINDOW_HEIGHT / 2) inScreenPos.y = obj.player.pos.y;
+    else if (obj.player.pos.y > camera.imgHeight - WINDOW_HEIGHT / 2) inScreenPos.y = obj.player.pos.y - (camera.imgHeight - WINDOW_HEIGHT);
+    else inScreenPos.y = WINDOW_HEIGHT / 2;
+
+    dir = atan2(mouse.pos.y - inScreenPos.y, mouse.pos.x - inScreenPos.x) * RADIAN;
+
+    printf("%d, %d\n", blockX, blockY);
+}
+
+//void Player::move() {
+//
+//}
 //draw
 void Player::draw() {
-    int tmpX, tmpY;
-    if (obj.player.pos.x < WINDOW_WIDTH / 2) tmpX = obj.player.pos.x;
-    else if (obj.player.pos.x > camera.imgWidth - WINDOW_WIDTH / 2) tmpX = obj.player.pos.x - (camera.imgWidth - WINDOW_WIDTH);
-    else tmpX = WINDOW_WIDTH / 2;
-
-    if (obj.player.pos.y < WINDOW_HEIGHT / 2) tmpY = obj.player.pos.y;
-    else if (obj.player.pos.y > camera.imgHeight - WINDOW_HEIGHT / 2) tmpY = obj.player.pos.y - (camera.imgHeight - WINDOW_HEIGHT);
-    else tmpY = WINDOW_HEIGHT / 2;
-
-    float dx = mouse.pos.x - tmpX;
-    float dy = mouse.pos.y - tmpY;
-    float dir = atan2(dy, dx) * RADIAN;
-
-    drawTextureEx(renderer, tmpX - (int)(w / 2), tmpY - (int)(h / 2), dir, image);
+    drawTexture(renderer, (int) (inScreenPos.x - (w / 2)), (int) (inScreenPos.y - (h / 2)), image);
+    drawTextureEx(renderer, (int) (inScreenPos.x - (w / 2) - 20), (int) (inScreenPos.y - (h / 2) - 20), dir, aim);
 }
 
 
