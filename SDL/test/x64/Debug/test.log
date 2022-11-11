@@ -3,16 +3,13 @@ C:\Users\User\Documents\GitHub\evolvable\SDL\test\box.h(15,2): warning C4091: 't
 C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(43,15): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(170,35): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(174,35): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(377,20): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(378,20): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(387,24): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(393,39): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(399,24): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(406,38): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(411,40): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(411,31): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(420,85): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(423,85): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(426,84): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(429,86): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(386,20): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(387,20): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(396,24): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(402,39): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(416,92): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(426,85): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(429,85): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(432,84): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(435,86): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   test.vcxproj -> C:\Users\User\Documents\GitHub\evolvable\SDL\x64\Debug\test.exe

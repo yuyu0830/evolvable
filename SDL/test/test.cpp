@@ -91,8 +91,12 @@ void inputCal(SDL_Event event) {
         mouse.pos.y = event.motion.y;
         break;
     case SDL_MOUSEBUTTONDOWN:
-        if (event.button.button == SDL_BUTTON_LEFT) mouse.click[0] = true;
-        else if (event.button.button == SDL_BUTTON_RIGHT) mouse.click[1] = true;
+        if (event.button.button == SDL_BUTTON_LEFT) {
+            mouse.click[0] = true;
+        }
+        else if (event.button.button == SDL_BUTTON_RIGHT) {
+            mouse.click[1] = true;
+        }
         break;
     case SDL_MOUSEBUTTONUP:
         if (event.button.button == SDL_BUTTON_LEFT) {
@@ -326,11 +330,20 @@ void OBJManager::BulletUpdate() {
     int sum = 0;
     for (int i = 0; i < BULLETSIZE; i++) {
         if (bullet[i].active) {
+            int x = (int)bullet[i].pos.x;
+            int y = (int)bullet[i].pos.y;
             bullet[i].move(bullet[i].dir);
             if (OutOfMap(bullet[i].pos, bullet[i].w, bullet[i].h)) {
                 bullet[i].active = false;
                 printf("bullet %d disabled!\n", i);
                 bulletNum--;
+            }
+            else if ((int)bullet[i].pos.x - x != 0 || (int)bullet[i].pos.y - y != 0) {
+                if (camera.map[(int)bullet[i].pos.x / 40][(int)bullet[i].pos.y / 40]) {
+                    bullet[i].active = false;
+                    printf("bullet %d disabled!\n", i);
+                    bulletNum--;
+                }
             }
             sum++;
             activeBulletNum.push_back(i);
@@ -357,7 +370,7 @@ void Player::init(Vector2 _pos, float _speed, SDL_Texture* _image, SDL_Texture* 
     aim = _aim;
     caterpillar = _caterpillar;
     caterpillarNum = 0;
-    caterpillarDir = 0.0f;
+    caterpillarDir = 90.0f;
     inScreenPos = Vector2(0, 0);
     blockX = 0;
     blockY = 0;
@@ -379,53 +392,50 @@ void Player::update() {
 }
 
 void Player::move() {
-    int playerX = 0, playerY = 0;
+    int move = 0;
     if (keys[(int)'w']) {
         if (pos.y > h / 2) {
-            playerY -= 1;
+            move -= 1;
         }
         else pos.y = h / 2;
     }
     if (keys[(int)'s']) {
         if (pos.y < camera.imgHeight - h / 2) {
-            playerY += 1;
+            move += 1;
         }
         else pos.y = camera.imgHeight - h / 2;
     }
     if (keys[(int)'a']) {
-        if (pos.x > w / 2) {
-            playerX -= 1;
-        }
-        else pos.x = w / 2;
-        caterpillarDir -= 1.0f;
+        caterpillarDir -= 1.4f;
     }
     if (keys[(int)'d']) {
-        if (pos.x < camera.imgWidth - w / 2) {
-            playerX += 1;
-        }
-        else pos.x = camera.imgWidth - w / 2;
-        caterpillarDir += 1.0f;
+        caterpillarDir += 1.4f;
     }
+
+
     if (caterpillarDir > 360) caterpillarDir -= 360;
     else if (caterpillarDir < 0) caterpillarDir += 360;
-    pos = VecAdd(pos, Vector2(playerX, playerY), speed);
+
+
+    pos = VecAdd(pos, Vector2(cos(caterpillarDir / RADIAN), sin(caterpillarDir / RADIAN)), move);
     //printf("    %d       %d %d     %.1f %.1f\n  %d  %d\n    %d\n", (int)((pos.y - (h / 2)) / 40), blockX, blockY, pos.x, pos.y, (int)((pos.x - (w / 2)) / 40), (int)((pos.x + (w / 2)) / 40), (int)((pos.y + (h / 2)) / 40));
     int top = (int) ((pos.y + 1 - h / 2) / 40);
     int bot = (int) ((pos.y - 1 + h / 2) / 40);
     int left = (int) ((pos.x + 1 - w / 2) / 40);
     int right = (int) ((pos.x - 1 + w / 2) / 40);
-    if (playerY || playerX) {
+    printf("%f\n", caterpillarDir);
+    if (move) {
         caterpillarNum = (caterpillarNum + 1) % 3;
-        if (playerY < 0) {
+        if (caterpillarDir < 180) {
             if (camera.map[left][top] || camera.map[right][top]) pos.y = blockY * h + h / 2;
         }
-        else if (playerY > 0) {
+        else if (caterpillarDir > 180) {
             if (camera.map[left][bot] || camera.map[right][bot]) pos.y = blockY * h + h / 2;
         }
-        if (playerX < 0) {
+        if (caterpillarDir > 270 || caterpillarDir < 90) {
             if (camera.map[left][top] || camera.map[left][bot]) pos.x = blockX * w + w / 2;
         }
-        else if (playerX > 0) {
+        else {
             if (camera.map[right][top] || camera.map[right][bot]) pos.x = blockX * w + w / 2;
         }
     }
@@ -498,8 +508,7 @@ void drawTextureCut(SDL_Renderer* renderer, SDL_Rect src, int x, int y, float an
     dst.h = src.h;
     center.x = dst.w / 2;
     center.y = src.h / 2;
-
-    SDL_RenderCopyEx(renderer, texture, &src, &dst, angle, &center, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(renderer, texture, &src, &dst, (int) (angle + 270) % 360, &center, SDL_FLIP_NONE);
 }
 
 SDL_Texture* loadTexture(const char* file) {
