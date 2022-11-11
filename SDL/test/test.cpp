@@ -27,6 +27,7 @@ void draw();
 void inputCal(SDL_Event e);
 void drawTexture(SDL_Renderer* renderer, int x, int y, SDL_Texture* texture);
 void drawTextureEx(SDL_Renderer* renderer, int x, int y, float angle, SDL_Texture* texture);
+void drawTextureCut(SDL_Renderer* renderer, SDL_Rect src, int x, int y, float angle, SDL_Texture* texture);
 SDL_Texture* loadTexture(const char* file);
 
 //global var
@@ -41,7 +42,7 @@ vector<int> activeBulletNum;
 int main(int argv, char** args) {
     srand(time(NULL));
     bool running = initAll();
-    obj.player.init(Vector2(500, 300), 1.5f, loadTexture("src/Player.png"), loadTexture("src/aim.png"));
+    obj.player.init(Vector2(500, 300), 1.5f, loadTexture("src/Player.png"), loadTexture("src/aim.png"), loadTexture("src/caterpillar.png"));
     bullet1 = loadTexture("src/bullet.png");
     camera.init(loadTexture("src/background.png"), loadTexture("src/walls.png"));
     camera.makeMap();
@@ -349,11 +350,14 @@ void OBJManager::BulletDraw() {
 
 //###########################################################################
 //#################################Player####################################
-void Player::init(Vector2 _pos, float _speed, SDL_Texture* _image, SDL_Texture* _aim){
+void Player::init(Vector2 _pos, float _speed, SDL_Texture* _image, SDL_Texture* _aim, SDL_Texture* _caterpillar){
     pos = _pos;
     speed = _speed;
     image = _image;
     aim = _aim;
+    caterpillar = _caterpillar;
+    caterpillarNum = 0;
+    caterpillarDir = 0.0f;
     inScreenPos = Vector2(0, 0);
     blockX = 0;
     blockY = 0;
@@ -393,36 +397,49 @@ void Player::move() {
             playerX -= 1;
         }
         else pos.x = w / 2;
+        caterpillarDir -= 1.0f;
     }
     if (keys[(int)'d']) {
         if (pos.x < camera.imgWidth - w / 2) {
             playerX += 1;
         }
         else pos.x = camera.imgWidth - w / 2;
+        caterpillarDir += 1.0f;
     }
+    if (caterpillarDir > 360) caterpillarDir -= 360;
+    else if (caterpillarDir < 0) caterpillarDir += 360;
     pos = VecAdd(pos, Vector2(playerX, playerY), speed);
     //printf("    %d       %d %d     %.1f %.1f\n  %d  %d\n    %d\n", (int)((pos.y - (h / 2)) / 40), blockX, blockY, pos.x, pos.y, (int)((pos.x - (w / 2)) / 40), (int)((pos.x + (w / 2)) / 40), (int)((pos.y + (h / 2)) / 40));
-    int top = (int) ((pos.y - h / 2) / 40);
-    int bot = (int) ((pos.y + h / 2) / 40);
-    int left = (int) ((pos.x - w / 2) / 40);
-    int right = (int) ((pos.x + w / 2) / 40);
-    if (playerY < 0) {
-        if (camera.map[left][top] || camera.map[right][top]) pos.y = blockY * h + h / 2;
+    int top = (int) ((pos.y + 1 - h / 2) / 40);
+    int bot = (int) ((pos.y - 1 + h / 2) / 40);
+    int left = (int) ((pos.x + 1 - w / 2) / 40);
+    int right = (int) ((pos.x - 1 + w / 2) / 40);
+    if (playerY || playerX) {
+        caterpillarNum = (caterpillarNum + 1) % 3;
+        if (playerY < 0) {
+            if (camera.map[left][top] || camera.map[right][top]) pos.y = blockY * h + h / 2;
+        }
+        else if (playerY > 0) {
+            if (camera.map[left][bot] || camera.map[right][bot]) pos.y = blockY * h + h / 2;
+        }
+        if (playerX < 0) {
+            if (camera.map[left][top] || camera.map[left][bot]) pos.x = blockX * w + w / 2;
+        }
+        else if (playerX > 0) {
+            if (camera.map[right][top] || camera.map[right][bot]) pos.x = blockX * w + w / 2;
+        }
     }
-    else if (playerY > 0) {
-        if (camera.map[left][bot] || camera.map[right][bot]) pos.y = blockY * h + h / 2;
-    }
-    if (playerX < 0) {
-        if (camera.map[left][top] || camera.map[left][bot]) pos.x = blockX * w + w / 2;
-    }
-    else if (playerX > 0) {
-        if (camera.map[right][top] || camera.map[right][bot]) pos.x = blockX * w + w / 2;
-    }
+    
 }
 //draw
 void Player::draw() {
-    drawTexture(renderer, (int) (inScreenPos.x - (w / 2)), (int) (inScreenPos.y - (h / 2)), image);
-    drawTextureEx(renderer, (int) (inScreenPos.x - (w / 2) - 20), (int) (inScreenPos.y - (h / 2) - 20), dir, aim);
+    int x = (int)(inScreenPos.x - (w / 2));
+    int y = (int)(inScreenPos.y - (h / 2));
+    SDL_Rect tmp;
+    tmp.x = (caterpillarNum / 2) * 40, tmp.y = (caterpillarNum % 2) * 40, tmp.h = 40, tmp.w = 40;
+    drawTextureCut(renderer, tmp, x, y, caterpillarDir, caterpillar);
+    drawTexture(renderer, x, y, image);
+    drawTextureEx(renderer, x - 20, y - 20, dir, aim);
 }
 
 
@@ -459,6 +476,21 @@ void drawTextureEx(SDL_Renderer* renderer, int x, int y, float angle, SDL_Textur
     src.x = 0;
     src.y = 0;
     SDL_QueryTexture(texture, NULL, NULL, &src.w, &src.h);
+
+    dst.x = x;
+    dst.y = y;
+    dst.w = src.w;
+    dst.h = src.h;
+    center.x = dst.w / 2;
+    center.y = src.h / 2;
+
+    SDL_RenderCopyEx(renderer, texture, &src, &dst, angle, &center, SDL_FLIP_NONE);
+}
+
+
+void drawTextureCut(SDL_Renderer* renderer, SDL_Rect src, int x, int y, float angle, SDL_Texture* texture) {
+    SDL_Rect dst;
+    SDL_Point center;
 
     dst.x = x;
     dst.y = y;
