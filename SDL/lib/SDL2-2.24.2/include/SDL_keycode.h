@@ -336,6 +336,7 @@ typedef enum
     KMOD_RSHIFT = 0x0002,
     KMOD_LCTRL = 0x0040,
     KMOD_RCTRL = 0x0080,
+
     KMOD_LALT = 0x0100,
     KMOD_RALT = 0x0200,
     KMOD_LGUI = 0x0400,

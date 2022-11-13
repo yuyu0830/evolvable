@@ -1,5 +1,6 @@
 #pragma once
 #include "object.h"
+#include <SDL.h>
 
 class Player : public Object {
 public:
@@ -10,6 +11,12 @@ public:
 	float caterpillarDir;
 	int blockX, blockY;
 	int caterpillarNum;
+
+	~Player() {
+		SDL_DestroyTexture(aim);
+		SDL_DestroyTexture(caterpillar);
+		SDL_DestroyTexture(image);
+	}
 
 	void init(Vector2 _pos, float _speed, SDL_Texture* _image, SDL_Texture* _aim, SDL_Texture* _catepiller);
 	void update();

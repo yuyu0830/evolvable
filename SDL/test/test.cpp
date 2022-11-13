@@ -1,5 +1,6 @@
 ﻿#include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -11,13 +12,13 @@
 #include "bullet.h"
 #include "camera.h"
 #include "OBJManager.h"
-
+#define _CRT_SECURE_NO_WARNINGS
 using namespace std;
 
 //handler
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
-
+TTF_Font* font = NULL;
 //main::function
 bool OutOfMap(Vector2 pos, int w, int h);
 bool initAll();
@@ -26,16 +27,18 @@ void update();
 void draw();
 void inputCal(SDL_Event e);
 void drawTexture(SDL_Renderer* renderer, int x, int y, SDL_Texture* texture);
-void drawTextureEx(SDL_Renderer* renderer, int x, int y, float angle, SDL_Texture* texture);
-void drawTextureCut(SDL_Renderer* renderer, SDL_Rect src, int x, int y, float angle, SDL_Texture* texture);
+void drawTextureR(SDL_Renderer* renderer, int x, int y, float angle, SDL_Texture* texture);
+void drawTextureA(SDL_Renderer* renderer, SDL_Rect src, int x, int y, SDL_Texture* texture);
+void drawTextureAR(SDL_Renderer* renderer, SDL_Rect src, int x, int y, float angle, SDL_Texture* texture);
 SDL_Texture* loadTexture(const char* file);
 
 //global var
 bool keys[255] = { 0, };
+bool specialKeys[10] = { 0, };
+bool developerMode = true;
 Mouse mouse;
 OBJManager obj;
 SDL_Texture* bullet1 = NULL;
-SDL_Texture* walls = NULL;
 Camera camera;
 vector<int> activeBulletNum;
 
@@ -81,10 +84,22 @@ void update() {
 void inputCal(SDL_Event event) {
     switch (event.type) {
     case SDL_KEYDOWN:
-        keys[event.key.keysym.sym] = true;
+        //printf("%d\n", event.key.keysym.sym);
+        if (event.key.keysym.sym < 255) {
+            keys[event.key.keysym.sym] = true;
+        }
+        else if ( event.key.keysym.sym > 1073742047 ){
+            specialKeys[event.key.keysym.sym - 1073742048] = true;
+        }
         break;
     case SDL_KEYUP:
-        keys[event.key.keysym.sym] = false;
+        //printf("%d\n", event.key.keysym.sym);
+        if (event.key.keysym.sym < 255) {
+            keys[event.key.keysym.sym] = false;
+        }
+        else if (event.key.keysym.sym >= 1073742048) {
+            specialKeys[event.key.keysym.sym - 1073742048] = false;
+        }
         break;
     case SDL_MOUSEMOTION:
         mouse.pos.x = event.motion.x;
@@ -112,20 +127,20 @@ void inputCal(SDL_Event event) {
 }
 
 bool initAll() {
-    // initialize video
+    //initialize video
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         printf("Video Initialize failed! error code : %s\n", (SDL_GetError()));
         return 0;
     }
 
-    // initialize window
+    //initialize window
     window = SDL_CreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL);
     if (window == 0) {
         printf("Create window failed! error code : %s\n", (SDL_GetError()));
         return 0;
     }
 
-    // initialize renderer
+    //initialize renderer
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (renderer == 0)
     {
@@ -138,12 +153,26 @@ bool initAll() {
         return 0;
     }
 
+    if (TTF_Init() != 0) {
+        printf("Font initialize failed! error code : %s\n", TTF_GetError());
+        return 0;
+    }
+
+    font = TTF_OpenFont("HBIOS-SYS.ttf", 32);
+    if (font == NULL) {
+        printf("Failed to load font!\n");
+        return 0;
+    }
+
     return 1;
 }
 
 bool closeAll() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    SDL_DestroyTexture(bullet1);
+    TTF_Quit();
+    IMG_Quit();
     SDL_Quit();
     return 1;
 }
@@ -155,6 +184,9 @@ void draw() {
     camera.drawWalls();
     obj.BulletDraw();
     obj.player.draw();
+    if (developerMode) {
+        camera.drawDeveloperMode();
+    }
     SDL_RenderPresent(renderer);
 }
 
@@ -176,6 +208,38 @@ void Camera::update() {
     if (obj.player.pos.y < WINDOW_HEIGHT / 2) pos.y = 0;
     else if (obj.player.pos.y > imgWidth - WINDOW_HEIGHT / 2) pos.y = imgWidth - WINDOW_HEIGHT;
     else pos.y = obj.player.pos.y - WINDOW_HEIGHT / 2;
+}
+
+Vector2 Camera::playerCollisionCheck(Vector2 vec) {
+    float x = obj.player.pos.x + vec.x;
+    float y = obj.player.pos.y + vec.y;
+    int top = (int)((y - obj.player.h / 2) / 40);
+    int left = (int)((x - obj.player.w / 2) / 40);
+
+    if (vec.x < 0) {
+        if (map[left][top] || map[left][top + 1]) {
+            x = (int)x;
+        }
+    }
+    else if (vec.x > 0){
+        if (map[left + 1][top] || map[left + 1][top + 1]) {
+            x = (int)x;
+        }
+    }
+
+    if (vec.y < 0){
+        if (map[left][top] || map[left + 1][top]) {
+            y = (int)y;
+        }
+    }
+    else if (vec.y > 0) {
+        if (map[left][top + 1] || map[left + 1][top + 1]) {
+            y = (int)y;
+        }
+    }
+
+    printf("%.3f  %.3f\n", x, y);
+    return Vector2(x, y);
 }
 
 void Camera::makeMap() {
@@ -246,45 +310,39 @@ void Camera::makeMap() {
 //draw
 void Camera::drawBackground() {
     SDL_Rect src;
-    SDL_Rect dst;
-
     src.x = pos.x;
     src.y = pos.y;
     src.w = WINDOW_WIDTH;
     src.h = WINDOW_HEIGHT;
+    drawTextureA(renderer, src, 0, 0, backgroundIMG);
 
-    dst.x = 0;
-    dst.y = 0;
-    dst.w = WINDOW_WIDTH;
-    dst.h = WINDOW_HEIGHT;
-
-    SDL_RenderCopy(renderer, backgroundIMG, &src, &dst);
 }
 
 void Camera::drawWalls() {
     SDL_Rect src;
-    SDL_Rect dst;
-    int cnt = 0;
     short startX = pos.x / 40, endX = (pos.x + WINDOW_WIDTH + 39) / 40;
     short startY = pos.y / 40, endY = (pos.y + WINDOW_WIDTH + 39) / 40;
     for (int i = startX; i < endX; i++) {
         for (int j = startY; j < endY; j++) {
             if (map[i][j] != 0) {
-                src.x = ((map[i][j] - 1) % 5) * 40;
-                src.y = ((map[i][j] - 1) / 5) * 40;
-                src.w = 40;
-                src.h = 40;
-
-                dst.x = i * 40 - pos.x;
-                dst.y = j * 40 - pos.y;
-                dst.w = 40;
-                dst.h = 40;
-
-                SDL_RenderCopy(renderer, wall, &src, &dst);
+                src.x = ((map[i][j] - 1) % 5) * 40; src.y = ((map[i][j] - 1) / 5) * 40;
+                src.w = 40; src.h = 40;
+                drawTextureA(renderer, src, i * 40 - pos.x, j * 40 - pos.y, wall);
             }
-            cnt++;
         }
     }
+}
+
+void Camera::drawDeveloperMode() {
+    char t[100];
+    sprintf_s(t, sizeof(t), "x = %.3f  y = %.3f  dir = %.3f  bullet = %d", obj.player.pos.x, obj.player.pos.y, obj.player.caterpillarDir, obj.bulletNum);
+    text = TTF_RenderText_Solid(font, t, color);
+    texture = SDL_CreateTextureFromSurface(renderer, text);
+    int texW = 0;
+    int texH = 0;
+    SDL_QueryTexture(texture, NULL, NULL, &texW, &texH);
+    SDL_Rect dst = { 20, 20, texW, texH };
+    SDL_RenderCopy(renderer, texture, NULL, &dst);
 }
 
 
@@ -307,7 +365,7 @@ void Object::drawObj(float _dir) {
         if (_dir == 0) {
             drawTexture(renderer, (int)pos.x - (w / 2) - camera.pos.x, (int)pos.y - (h / 2) - camera.pos.y, image);
         }
-        else drawTextureEx(renderer, (int)pos.x - (w / 2), (int)pos.y - (h / 2), _dir, image);
+        else drawTextureR(renderer, (int)pos.x - (w / 2), (int)pos.y - (h / 2), _dir, image);
     }
 }
 
@@ -415,15 +473,16 @@ void Player::move() {
 
     if (caterpillarDir > 360) caterpillarDir -= 360;
     else if (caterpillarDir < 0) caterpillarDir += 360;
-
-
-    pos = VecAdd(pos, Vector2(cos(caterpillarDir / RADIAN), sin(caterpillarDir / RADIAN)), move);
-    //printf("    %d       %d %d     %.1f %.1f\n  %d  %d\n    %d\n", (int)((pos.y - (h / 2)) / 40), blockX, blockY, pos.x, pos.y, (int)((pos.x - (w / 2)) / 40), (int)((pos.x + (w / 2)) / 40), (int)((pos.y + (h / 2)) / 40));
-    int top = (int) ((pos.y + 1 - h / 2) / 40);
+    //camera.playerCollisionCheck(Vector2(0, 0));
+    if (move) {
+        pos = camera.playerCollisionCheck(Vector2(cos(caterpillarDir / RADIAN), sin(caterpillarDir / RADIAN)));
+    }
+    
+    //pos = VecAdd(pos, Vector2(cos(caterpillarDir / RADIAN), sin(caterpillarDir / RADIAN)), move);
+    /*int top = (int) ((pos.y + 1 - h / 2) / 40);
     int bot = (int) ((pos.y - 1 + h / 2) / 40);
     int left = (int) ((pos.x + 1 - w / 2) / 40);
     int right = (int) ((pos.x - 1 + w / 2) / 40);
-    printf("%f\n", caterpillarDir);
     if (move) {
         caterpillarNum = (caterpillarNum + 1) % 3;
         if (caterpillarDir < 180) {
@@ -438,18 +497,19 @@ void Player::move() {
         else {
             if (camera.map[right][top] || camera.map[right][bot]) pos.x = blockX * w + w / 2;
         }
-    }
+    }*/
     
 }
+
 //draw
 void Player::draw() {
     int x = (int)(inScreenPos.x - (w / 2));
     int y = (int)(inScreenPos.y - (h / 2));
     SDL_Rect tmp;
     tmp.x = (caterpillarNum / 2) * 40, tmp.y = (caterpillarNum % 2) * 40, tmp.h = 40, tmp.w = 40;
-    drawTextureCut(renderer, tmp, x, y, caterpillarDir, caterpillar);
+    drawTextureAR(renderer, tmp, x, y, caterpillarDir, caterpillar);
     drawTexture(renderer, x, y, image);
-    drawTextureEx(renderer, x - 20, y - 20, dir, aim);
+    drawTextureR(renderer, x - 20, y - 20, dir, aim);
 }
 
 
@@ -478,7 +538,17 @@ void drawTexture(SDL_Renderer* renderer, int x, int y, SDL_Texture* texture) {
     SDL_RenderCopy(renderer, texture, NULL, &dst);
 }
 
-void drawTextureEx(SDL_Renderer* renderer, int x, int y, float angle, SDL_Texture* texture) {
+void drawTextureA(SDL_Renderer* renderer, SDL_Rect src, int x, int y, SDL_Texture* texture) {
+    SDL_Rect dst;
+
+    dst.x = x;
+    dst.y = y;
+    dst.w = src.w;
+    dst.h = src.h;
+    SDL_RenderCopy(renderer, texture, &src, &dst);
+}
+
+void drawTextureR(SDL_Renderer* renderer, int x, int y, float angle, SDL_Texture* texture) {
     SDL_Rect src;
     SDL_Rect dst;
     SDL_Point center;
@@ -497,8 +567,7 @@ void drawTextureEx(SDL_Renderer* renderer, int x, int y, float angle, SDL_Textur
     SDL_RenderCopyEx(renderer, texture, &src, &dst, angle, &center, SDL_FLIP_NONE);
 }
 
-
-void drawTextureCut(SDL_Renderer* renderer, SDL_Rect src, int x, int y, float angle, SDL_Texture* texture) {
+void drawTextureAR(SDL_Renderer* renderer, SDL_Rect src, int x, int y, float angle, SDL_Texture* texture) {
     SDL_Rect dst;
     SDL_Point center;
 

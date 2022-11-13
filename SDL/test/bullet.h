@@ -11,6 +11,9 @@ public:
 
 	Bullet() {};
 
+	~Bullet() {
+		SDL_DestroyTexture(image);
+	}
 	//void Reset(int _bulletNum);
 	//void Create(Vector2 _pos, int _speed);
 	//void Calc();
