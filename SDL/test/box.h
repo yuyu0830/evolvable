@@ -4,6 +4,7 @@
 #define WINDOW_HEIGHT 720
 #define RADIAN 57.295791f
 #define BULLETSIZE 100
+#define DIAGONAL_LENGTH 28.284271f
 
 typedef struct Vector2 {
     float x, y;

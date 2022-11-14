@@ -11,6 +11,8 @@ public:
 	float caterpillarDir;
 	int blockX, blockY;
 	int caterpillarNum;
+	Vector2 vertex[4];
+	bool led[4];
 
 	~Player() {
 		SDL_DestroyTexture(aim);
@@ -20,6 +22,6 @@ public:
 
 	void init(Vector2 _pos, float _speed, SDL_Texture* _image, SDL_Texture* _aim, SDL_Texture* _catepiller);
 	void update();
-	void move();
+	void move(float moveX, float moveY);
 	void draw();
 };

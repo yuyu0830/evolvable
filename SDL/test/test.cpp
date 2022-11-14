@@ -36,6 +36,7 @@ SDL_Texture* loadTexture(const char* file);
 bool keys[255] = { 0, };
 bool specialKeys[10] = { 0, };
 bool developerMode = true;
+bool moveMode = true;
 Mouse mouse;
 OBJManager obj;
 SDL_Texture* bullet1 = NULL;
@@ -71,7 +72,6 @@ int main(int argv, char** args) {
 //###########################################################################
 //#################################main######################################
 void update() {
-    obj.player.move();
     obj.player.update();
     camera.update();
     if (mouse.click[0] && !mouse.clicked[0]) {
@@ -84,22 +84,17 @@ void update() {
 void inputCal(SDL_Event event) {
     switch (event.type) {
     case SDL_KEYDOWN:
-        //printf("%d\n", event.key.keysym.sym);
-        if (event.key.keysym.sym < 255) {
-            keys[event.key.keysym.sym] = true;
+        //printf("%d\n", event.key.keysym.scancode);
+        keys[event.key.keysym.scancode] = true;
+        if (event.key.keysym.scancode == 60) {
+            developerMode = !developerMode;
         }
-        else if ( event.key.keysym.sym > 1073742047 ){
-            specialKeys[event.key.keysym.sym - 1073742048] = true;
+        if (event.key.keysym.scancode == 59) {
+            moveMode = !moveMode;
         }
         break;
     case SDL_KEYUP:
-        //printf("%d\n", event.key.keysym.sym);
-        if (event.key.keysym.sym < 255) {
-            keys[event.key.keysym.sym] = false;
-        }
-        else if (event.key.keysym.sym >= 1073742048) {
-            specialKeys[event.key.keysym.sym - 1073742048] = false;
-        }
+        keys[event.key.keysym.scancode] = false;
         break;
     case SDL_MOUSEMOTION:
         mouse.pos.x = event.motion.x;
@@ -210,38 +205,6 @@ void Camera::update() {
     else pos.y = obj.player.pos.y - WINDOW_HEIGHT / 2;
 }
 
-Vector2 Camera::playerCollisionCheck(Vector2 vec) {
-    float x = obj.player.pos.x + vec.x;
-    float y = obj.player.pos.y + vec.y;
-    int top = (int)((y - obj.player.h / 2) / 40);
-    int left = (int)((x - obj.player.w / 2) / 40);
-
-    if (vec.x < 0) {
-        if (map[left][top] || map[left][top + 1]) {
-            x = (int)x;
-        }
-    }
-    else if (vec.x > 0){
-        if (map[left + 1][top] || map[left + 1][top + 1]) {
-            x = (int)x;
-        }
-    }
-
-    if (vec.y < 0){
-        if (map[left][top] || map[left + 1][top]) {
-            y = (int)y;
-        }
-    }
-    else if (vec.y > 0) {
-        if (map[left][top + 1] || map[left + 1][top + 1]) {
-            y = (int)y;
-        }
-    }
-
-    printf("%.3f  %.3f\n", x, y);
-    return Vector2(x, y);
-}
-
 void Camera::makeMap() {
     bool tempMap[77][77] = {0, };
     for (int i = 1; i < 76; i++) {
@@ -306,6 +269,51 @@ void Camera::makeMap() {
     }
     return;
 };
+
+float Camera::wallCheck(float angle) {
+    while (angle >= 90.0f) {
+        angle -= 90.0f;
+    }
+    float x = sin(angle / RADIAN) * DIAGONAL_LENGTH;
+    float y = cos(angle / RADIAN) * DIAGONAL_LENGTH;
+    if (map[(int)((obj.player.pos.x + x) / 40)][(int)((obj.player.pos.y - y) / 40)]) {
+        return false;
+    }
+    if (map[(int)((obj.player.pos.x + y) / 40)][(int)((obj.player.pos.y + x) / 40)]) {
+        return false;
+    }
+    if (map[(int)((obj.player.pos.x - x) / 40)][(int)((obj.player.pos.y + y) / 40)]) {
+        return false;
+    }
+    if (map[(int)((obj.player.pos.x - y) / 40)][(int)((obj.player.pos.y - x) / 40)]) {
+        return false;
+    }
+    return true;
+
+
+    /*if (map[(int)((obj.player.pos.x + x) / 40)][(int)((obj.player.pos.y - y) / 40)]) {
+        if (map[(int)((obj.player.pos.x + x) / 40) - 2][(int)((obj.player.pos.y - y) / 40)]) {
+
+        }
+    }
+    if (map[(int)((obj.player.pos.x + y) / 40)][(int)((obj.player.pos.y + x) / 40)]) {
+        printf("2\n");
+    }
+    if (map[(int)((obj.player.pos.x - x) / 40)][(int)((obj.player.pos.y + y) / 40)]) {
+        printf("3\n");
+    }
+    if (map[(int)((obj.player.pos.x - y) / 40)][(int)((obj.player.pos.y - x) / 40)]) {
+        printf("4\n");
+    }
+    return true;*/
+}
+
+bool Camera::wallCheck(float x, float y) {
+    if (map[(int)x / 40][(int)y / 40]) {
+        return true;
+    }
+    return false;
+}
 
 //draw
 void Camera::drawBackground() {
@@ -428,14 +436,88 @@ void Player::init(Vector2 _pos, float _speed, SDL_Texture* _image, SDL_Texture* 
     aim = _aim;
     caterpillar = _caterpillar;
     caterpillarNum = 0;
-    caterpillarDir = 90.0f;
+    caterpillarDir = 0.0f;
     inScreenPos = Vector2(0, 0);
     blockX = 0;
     blockY = 0;
     SDL_QueryTexture(_image, NULL, NULL, &w, &h);
 }
 
+void Player::move(float moveX, float moveY) {
+    for (int i = 0; i < 4; i++) led[i] = 0;
+    int a, b, c;
+    if (moveX < 0) {
+        a = 2, b = 3, c = 0;
+    }
+    else {
+        a = 0, b = 1, c = 1;
+    }
+
+    if (camera.wallCheck(vertex[a].x + moveX, vertex[a].y) || camera.wallCheck(vertex[b].x + moveX, vertex[b].y)) {
+        led[c] = true;
+    }
+    else {
+        pos.x += moveX;
+    }
+    
+
+    if (moveY < 0) {
+        a = 0, b = 3, c = 2;
+    }
+    else {
+        a = 1, b = 2, c = 3;
+    }
+
+    if (camera.wallCheck(vertex[a].x, vertex[a].y + moveY) || camera.wallCheck(vertex[b].x, vertex[b].y + moveY)) {
+        led[c] = true;
+    }
+    else {
+        pos.y += moveY;
+    }
+}
+
 void Player::update() {
+    // input Player's moving
+    int move = 0;
+    if (keys[26]) { // w
+        move -= 1;
+    }
+    if (keys[22]) { // s
+        move += 1;
+    }
+    if (keys[4]) { // a
+        if (camera.wallCheck(caterpillarDir - 1.4f)) {
+            caterpillarDir -= 1.4f;
+        }
+        //caterpillarDir = camera.wallCheck(caterpillarDir - 1.4f);
+    }
+    if (keys[7]) { // d
+        if (camera.wallCheck(caterpillarDir + 1.4f)) {
+            caterpillarDir += 1.4f;
+        }
+        //caterpillarDir = camera.wallCheck(caterpillarDir - 1.4f);
+    }
+
+    // caterpillar direction
+    if (caterpillarDir >= 360) caterpillarDir -= 360;
+    else if (caterpillarDir < 0) caterpillarDir += 360;
+
+    // calculate vertax
+    float angle = caterpillarDir + 45.0f;
+    while (angle >= 90.0f) {
+        angle -= 90.0f;
+    }
+    float x = sin(angle / RADIAN) * DIAGONAL_LENGTH;
+    float y = cos(angle / RADIAN) * DIAGONAL_LENGTH;
+    vertex[0] = { pos.x + x, pos.y - y };
+    vertex[1] = { pos.x + y, pos.y + x };
+    vertex[2] = { pos.x - x, pos.y + y };
+    vertex[3] = { pos.x - y, pos.y - x };
+    //printf("%.1f : %.1f %.1f    %.1f %.1f    %.1f %.1f    %.1f %.1f\n", angle, vertex[0].x, vertex[0].y, vertex[1].x, vertex[1].y, vertex[2].x, vertex[2].y, vertex[3].x, vertex[3].y);
+
+    this->move((sin(caterpillarDir / RADIAN) * move) * -1, (cos(caterpillarDir / RADIAN) * move));
+
+    // calculate inscreen position
     if (obj.player.pos.x < WINDOW_WIDTH / 2) inScreenPos.x = obj.player.pos.x;
     else if (obj.player.pos.x > camera.imgWidth - WINDOW_WIDTH / 2) inScreenPos.x = obj.player.pos.x - (camera.imgWidth - WINDOW_WIDTH);
     else inScreenPos.x = WINDOW_WIDTH / 2;
@@ -444,62 +526,14 @@ void Player::update() {
     else if (obj.player.pos.y > camera.imgHeight - WINDOW_HEIGHT / 2) inScreenPos.y = obj.player.pos.y - (camera.imgHeight - WINDOW_HEIGHT);
     else inScreenPos.y = WINDOW_HEIGHT / 2;
 
+    // calculate player to mouse angle
     dir = atan2(mouse.pos.y - inScreenPos.y, mouse.pos.x - inScreenPos.x) * RADIAN;
+
+    // calculate player's map position
     blockX = pos.x / 40;
     blockY = pos.y / 40;
 }
 
-void Player::move() {
-    int move = 0;
-    if (keys[(int)'w']) {
-        if (pos.y > h / 2) {
-            move -= 1;
-        }
-        else pos.y = h / 2;
-    }
-    if (keys[(int)'s']) {
-        if (pos.y < camera.imgHeight - h / 2) {
-            move += 1;
-        }
-        else pos.y = camera.imgHeight - h / 2;
-    }
-    if (keys[(int)'a']) {
-        caterpillarDir -= 1.4f;
-    }
-    if (keys[(int)'d']) {
-        caterpillarDir += 1.4f;
-    }
-
-
-    if (caterpillarDir > 360) caterpillarDir -= 360;
-    else if (caterpillarDir < 0) caterpillarDir += 360;
-    //camera.playerCollisionCheck(Vector2(0, 0));
-    if (move) {
-        pos = camera.playerCollisionCheck(Vector2(cos(caterpillarDir / RADIAN), sin(caterpillarDir / RADIAN)));
-    }
-    
-    //pos = VecAdd(pos, Vector2(cos(caterpillarDir / RADIAN), sin(caterpillarDir / RADIAN)), move);
-    /*int top = (int) ((pos.y + 1 - h / 2) / 40);
-    int bot = (int) ((pos.y - 1 + h / 2) / 40);
-    int left = (int) ((pos.x + 1 - w / 2) / 40);
-    int right = (int) ((pos.x - 1 + w / 2) / 40);
-    if (move) {
-        caterpillarNum = (caterpillarNum + 1) % 3;
-        if (caterpillarDir < 180) {
-            if (camera.map[left][top] || camera.map[right][top]) pos.y = blockY * h + h / 2;
-        }
-        else if (caterpillarDir > 180) {
-            if (camera.map[left][bot] || camera.map[right][bot]) pos.y = blockY * h + h / 2;
-        }
-        if (caterpillarDir > 270 || caterpillarDir < 90) {
-            if (camera.map[left][top] || camera.map[left][bot]) pos.x = blockX * w + w / 2;
-        }
-        else {
-            if (camera.map[right][top] || camera.map[right][bot]) pos.x = blockX * w + w / 2;
-        }
-    }*/
-    
-}
 
 //draw
 void Player::draw() {
@@ -508,8 +542,25 @@ void Player::draw() {
     SDL_Rect tmp;
     tmp.x = (caterpillarNum / 2) * 40, tmp.y = (caterpillarNum % 2) * 40, tmp.h = 40, tmp.w = 40;
     drawTextureAR(renderer, tmp, x, y, caterpillarDir, caterpillar);
+    //drawTextureAR(renderer, tmp, x, y, 0, caterpillar);
     drawTexture(renderer, x, y, image);
     drawTextureR(renderer, x - 20, y - 20, dir, aim);
+    if (led[0]) { // left
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+        SDL_RenderDrawLine(renderer, vertex[2].x - camera.pos.x, vertex[2].y - camera.pos.y, vertex[3].x - camera.pos.x, vertex[3].y - camera.pos.y);
+    }
+    if (led[1]) { // right
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+        SDL_RenderDrawLine(renderer, vertex[0].x - camera.pos.x, vertex[0].y - camera.pos.y, vertex[1].x - camera.pos.x, vertex[1].y - camera.pos.y);
+    }
+    if (led[2]) { // top
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+        SDL_RenderDrawLine(renderer, vertex[0].x - camera.pos.x, vertex[0].y - camera.pos.y, vertex[3].x - camera.pos.x, vertex[3].y - camera.pos.y);
+    }
+    if (led[3]) { // bottom
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+        SDL_RenderDrawLine(renderer, vertex[1].x - camera.pos.x, vertex[1].y - camera.pos.y, vertex[2].x - camera.pos.x, vertex[2].y - camera.pos.y);
+    }
 }
 
 
@@ -577,7 +628,7 @@ void drawTextureAR(SDL_Renderer* renderer, SDL_Rect src, int x, int y, float ang
     dst.h = src.h;
     center.x = dst.w / 2;
     center.y = src.h / 2;
-    SDL_RenderCopyEx(renderer, texture, &src, &dst, (int) (angle + 270) % 360, &center, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(renderer, texture, &src, &dst, angle, &center, SDL_FLIP_NONE);
 }
 
 SDL_Texture* loadTexture(const char* file) {

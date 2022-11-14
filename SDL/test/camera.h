@@ -19,11 +19,14 @@ public:
 		SDL_DestroyTexture(texture);
 		SDL_FreeSurface(text);
 	};
+
 	void init(SDL_Texture* _backgroundIMG, SDL_Texture* _wall);
 	void drawBackground();
 	void drawWalls();
 	void drawDeveloperMode();
 	void update();
-	Vector2 playerCollisionCheck(Vector2 vec);
 	void makeMap();
+
+	bool wallCheck(float x, float y);
+	float wallCheck(float angle);
 };
