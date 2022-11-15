@@ -34,7 +34,6 @@ SDL_Texture* loadTexture(const char* file);
 
 //global var
 bool keys[255] = { 0, };
-bool specialKeys[10] = { 0, };
 bool developerMode = true;
 bool moveMode = true;
 Mouse mouse;
@@ -276,25 +275,23 @@ float Camera::wallCheck(float angle) {
     }
     float x = sin(angle / RADIAN) * DIAGONAL_LENGTH;
     float y = cos(angle / RADIAN) * DIAGONAL_LENGTH;
+    //if (map[(int)((obj.player.pos.x + x) / 40)][(int)((obj.player.pos.y - y) / 40)]) {
+    //    return false;
+    //}
+    //if (map[(int)((obj.player.pos.x + y) / 40)][(int)((obj.player.pos.y + x) / 40)]) {
+    //    return false;
+    //}
+    //if (map[(int)((obj.player.pos.x - x) / 40)][(int)((obj.player.pos.y + y) / 40)]) {
+    //    return false;
+    //}
+    //if (map[(int)((obj.player.pos.x - y) / 40)][(int)((obj.player.pos.y - x) / 40)]) {
+    //    return false;
+    //}
+    //return true;
+
+
     if (map[(int)((obj.player.pos.x + x) / 40)][(int)((obj.player.pos.y - y) / 40)]) {
-        return false;
-    }
-    if (map[(int)((obj.player.pos.x + y) / 40)][(int)((obj.player.pos.y + x) / 40)]) {
-        return false;
-    }
-    if (map[(int)((obj.player.pos.x - x) / 40)][(int)((obj.player.pos.y + y) / 40)]) {
-        return false;
-    }
-    if (map[(int)((obj.player.pos.x - y) / 40)][(int)((obj.player.pos.y - x) / 40)]) {
-        return false;
-    }
-    return true;
-
-
-    /*if (map[(int)((obj.player.pos.x + x) / 40)][(int)((obj.player.pos.y - y) / 40)]) {
-        if (map[(int)((obj.player.pos.x + x) / 40) - 2][(int)((obj.player.pos.y - y) / 40)]) {
-
-        }
+        printf("1\n");
     }
     if (map[(int)((obj.player.pos.x + y) / 40)][(int)((obj.player.pos.y + x) / 40)]) {
         printf("2\n");
@@ -305,7 +302,7 @@ float Camera::wallCheck(float angle) {
     if (map[(int)((obj.player.pos.x - y) / 40)][(int)((obj.player.pos.y - x) / 40)]) {
         printf("4\n");
     }
-    return true;*/
+    return true;
 }
 
 bool Camera::wallCheck(float x, float y) {
@@ -477,25 +474,16 @@ void Player::move(float moveX, float moveY) {
 }
 
 void Player::update() {
-    // input Player's moving
-    int move = 0;
-    if (keys[26]) { // w
-        move -= 1;
-    }
-    if (keys[22]) { // s
-        move += 1;
-    }
+    // rotation calculate
     if (keys[4]) { // a
         if (camera.wallCheck(caterpillarDir - 1.4f)) {
             caterpillarDir -= 1.4f;
         }
-        //caterpillarDir = camera.wallCheck(caterpillarDir - 1.4f);
     }
     if (keys[7]) { // d
         if (camera.wallCheck(caterpillarDir + 1.4f)) {
             caterpillarDir += 1.4f;
         }
-        //caterpillarDir = camera.wallCheck(caterpillarDir - 1.4f);
     }
 
     // caterpillar direction
@@ -513,9 +501,20 @@ void Player::update() {
     vertex[1] = { pos.x + y, pos.y + x };
     vertex[2] = { pos.x - x, pos.y + y };
     vertex[3] = { pos.x - y, pos.y - x };
-    //printf("%.1f : %.1f %.1f    %.1f %.1f    %.1f %.1f    %.1f %.1f\n", angle, vertex[0].x, vertex[0].y, vertex[1].x, vertex[1].y, vertex[2].x, vertex[2].y, vertex[3].x, vertex[3].y);
 
-    this->move((sin(caterpillarDir / RADIAN) * move) * -1, (cos(caterpillarDir / RADIAN) * move));
+    // moving calculate
+    if (keys[26]) { // w
+        //this->move((sin(caterpillarDir / RADIAN) * -1) * -1, (cos(caterpillarDir / RADIAN) * -1));
+        pos.x += (sin(caterpillarDir / RADIAN) * -1) * -1;
+        pos.y += cos(caterpillarDir / RADIAN) * -1;
+    }
+    if (keys[22]) { // s
+        //this->move((sin(caterpillarDir / RADIAN)) * -1, (cos(caterpillarDir / RADIAN)));
+        pos.x += (sin(caterpillarDir / RADIAN)) * -1;
+        pos.y += cos(caterpillarDir / RADIAN);
+    }
+    
+    //if ()
 
     // calculate inscreen position
     if (obj.player.pos.x < WINDOW_WIDTH / 2) inScreenPos.x = obj.player.pos.x;
