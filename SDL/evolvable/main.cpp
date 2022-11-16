@@ -1,21 +1,29 @@
 ﻿#include <stdio.h>
 #include <stdbool.h>
+#include <string>
+#include <vector>
+#include <time.h>
 
 #include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
 
 #include "game.h"
+#include "init.h"
+#include "box.h"
 
 // Define screen dimensions
-#define SCREEN_WIDTH    800
-#define SCREEN_HEIGHT   600
-#define _CRT_SECURE_NO_WARNINGS
 
 using namespace std;
 
-SDL_Window* window = NULL;
-SDL_Renderer* renderer = NULL;
-
+App app;
 int main(int argv, char** args) {
-    srand(time(NULL));
-    
+    bool running = init();
+    if (running) {
+        game();
+    }
+    else {
+        printf("Game running Failed!\nPlease try again!\n");
+    }
+    return 0;
 }
