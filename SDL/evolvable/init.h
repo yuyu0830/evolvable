@@ -1,2 +1,3 @@
 #pragma once
-bool init();
+#include "game.h"
+bool init(App *app);
