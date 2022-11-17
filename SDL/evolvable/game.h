@@ -1,4 +1,6 @@
-#pragma once 
+#ifndef GAME_H_
+#define GAME_H_
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -8,8 +10,18 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
+#include "init.h"
 #include "box.h"
-#include "draw.h"
-#include "input.h"
 
-void game(App* app);
+class Game {
+public:
+	Game();
+	~Game();
+
+private:
+	void gameLoop();
+	void draw();
+	void update();
+};
+
+#endif

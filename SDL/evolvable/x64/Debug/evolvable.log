@@ -1,2 +1,10 @@
-﻿  game.cpp
-  evolvable.vcxproj -> C:\Users\User\Documents\GitHub\evolvable\SDL\x64\Debug\evolvable.exe
+﻿  box.cpp
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\evolvable\box.cpp(3,6): error C2027: 정의되지 않은 형식 'SDL_Window'을(를) 사용했습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\evolvable\box.h(4): message : 'SDL_Window' 선언을 참조하십시오.
+  game.cpp
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\evolvable\box.h(4,17): warning C4099: 'SDL_Window': 처음에는 'struct'을(를) 사용하여 형식 이름을 표시했는데 이제는 'class'을(를) 사용하여 표시합니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\lib\SDL2-2.24.2\include\SDL_video.h(95): message : 'SDL_Window' 선언을 참조하십시오.
+  main.cpp
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\evolvable\box.h(4,17): warning C4099: 'SDL_Window': 처음에는 'struct'을(를) 사용하여 형식 이름을 표시했는데 이제는 'class'을(를) 사용하여 표시합니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\lib\SDL2-2.24.2\include\SDL_video.h(95): message : 'SDL_Window' 선언을 참조하십시오.
+  코드를 생성하고 있습니다...
