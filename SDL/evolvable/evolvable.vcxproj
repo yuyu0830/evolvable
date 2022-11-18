@@ -18,6 +18,27 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\box.cpp" />
+    <ClCompile Include="src\draw.cpp" />
+    <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\input.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\object.cpp" />
+    <ClCompile Include="src\sprite\bullet.cpp" />
+    <ClCompile Include="src\sprite\map.cpp" />
+    <ClCompile Include="src\sprite\player.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\box.h" />
+    <ClInclude Include="src\draw.h" />
+    <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\input.h" />
+    <ClInclude Include="src\object.h" />
+    <ClInclude Include="src\sprite\bullet.h" />
+    <ClInclude Include="src\sprite\map.h" />
+    <ClInclude Include="src\sprite\player.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -129,22 +150,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="box.cpp" />
-    <ClCompile Include="draw.cpp" />
-    <ClCompile Include="game.cpp" />
-    <ClCompile Include="init.cpp" />
-    <ClCompile Include="input.cpp" />
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="box.h" />
-    <ClInclude Include="draw.h" />
-    <ClInclude Include="game.h" />
-    <ClInclude Include="init.h" />
-    <ClInclude Include="input.h" />
-    <ClInclude Include="main.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

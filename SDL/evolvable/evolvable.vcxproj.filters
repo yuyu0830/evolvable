@@ -13,45 +13,63 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="sprite">
+      <UniqueIdentifier>{c4368290-0ddd-4466-a857-b748c591b1a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="src\box.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="draw.cpp">
+    <ClCompile Include="src\draw.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="input.cpp">
+    <ClCompile Include="src\game.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="game.cpp">
+    <ClCompile Include="src\input.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="init.cpp">
+    <ClCompile Include="src\main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="box.cpp">
+    <ClCompile Include="src\object.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprite\map.cpp">
+      <Filter>sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprite\player.cpp">
+      <Filter>sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprite\bullet.cpp">
+      <Filter>sprite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="draw.h">
+    <ClInclude Include="src\box.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="input.h">
+    <ClInclude Include="src\draw.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="main.h">
+    <ClInclude Include="src\game.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="game.h">
+    <ClInclude Include="src\input.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="init.h">
+    <ClInclude Include="src\object.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="box.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="src\sprite\map.h">
+      <Filter>sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sprite\player.h">
+      <Filter>sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sprite\bullet.h">
+      <Filter>sprite</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
