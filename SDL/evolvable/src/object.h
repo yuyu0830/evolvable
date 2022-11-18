@@ -13,11 +13,10 @@ class Object {
 public:
 	void init(SDL_Renderer* renderer);
 	void draw(SDL_Renderer* renderer);
-	void update(const Input* input);
+	void update(Input* input);
 
 private:
 	Player player;
-	Bullet bullet;
 	Map map;
 
 };

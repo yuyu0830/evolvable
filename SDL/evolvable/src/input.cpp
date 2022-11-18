@@ -34,9 +34,11 @@ bool inputCalc(Input* input, Uint32 programTime) {
         case SDL_MOUSEBUTTONUP:
             if (event.button.button == SDL_BUTTON_LEFT) {
                 input->mouseClick[0] = 0;
+                input->mouseClicked[0] = false;
             }
             else if (event.button.button == SDL_BUTTON_RIGHT) {
                 input->mouseClick[1] = 0;
+                input->mouseClicked[1] = false;
             }
             break;
         }

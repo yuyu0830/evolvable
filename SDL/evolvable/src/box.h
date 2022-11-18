@@ -57,6 +57,7 @@ public:
 struct Input {
 	Uint32 keys[255];
 	Uint32 mouseClick[3];
+	bool mouseClicked[3];
 	SDL_Point mousePos;
 };
 

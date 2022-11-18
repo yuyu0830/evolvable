@@ -1,16 +1,16 @@
 #include "player.h"
 
 Player::~Player() {
-	SDL_DestroyTexture(fireAngleImg);
+	SDL_DestroyTexture(fireDirImg);
 	SDL_DestroyTexture(caterpillar);
 	SDL_DestroyTexture(turret);
 }
 
-void Player::init(SDL_FPoint _pos, float _speed, float _rotateSpeed, SDL_Texture* _turret, SDL_Texture* _caterpillar, SDL_Texture* _fireAngleImg, SDL_Texture* _bulletImg) {
+void Player::init(SDL_FPoint _pos, float _speed, float _rotateSpeed, SDL_Texture* _turret, SDL_Texture* _caterpillar, SDL_Texture* _fireDirImg, SDL_Texture* _bulletImg) {
     strcpy_s(name, "Player");
     turret = _turret;
     caterpillar = _caterpillar;
-    fireAngleImg = _fireAngleImg;
+    fireDirImg = _fireDirImg;
     
     pos = _pos;
     speed = _speed;
@@ -23,7 +23,7 @@ void Player::init(SDL_FPoint _pos, float _speed, float _rotateSpeed, SDL_Texture
     caterpillarDir = 0.0f;
 
     inScreenPos = _pos;
-    SDL_QueryTexture(fireAngleImg, NULL, NULL, &fw, &fh);
+    SDL_QueryTexture(fireDirImg, NULL, NULL, &fw, &fh);
     SDL_QueryTexture(turret, NULL, NULL, &w, &h);
     printf("%s initialize complete!\n", name);
     bullet.init(name, _bulletImg, 2.0f);
@@ -33,7 +33,7 @@ void Player::move() {
     ;
 }
 
-void Player::update(const Input* input) {
+void Player::update(Input* input) {
     int move = 0;
     if (input->keys[4]) {
         caterpillarDir -= rotateSpeed;
@@ -62,16 +62,17 @@ void Player::update(const Input* input) {
     caterpillarRect = { (caterpillarNum / 2) * 40,(caterpillarNum % 2) * 40 , 40, 40 };
     fireDir = atan2(input->mousePos.y - pos.y, input->mousePos.x - pos.x) * RADIAN;
 
-    if (input->mouseClick[0]) {
+    if (input->mouseClick[0] && !input->mouseClicked[0]) {
         bullet.create(fireDir, pos);
+        input->mouseClicked[0] = true;
     }
 }
 
 
 //draw
 void Player::draw(SDL_Renderer* renderer) {
-    drawTextureAR(renderer, caterpillarRect, (int)pos.x, (int)pos.y, caterpillarDir, caterpillar);
-    drawTexture(renderer, (int)pos.x, (int)pos.y, turret);
-    drawTextureR(renderer, (int)pos.x, (int)pos.y, fireDir, fireAngleImg);
+    drawTextureAR(renderer, caterpillarRect, (int)(pos.x - w / 2), (int)(pos.y - h / 2), caterpillarDir, caterpillar);
+    drawTexture(renderer, (int)(pos.x - w / 2), (int)(pos.y - h / 2) , turret);
+    drawTextureR(renderer, (int)(pos.x - fw / 2), (int)(pos.y - fh / 2), fireDir, fireDirImg);
     bullet.draw(renderer);
 }

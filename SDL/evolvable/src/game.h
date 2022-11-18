@@ -35,10 +35,8 @@ private:
 	bool running;
 	bool infoMode;
 
-
 	//frame
 	float fps;
 	int frameCounter;
 };
-
 #endif

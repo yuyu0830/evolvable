@@ -14,11 +14,11 @@ public:
 	~Player();
 	void init(SDL_FPoint _pos, float _speed, float _rotateSpeed, SDL_Texture* _turret, SDL_Texture* _caterpillar, SDL_Texture* _fireAngleImg, SDL_Texture* _bulletImg);
 	void move();
-	void update(const Input* input);
+	void update(Input* input);
 	void draw(SDL_Renderer* renderer);
 
 private:
-	SDL_Texture* fireAngleImg;
+	SDL_Texture* fireDirImg;
 	SDL_Texture* caterpillar;
 	SDL_Texture* turret;
 
