@@ -93,9 +93,6 @@ void Game::gameLoop() {
 void Game::draw() {
     SDL_RenderClear(app.renderer);
     object.draw(app.renderer);
-    drawTexture(app.renderer, 100, 100, blueTile);
-    drawTexture(app.renderer, 190, 100, blueTile);
-    drawTexture(app.renderer, 145, 126, blueTile);
     SDL_RenderPresent(app.renderer);
 }
 

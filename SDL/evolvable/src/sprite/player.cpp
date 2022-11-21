@@ -49,8 +49,8 @@ void Player::update(Input* input) {
     if (move != 0) {
         if (caterpillarNum >= 3) caterpillarNum -= 3;
         else if (caterpillarNum < 0) caterpillarNum += 3;
-        pos.x += (sin(caterpillarDir / RADIAN) * move) * -1;
-        pos.y += cos(caterpillarDir / RADIAN) * move;
+        pos.x += (sin(caterpillarDir / RADIAN) * move) * -1 * speed;
+        pos.y += cos(caterpillarDir / RADIAN) * move * speed;
     }
     
     if (caterpillarDir >= 360) caterpillarDir -= 360;
@@ -58,13 +58,23 @@ void Player::update(Input* input) {
     caterpillarRect = { (caterpillarNum / 2) * 40,(caterpillarNum % 2) * 40 , 40, 40 };
     fireDir = atan2(input->mousePos.y - pos.y, input->mousePos.x - pos.x) * RADIAN + 90;
     if (fireDir > 360) fireDir -= 360;
-    printf("%f\n", fireDir);
     if (input->mouseClick[0] && !input->mouseClicked[0]) {
         bullet.create(fireDir, pos);
         input->mouseClicked[0] = true;
     }
+
+    if (pos.x < WINDOW_WIDTH / 2) inScreenPos.x = pos.x;
+    else if (pos.x > mapSize->x - WINDOW_WIDTH / 2) inScreenPos.x = pos.x - (mapSize -> x - WINDOW_WIDTH);
+    else inScreenPos.x = pos.x - WINDOW_WIDTH / 2;
+
+    if (pos.y < WINDOW_HEIGHT / 2) inScreenPos.y = 0;
+    else if (pos.y > mapSize->y - WINDOW_HEIGHT / 2) inScreenPos.y = mapSize->y - WINDOW_HEIGHT;
+    else inScreenPos.y = pos.y - WINDOW_HEIGHT / 2;
 }
 
+SDL_FPoint Player::posReturn() {
+    return inScreenPos;
+}
 
 //draw
 void Player::draw(SDL_Renderer* renderer) {
@@ -72,4 +82,8 @@ void Player::draw(SDL_Renderer* renderer) {
     drawTexture(renderer, (int)(pos.x - w / 2), (int)(pos.y - h / 2) , turret);
     drawTextureR(renderer, (int)(pos.x - fw / 2), (int)(pos.y - fh / 2), fireDir, fireDirImg);
     bullet.draw(renderer);
+}
+
+void Player::mapSizePoint(SDL_Point* _mapSize) {
+    mapSize = _mapSize;
 }
