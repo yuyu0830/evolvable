@@ -46,6 +46,16 @@ bool Game::init() {
         return 0;
     }
 
+    app.cursor[0] = SDL_CreateColorCursor(IMG_Load("src/image/Cursor_green.png"), 20, 20);
+    app.cursor[1] = SDL_CreateColorCursor(IMG_Load("src/image/Cursor_yellow.png"), 20, 20);
+    app.cursor[2]= SDL_CreateColorCursor(IMG_Load("src/image/Cursor_red.png"), 20, 20);
+    if (!app.cursor[0] || !app.cursor[1] || !app.cursor[2]) {
+        printf("Cursor image load failed!\n");
+        return 0;
+    }
+
+    SDL_SetCursor(app.cursor[0]);
+
     //initialize TTF
     if (TTF_Init() != 0) {
         printf("Font initialize failed! error code : %s\n", TTF_GetError());
@@ -66,23 +76,32 @@ bool Game::init() {
 void Game::gameLoop() {
     timer.program.start();
     object.init(app.renderer);
+
+    blueTile = loadTexture(app.renderer, "src/image/tile_blue.png");
+    whiteTile = loadTexture(app.renderer, "src/image/tile_white.png");
+
     while (running) {
         timer.frame.start();
         update();
         draw();
     }
+    SDL_DestroyTexture(blueTile);
+    SDL_DestroyTexture(whiteTile);
+
 }
 
 void Game::draw() {
     SDL_RenderClear(app.renderer);
     object.draw(app.renderer);
+    drawTexture(app.renderer, 100, 100, blueTile);
+    drawTexture(app.renderer, 190, 100, blueTile);
+    drawTexture(app.renderer, 145, 126, blueTile);
     SDL_RenderPresent(app.renderer);
 }
 
 void Game::update() {
     //input calculate
     running = inputCalc(&input, timer.program.getTicks());
-
     object.update(&input);
 
     //frame calculate

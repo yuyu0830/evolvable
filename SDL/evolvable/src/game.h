@@ -30,6 +30,9 @@ private:
 	Input input;
 	Timer timer;
 	
+	SDL_Texture* blueTile;
+	SDL_Texture* whiteTile;
+
 	Object object;
 
 	bool running;

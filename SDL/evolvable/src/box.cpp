@@ -1,4 +1,3 @@
-#include <ostream>
 #include "box.h"
 
 //###########################################################
@@ -7,6 +6,9 @@ App::~App() {
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	font = NULL;
+    for (int i = 0; i < 3; i++) {
+        SDL_FreeCursor(cursor[i]);
+    }
 	printf("App destroy complete!");
 }
 

@@ -29,10 +29,6 @@ void Player::init(SDL_FPoint _pos, float _speed, float _rotateSpeed, SDL_Texture
     bullet.init(name, _bulletImg, 2.0f);
 }
 
-void Player::move() {
-    ;
-}
-
 void Player::update(Input* input) {
     int move = 0;
     if (input->keys[4]) {
@@ -60,8 +56,9 @@ void Player::update(Input* input) {
     if (caterpillarDir >= 360) caterpillarDir -= 360;
     else if (caterpillarDir < 0) caterpillarDir += 360;
     caterpillarRect = { (caterpillarNum / 2) * 40,(caterpillarNum % 2) * 40 , 40, 40 };
-    fireDir = atan2(input->mousePos.y - pos.y, input->mousePos.x - pos.x) * RADIAN;
-
+    fireDir = atan2(input->mousePos.y - pos.y, input->mousePos.x - pos.x) * RADIAN + 90;
+    if (fireDir > 360) fireDir -= 360;
+    printf("%f\n", fireDir);
     if (input->mouseClick[0] && !input->mouseClicked[0]) {
         bullet.create(fireDir, pos);
         input->mouseClicked[0] = true;

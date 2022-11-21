@@ -26,6 +26,15 @@ void drawTextureA(SDL_Renderer* renderer, SDL_Rect src, int x, int y, SDL_Textur
     SDL_RenderCopy(renderer, texture, &src, &dst);
 }
 
+void drawTextureB(SDL_Renderer* renderer, SDL_Rect dst, SDL_Texture* texture) {
+    SDL_Rect src;
+
+    src.x = 0;
+    src.y = 0;
+    SDL_QueryTexture(texture, NULL, NULL, &src.w, &src.h);
+    SDL_RenderCopy(renderer, texture, NULL, &dst);
+}
+
 void drawTextureR(SDL_Renderer* renderer, int x, int y, float angle, SDL_Texture* texture) {
     SDL_Rect src;
     SDL_Rect dst;

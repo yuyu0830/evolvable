@@ -25,34 +25,34 @@ void Bullet::init(char _owner[], SDL_Texture* _bulletImg, float _speed) {
 void Bullet::draw(SDL_Renderer* renderer) {
 	for (int i = 0; i < BULLETSIZE; i++) {
 		if (active[i]) {
-			drawTexture(renderer, (int)pos[i].x, (int)pos[i].y, bulletImg);
+			drawTexture(renderer, (int)pos[i].x - w / 2, (int)pos[i].y - h / 2, bulletImg);
 		}
 	}
 }
 
 void Bullet::create(float _dir, SDL_FPoint _pos) {
 	if (bulletCounter < BULLETSIZE) {
+		bulletCounter++;
 		int bulletNum = 0;
 		while (active[bulletNum]) {
 			bulletNum++;
 		};
 		active[bulletNum] = true;
 		pos[bulletNum] = _pos;
-		dir[bulletNum] = { (sin(_dir / RADIAN) * speed) * -1, cos(_dir / RADIAN) * speed };
-
-		printf("%d   %.3f  %.3f\n", bulletNum, dir[bulletNum].x , dir[bulletNum].y);
+		dir[bulletNum] = { sin(_dir / RADIAN) * speed , cos(_dir / RADIAN) * speed  * -1};
 	}
 }
 
 void Bullet::update() {
-	printf("%d\n", active[0]);
 	int count = 0;
 	for (int i = 0; i < BULLETSIZE; i++) {
 		if (active[i]) {
-			printf("%d   %.3f  %.3f\n", i, dir[i].x, dir[i].y);
 			count++;
 			pos[i].x += dir[i].x;
 			pos[i].y += dir[i].y;
+		}
+		if (count == bulletCounter) {
+			break;
 		}
 	}
 }

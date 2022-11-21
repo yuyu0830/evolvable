@@ -1,7 +1,10 @@
 #ifndef BOX_H
 #define BOX_H
 
+#include <ostream>
+
 #include <SDL.h>
+#include <SDL_image.h>
 #include <SDL_ttf.h>
 
 const char WINDOW_TITLE[] = "WTF";
@@ -9,6 +12,8 @@ const int WINDOW_WIDTH = 1280;
 const int WINDOW_HEIGHT = 720;
 const int SCREEN_FPS = 60;
 const int SCREEN_TICK_PER_FRAME = 1000 / SCREEN_FPS;
+const int TILE_X = 60;
+const int TILE_Y = 52;
 
 const int BULLETSIZE = 100;
 const float RADIAN = 57.295791f;
@@ -50,7 +55,7 @@ public:
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 	TTF_Font* font;
-
+	SDL_Cursor* cursor[3]; //green, yellow, red
 	~App();
 };
 
