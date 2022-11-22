@@ -116,3 +116,15 @@ bool LTimer::isPaused()
     //Timer is running and paused
     return mPaused && mStarted;
 }
+
+bool isin(int target, int start, int end) {
+    if (target < start) return 0;
+    if (target > end) return 0;
+    return 1;
+}
+
+bool isin(float target, float start, float end) {
+    if (target < start) return 0;
+    if (target > end) return 0;
+    return 1;
+}

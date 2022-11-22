@@ -14,6 +14,7 @@ Game::~Game() {
 }
 
 bool Game::init() {
+    srand(time(NULL));
     //initialize var
     running = true;
     infoMode = false;

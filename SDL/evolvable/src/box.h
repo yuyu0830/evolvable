@@ -17,7 +17,6 @@ const int TILE_Y = 52;
 
 const int BULLETSIZE = 100;
 const float RADIAN = 57.295791f;
-const float DIAGONAL_LENGTH = 28.284271f;
 
 class LTimer
 {
@@ -71,5 +70,8 @@ struct Timer {
 	LTimer frame;
 	LTimer game;
 };
+
+bool isin(int target, int start, int end);
+bool isin(float target, float start, float end);
 
 #endif

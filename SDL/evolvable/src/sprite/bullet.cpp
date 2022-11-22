@@ -4,9 +4,8 @@ Bullet::~Bullet() {
 	SDL_DestroyTexture(bulletImg);
 }
 
-void Bullet::init(char _owner[], SDL_Texture* _bulletImg, float _speed) {
+void Bullet::init(char _owner[], float _speed) {
 	strcpy_s(owner, _owner);
-	bulletImg = _bulletImg;
 	speed = _speed;
 
 	bulletCounter = 0;
@@ -22,10 +21,12 @@ void Bullet::init(char _owner[], SDL_Texture* _bulletImg, float _speed) {
 	printf("%s's Bullet Initialize Complete!\n", owner);
 }
 
-void Bullet::draw(SDL_Renderer* renderer) {
+void Bullet::draw(SDL_Renderer* renderer, SDL_FPoint cameraPos) {
 	for (int i = 0; i < BULLETSIZE; i++) {
 		if (active[i]) {
-			drawTexture(renderer, (int)pos[i].x - w / 2, (int)pos[i].y - h / 2, bulletImg);
+			if (isin(pos[i].x, cameraPos.x, cameraPos.x + WINDOW_WIDTH) && isin(pos[i].y, cameraPos.y, cameraPos.y + WINDOW_HEIGHT)) {
+				drawTexture(renderer, (int)(pos[i].x - cameraPos.x - w / 2), (int)(pos[i].y - cameraPos.y - h / 2), bulletImg);
+			}
 		}
 	}
 }

@@ -9,9 +9,12 @@
 class Map {
 public:
 	~Map();
-	void init(SDL_Texture* _backgroundImg, SDL_Texture* _whiteTile, SDL_Texture* _blueTile);
-	void makeMap(SDL_Point _mapsize);
-	void draw(SDL_Renderer* renderer, SDL_FPoint playerPos);
+	void init();
+	void makeMap();
+	bool collisionCheck(SDL_FPoint pos, float radius);
+
+	void update(SDL_FPoint playerPos, SDL_FPoint* playerInscreenPos);
+	void draw(SDL_Renderer* renderer);
 
 private:
 	SDL_Texture* backgroundImg;

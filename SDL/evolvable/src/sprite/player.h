@@ -12,13 +12,10 @@
 class Player {
 public:
 	~Player();
-	void init(SDL_FPoint _pos, float _speed, float _rotateSpeed, SDL_Texture* _turret, SDL_Texture* _caterpillar, SDL_Texture* _fireAngleImg, SDL_Texture* _bulletImg);
+	void init(SDL_FPoint _pos, float _speed, float _rotateSpeed);
 	void update(Input* input);
 	void draw(SDL_Renderer* renderer);
-	void mapSizePoint(SDL_Point* _mapSize);
-	SDL_FPoint posReturn();
 	
-
 private:
 	SDL_Texture* fireDirImg;
 	SDL_Texture* caterpillar;
@@ -29,7 +26,6 @@ private:
 	SDL_FPoint pos;
 	SDL_FPoint inScreenPos;
 	SDL_FPoint vertex[4];
-	SDL_Point* mapSize;
 
 	SDL_Rect caterpillarRect;
 

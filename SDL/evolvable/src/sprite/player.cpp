@@ -6,12 +6,8 @@ Player::~Player() {
 	SDL_DestroyTexture(turret);
 }
 
-void Player::init(SDL_FPoint _pos, float _speed, float _rotateSpeed, SDL_Texture* _turret, SDL_Texture* _caterpillar, SDL_Texture* _fireDirImg, SDL_Texture* _bulletImg) {
-    strcpy_s(name, "Player");
-    turret = _turret;
-    caterpillar = _caterpillar;
-    fireDirImg = _fireDirImg;
-    
+void Player::init(SDL_FPoint _pos, float _speed, float _rotateSpeed) {
+    strcpy_s(name, "Player");    
     pos = _pos;
     speed = _speed;
     rotateSpeed = _rotateSpeed;
@@ -26,7 +22,7 @@ void Player::init(SDL_FPoint _pos, float _speed, float _rotateSpeed, SDL_Texture
     SDL_QueryTexture(fireDirImg, NULL, NULL, &fw, &fh);
     SDL_QueryTexture(turret, NULL, NULL, &w, &h);
     printf("%s initialize complete!\n", name);
-    bullet.init(name, _bulletImg, 2.0f);
+    bullet.init(name, 2.0f);
 }
 
 void Player::update(Input* input) {
@@ -56,34 +52,17 @@ void Player::update(Input* input) {
     if (caterpillarDir >= 360) caterpillarDir -= 360;
     else if (caterpillarDir < 0) caterpillarDir += 360;
     caterpillarRect = { (caterpillarNum / 2) * 40,(caterpillarNum % 2) * 40 , 40, 40 };
-    fireDir = atan2(input->mousePos.y - pos.y, input->mousePos.x - pos.x) * RADIAN + 90;
+    fireDir = atan2(input->mousePos.y - inScreenPos.y, input->mousePos.x - inScreenPos.x) * RADIAN + 90;
     if (fireDir > 360) fireDir -= 360;
     if (input->mouseClick[0] && !input->mouseClicked[0]) {
         bullet.create(fireDir, pos);
         input->mouseClicked[0] = true;
     }
-
-    if (pos.x < WINDOW_WIDTH / 2) inScreenPos.x = pos.x;
-    else if (pos.x > mapSize->x - WINDOW_WIDTH / 2) inScreenPos.x = pos.x - (mapSize -> x - WINDOW_WIDTH);
-    else inScreenPos.x = pos.x - WINDOW_WIDTH / 2;
-
-    if (pos.y < WINDOW_HEIGHT / 2) inScreenPos.y = 0;
-    else if (pos.y > mapSize->y - WINDOW_HEIGHT / 2) inScreenPos.y = mapSize->y - WINDOW_HEIGHT;
-    else inScreenPos.y = pos.y - WINDOW_HEIGHT / 2;
-}
-
-SDL_FPoint Player::posReturn() {
-    return inScreenPos;
 }
 
 //draw
 void Player::draw(SDL_Renderer* renderer) {
-    drawTextureAR(renderer, caterpillarRect, (int)(pos.x - w / 2), (int)(pos.y - h / 2), caterpillarDir, caterpillar);
-    drawTexture(renderer, (int)(pos.x - w / 2), (int)(pos.y - h / 2) , turret);
-    drawTextureR(renderer, (int)(pos.x - fw / 2), (int)(pos.y - fh / 2), fireDir, fireDirImg);
-    bullet.draw(renderer);
-}
-
-void Player::mapSizePoint(SDL_Point* _mapSize) {
-    mapSize = _mapSize;
+    drawTextureAR(renderer, caterpillarRect, (int)(inScreenPos.x - w / 2), (int)(inScreenPos.y - h / 2), caterpillarDir, caterpillar);
+    drawTexture(renderer, (int)(inScreenPos.x - w / 2), (int)(inScreenPos.y - h / 2) , turret);
+    drawTextureR(renderer, (int)(inScreenPos.x - fw / 2), (int)(inScreenPos.y - fh / 2), fireDir, fireDirImg);
 }

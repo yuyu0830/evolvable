@@ -7,29 +7,72 @@ Map::~Map() {
 	printf("Map destroy Complete!\n");
 }
 
-void Map::init(SDL_Texture* _backgroundImg, SDL_Texture* _whiteTile, SDL_Texture* _blueTile) {
-	backgroundImg = _backgroundImg;
-	whiteTile = _whiteTile;
-	blueTile = _blueTile;
-	
+void Map::init() {
 	SDL_QueryTexture(backgroundImg, NULL, NULL, &mapSize.x, &mapSize.y);
-
+	tileSize = { (int)((mapSize.x + 15) / 45), (int)((mapSize.y + 26) / 52) };
 	cameraPos = {0, 0};
 }
 
-void Map::makeMap(SDL_Point _mapSize) {
-	mapSize = _mapSize;
-	tileSize = { (int)((mapSize.x - 30) / 45), (int)((mapSize.y - 26) / 52) };
-	int size;
-	for (int i = 0; i < tileSize.x; i++) {
-		for (int j = 0; j < tileSize.y; j++) {
-			if (i == 0 || j == 0) map[i][j] = 1;
-			else map[i][j] = 0;
+void Map::makeMap() {
+	for (int i = 0; i <= tileSize.x; i++) {
+		for (int j = 0; j <= tileSize.y; j++) {
+			if (i == 0 || j == 0 || i >= tileSize.x - 1 || j >= tileSize.y - 1) map[i][j] = 1;
+			else {
+				int a = rand() % 10;
+				if (a > 0) map[i][j] = 0;
+				else map[i][j] = 1;
+			}
 		}
 	}
 }
 
-void Map::draw(SDL_Renderer* renderer, SDL_FPoint playerPos) {
-	cameraPos = { playerPos.x - WINDOW_WIDTH / 2, playerPos.y - WINDOW_HEIGHT / 2 };
+bool Map::collisionCheck(SDL_FPoint pos, float radius) {
+	if ((input->mousePos.x + 30) % 45 < 15) e = true;
+	printf("%d, %d  %d\n", (int)((input->mousePos.x + 30) / 45), (int)((input->mousePos.y + 26) / 52), e);
+	return false;
+}
+
+void Map::update(SDL_FPoint playerPos, SDL_FPoint* playerInscreenPos) {
+	if (playerPos.x < WINDOW_WIDTH / 2) {
+		cameraPos.x = 0;
+		playerInscreenPos->x = playerPos.x;
+	}
+	else if (playerPos.x > mapSize.x - (WINDOW_WIDTH / 2)) {
+		cameraPos.x = mapSize.x - WINDOW_WIDTH;
+		playerInscreenPos->x = playerPos.x - (mapSize.x - WINDOW_WIDTH);
+	}
+	else {
+		cameraPos.x = playerPos.x - (WINDOW_WIDTH / 2);
+		playerInscreenPos->x = WINDOW_WIDTH / 2;
+	}
+
+	if (playerPos.y < WINDOW_HEIGHT / 2) {
+		cameraPos.y = 0;
+		playerInscreenPos->y = playerPos.y;
+	}
+	else if (playerPos.y > mapSize.y - (WINDOW_HEIGHT / 2)) {
+		cameraPos.y = mapSize.y - WINDOW_HEIGHT;
+		playerInscreenPos->y = playerPos.y - (mapSize.y - WINDOW_HEIGHT);
+	}
+	else {
+		cameraPos.y = playerPos.y - (WINDOW_HEIGHT / 2);
+		playerInscreenPos->y = WINDOW_HEIGHT / 2;
+	}
+}
+
+void Map::draw(SDL_Renderer* renderer) {
 	drawTextureA(renderer, { (int)cameraPos.x, (int)cameraPos.y, WINDOW_WIDTH, WINDOW_HEIGHT }, 0, 0, backgroundImg);
+	short startX = (int)((cameraPos.x + 15) / 45), endX = (int)((cameraPos.x + WINDOW_WIDTH + 59) / 45);
+	short startY = (int)(cameraPos.y / 52), endY = (int)((cameraPos.y + WINDOW_HEIGHT + 51) / 52);
+	//printf("%d, %d,   %d, %d\n", startX, endX, startY, endY);
+	for (int i = startX; i <= endX; i++) {
+		for (int j = startY; j <= endY; j++) {
+			int tmp = 0;
+			if (i % 2 == 0) tmp = -26;
+			else tmp = 0;
+			
+			if (map[i][j]) drawTexture(renderer, (int)(i * 45 - 30 - cameraPos.x), (int)(j * 52 + tmp - cameraPos.y), blueTile);
+			else drawTexture(renderer, (int)(i * 45 - 30 - cameraPos.x), (int)(j * 52 + tmp - cameraPos.y), whiteTile);
+		}
+	}
 }

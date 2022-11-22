@@ -10,8 +10,8 @@
 class Bullet {
 public:
 	~Bullet();
-	void init(char _owner[], SDL_Texture* _bulletImg, float _speed);
-	void draw(SDL_Renderer* renderer);
+	void init(char _owner[], float _speed);
+	void draw(SDL_Renderer* renderer, SDL_FPoint cameraPos);
 	void create(float _dir, SDL_FPoint _pos);
 	void update();
 
