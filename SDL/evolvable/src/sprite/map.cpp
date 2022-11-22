@@ -27,8 +27,21 @@ void Map::makeMap() {
 }
 
 bool Map::collisionCheck(SDL_FPoint pos, float radius) {
-	if ((input->mousePos.x + 30) % 45 < 15) e = true;
-	printf("%d, %d  %d\n", (int)((input->mousePos.x + 30) / 45), (int)((input->mousePos.y + 26) / 52), e);
+	int tileX = (pos.x + 30) / 45, tileY, tmp;
+
+	if (tileX % 2 == 0) tmp = 0;
+	else tmp = 26;
+
+	tileY = (pos.y + tmp) / 52;
+
+	if (map[tileX][tileY]) {
+		float lenX = (tileX * 45 - cameraPos.x) - pos.x;
+		float lenY = (tileY * 52 + tmp - cameraPos.y) - pos.y;
+		float len = sqrt(lenX * lenX + lenY * lenY);
+		if (len < 26 + radius) printf("!");
+	}
+	//(pos.x + 30) % 45 < 15;
+	
 	return false;
 }
 

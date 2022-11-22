@@ -12,8 +12,6 @@ const int WINDOW_WIDTH = 1280;
 const int WINDOW_HEIGHT = 720;
 const int SCREEN_FPS = 60;
 const int SCREEN_TICK_PER_FRAME = 1000 / SCREEN_FPS;
-const int TILE_X = 60;
-const int TILE_Y = 52;
 
 const int BULLETSIZE = 100;
 const float RADIAN = 57.295791f;
@@ -58,6 +56,18 @@ public:
 	~App();
 };
 
+class tile {
+public:
+	
+
+private:
+	SDL_Point pos;
+	SDL_Point tileNum;
+	bool passable;
+
+	friend class Map;
+};
+
 struct Input {
 	Uint32 keys[255];
 	Uint32 mouseClick[3];
@@ -70,6 +80,7 @@ struct Timer {
 	LTimer frame;
 	LTimer game;
 };
+
 
 bool isin(int target, int start, int end);
 bool isin(float target, float start, float end);
