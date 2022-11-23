@@ -17,15 +17,13 @@ void Object::init(SDL_Renderer* renderer) {
 }
 
 void Object::update(Input* input) {
-	player.update(input);
+	player.update(input, map.map);
 	player.bullet.update();
 	map.update(player.pos, &player.inScreenPos);
-	
 }
 
 void Object::draw(SDL_Renderer* renderer) {
 	map.draw(renderer);
-	player.draw(renderer);
+	player.draw(renderer, map.map);
 	player.bullet.draw(renderer, map.cameraPos);
-	map.collisionCheck(renderer, player.pos, 5.f);
 }

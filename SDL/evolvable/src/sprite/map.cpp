@@ -26,22 +26,6 @@ void Map::makeMap() {
 	}
 }
 
-bool Map::collisionCheck(SDL_Renderer* renderer, SDL_FPoint pos, float radius) {
-	int tileX = ((pos.x + 30) / 45), tmp = -26;
-	if (tileX % 2 != 0) tmp = 0;
-	int tileY = ((pos.y - tmp) / 52);
-	SDL_RenderDrawLine(renderer, pos.x, pos.y, (tileX - 1) * 45, tileY * 52 + tmp);
-	SDL_RenderDrawLine(renderer, pos.x, pos.y, (tileX - 1) * 45, (tileY + 1) * 52 + tmp);
-	
-	SDL_RenderDrawLine(renderer, pos.x, pos.y, tileX * 45, tileY * 52 + tmp + 26);
-	SDL_RenderDrawLine(renderer, pos.x, pos.y, tileX * 45, (tileY + 1) * 52 + tmp + 26);
-	SDL_RenderDrawLine(renderer, pos.x, pos.y, tileX * 45, (tileY - 1) * 52 + tmp + 26);
-
-	SDL_RenderDrawLine(renderer, pos.x, pos.y, (tileX + 1) * 45, tileY * 52 + tmp);
-	SDL_RenderDrawLine(renderer, pos.x, pos.y, (tileX + 1) * 45, (tileY + 1) * 52 + tmp);
-	
-	return false;
-}
 
 void Map::update(SDL_FPoint playerPos, SDL_FPoint* playerInscreenPos) {
 	if (playerPos.x < WINDOW_WIDTH / 2) {
@@ -83,7 +67,7 @@ void Map::draw(SDL_Renderer* renderer) {
 			else tmp = 0;
 			
 			if (map[i][j]) drawTexture(renderer, (int)(i * 45 - 30 - cameraPos.x), (int)(j * 52 + tmp - cameraPos.y), blueTile);
-			else drawTexture(renderer, (int)(i * 45 - 30 - cameraPos.x), (int)(j * 52 + tmp - cameraPos.y), blueTile);
+			else drawTexture(renderer, (int)(i * 45 - 30 - cameraPos.x), (int)(j * 52 + tmp - cameraPos.y), whiteTile);
 		}
 	}
 }

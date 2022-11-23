@@ -13,8 +13,9 @@ class Player {
 public:
 	~Player();
 	void init(SDL_FPoint _pos, float _speed, float _rotateSpeed);
-	void update(Input* input);
-	void draw(SDL_Renderer* renderer);
+	void update(Input* input, bool map[100][100]);
+	void draw(SDL_Renderer* renderer, bool map[100][100]);
+	bool collisionCheck(bool map[100][100], SDL_FPoint nextMove);
 
 private:
 	SDL_Texture* fireDirImg;
