@@ -15,7 +15,7 @@ public:
 	void init(SDL_FPoint _pos, float _speed, float _rotateSpeed);
 	void update(Input* input);
 	void draw(SDL_Renderer* renderer);
-	
+
 private:
 	SDL_Texture* fireDirImg;
 	SDL_Texture* caterpillar;

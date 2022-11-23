@@ -20,12 +20,12 @@ void Object::update(Input* input) {
 	player.update(input);
 	player.bullet.update();
 	map.update(player.pos, &player.inScreenPos);
-	map.collisionCheck(player.pos, 5.f);
+	
 }
 
 void Object::draw(SDL_Renderer* renderer) {
 	map.draw(renderer);
 	player.draw(renderer);
 	player.bullet.draw(renderer, map.cameraPos);
+	map.collisionCheck(renderer, player.pos, 5.f);
 }
-

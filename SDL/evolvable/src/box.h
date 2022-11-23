@@ -56,18 +56,6 @@ public:
 	~App();
 };
 
-class tile {
-public:
-	
-
-private:
-	SDL_Point pos;
-	SDL_Point tileNum;
-	bool passable;
-
-	friend class Map;
-};
-
 struct Input {
 	Uint32 keys[255];
 	Uint32 mouseClick[3];
@@ -84,5 +72,8 @@ struct Timer {
 
 bool isin(int target, int start, int end);
 bool isin(float target, float start, float end);
-
+SDL_Point tileToPos(SDL_Point tile);
+SDL_Point tileToPos(SDL_FPoint tile);
+SDL_Point posToTile(SDL_Point pos);
+SDL_Point posToTile(SDL_FPoint tile);
 #endif

@@ -11,7 +11,7 @@ public:
 	~Map();
 	void init();
 	void makeMap();
-	bool collisionCheck(SDL_FPoint pos, float radius);
+	bool collisionCheck(SDL_Renderer* renderer, SDL_FPoint pos, float radius);
 
 	void update(SDL_FPoint playerPos, SDL_FPoint* playerInscreenPos);
 	void draw(SDL_Renderer* renderer);

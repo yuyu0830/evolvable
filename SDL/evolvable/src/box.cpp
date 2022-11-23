@@ -105,6 +105,7 @@ Uint32 LTimer::getTicks()
     return time;
 }
 
+
 bool LTimer::isStarted()
 {
     //Timer is running and paused or unpaused
@@ -117,6 +118,9 @@ bool LTimer::isPaused()
     return mPaused && mStarted;
 }
 
+
+//###########################################################
+//###########################################################
 bool isin(int target, int start, int end) {
     if (target < start) return 0;
     if (target > end) return 0;
@@ -127,4 +131,32 @@ bool isin(float target, float start, float end) {
     if (target < start) return 0;
     if (target > end) return 0;
     return 1;
+}
+
+SDL_Point tileToPos(SDL_Point tile) {
+    int tmp;
+    if (tile.x % 2 == 0) tmp = 0;
+    else tmp = 26;
+    return { tile.x * 45, tile.y * 52 + tmp };
+}
+
+SDL_Point tileToPos(SDL_FPoint tile) {
+    int tmp;
+    if ((int)tile.x % 2 == 0) tmp = 0;
+    else tmp = 26;
+    return { (int)(tile.x * 45), (int)(tile.y * 52 + tmp) };
+}
+
+SDL_Point posToTile(SDL_Point pos) {
+    int tmp;
+    if (pos.x % 2 == 0) tmp = 0;
+    else tmp = 26;
+    return {(pos.x + 30) / 45, (pos.y + tmp) / 52};
+}
+
+SDL_Point posToTile(SDL_FPoint pos) {
+    int tmp;
+    if ((int)pos.x % 2 == 0) tmp = 0;
+    else tmp = 26;
+    return { (int)((pos.x + 30) / 45), (int)((pos.y + tmp) / 52) };
 }

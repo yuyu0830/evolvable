@@ -26,21 +26,19 @@ void Map::makeMap() {
 	}
 }
 
-bool Map::collisionCheck(SDL_FPoint pos, float radius) {
-	int tileX = (pos.x + 30) / 45, tileY, tmp;
+bool Map::collisionCheck(SDL_Renderer* renderer, SDL_FPoint pos, float radius) {
+	int tileX = ((pos.x + 30) / 45), tmp = -26;
+	if (tileX % 2 != 0) tmp = 0;
+	int tileY = ((pos.y - tmp) / 52);
+	SDL_RenderDrawLine(renderer, pos.x, pos.y, (tileX - 1) * 45, tileY * 52 + tmp);
+	SDL_RenderDrawLine(renderer, pos.x, pos.y, (tileX - 1) * 45, (tileY + 1) * 52 + tmp);
+	
+	SDL_RenderDrawLine(renderer, pos.x, pos.y, tileX * 45, tileY * 52 + tmp + 26);
+	SDL_RenderDrawLine(renderer, pos.x, pos.y, tileX * 45, (tileY + 1) * 52 + tmp + 26);
+	SDL_RenderDrawLine(renderer, pos.x, pos.y, tileX * 45, (tileY - 1) * 52 + tmp + 26);
 
-	if (tileX % 2 == 0) tmp = 0;
-	else tmp = 26;
-
-	tileY = (pos.y + tmp) / 52;
-
-	if (map[tileX][tileY]) {
-		float lenX = (tileX * 45 - cameraPos.x) - pos.x;
-		float lenY = (tileY * 52 + tmp - cameraPos.y) - pos.y;
-		float len = sqrt(lenX * lenX + lenY * lenY);
-		if (len < 26 + radius) printf("!");
-	}
-	//(pos.x + 30) % 45 < 15;
+	SDL_RenderDrawLine(renderer, pos.x, pos.y, (tileX + 1) * 45, tileY * 52 + tmp);
+	SDL_RenderDrawLine(renderer, pos.x, pos.y, (tileX + 1) * 45, (tileY + 1) * 52 + tmp);
 	
 	return false;
 }
@@ -85,7 +83,7 @@ void Map::draw(SDL_Renderer* renderer) {
 			else tmp = 0;
 			
 			if (map[i][j]) drawTexture(renderer, (int)(i * 45 - 30 - cameraPos.x), (int)(j * 52 + tmp - cameraPos.y), blueTile);
-			else drawTexture(renderer, (int)(i * 45 - 30 - cameraPos.x), (int)(j * 52 + tmp - cameraPos.y), whiteTile);
+			else drawTexture(renderer, (int)(i * 45 - 30 - cameraPos.x), (int)(j * 52 + tmp - cameraPos.y), blueTile);
 		}
 	}
 }
