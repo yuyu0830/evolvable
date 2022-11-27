@@ -73,8 +73,8 @@ void Player::draw(SDL_Renderer* renderer, bool map[100][100]) {
         SDL_RenderDrawLine(renderer, i * 45, 0, i * 45, WINDOW_HEIGHT);
         for (int j = 0; j < 15; j++) {
             if (i % 2 == 0) tmp = 0;
-
-            SDL_RenderDrawLine(renderer, i * 45, 0, i * 45, WINDOW_HEIGHT);
+            else tmp = 26;
+            SDL_RenderDrawLine(renderer, i * 45, j * 60 + tmp, i * 45 + 45, j * 60 + tmp);
         }
     }
     
