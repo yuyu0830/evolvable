@@ -72,6 +72,7 @@ struct Timer {
 
 bool isin(int target, int start, int end);
 bool isin(float target, float start, float end);
+float pow(float v);
 SDL_Point tileToPos(SDL_Point tile);
 SDL_Point tileToPos(SDL_FPoint tile);
 SDL_Point posToTile(SDL_Point pos);

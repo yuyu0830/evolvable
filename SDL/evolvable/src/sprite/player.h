@@ -15,7 +15,7 @@ public:
 	void init(SDL_FPoint _pos, float _speed, float _rotateSpeed);
 	void update(Input* input, bool map[100][100]);
 	void draw(SDL_Renderer* renderer, bool map[100][100]);
-	bool collisionCheck(bool map[100][100], SDL_FPoint nextMove);
+	void collisionCheck(bool map[100][100], SDL_FPoint nextMove, int move);
 
 private:
 	SDL_Texture* fireDirImg;
@@ -25,6 +25,7 @@ private:
 	Bullet bullet;
 
 	SDL_FPoint pos;
+	SDL_Point tilePos;
 	SDL_FPoint inScreenPos;
 	SDL_FPoint vertex[4];
 

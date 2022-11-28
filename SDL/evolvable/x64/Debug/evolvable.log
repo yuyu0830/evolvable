@@ -1,1 +1,9 @@
-﻿  evolvable.vcxproj -> C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\x64\Debug\evolvable.exe
+﻿  player.cpp
+C:\Users\User\Documents\GitHub\evolvable\SDL\evolvable\src\sprite\player.cpp(68,45): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\User\Documents\GitHub\evolvable\SDL\evolvable\src\sprite\player.cpp(68,38): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\User\Documents\GitHub\evolvable\SDL\evolvable\src\sprite\player.cpp(156,44): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\User\Documents\GitHub\evolvable\SDL\evolvable\src\sprite\player.cpp(159,45): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\User\Documents\GitHub\evolvable\SDL\evolvable\src\sprite\player.cpp(167,44): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\User\Documents\GitHub\evolvable\SDL\evolvable\src\sprite\player.cpp(180,27): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\User\Documents\GitHub\evolvable\SDL\evolvable\src\sprite\player.cpp(180,66): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  evolvable.vcxproj -> C:\Users\User\Documents\GitHub\evolvable\SDL\x64\Debug\evolvable.exe

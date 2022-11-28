@@ -121,6 +121,10 @@ bool LTimer::isPaused()
 
 //###########################################################
 //###########################################################
+float pow(float v) {
+    return v * v;
+}
+
 bool isin(int target, int start, int end) {
     if (target < start) return 0;
     if (target > end) return 0;

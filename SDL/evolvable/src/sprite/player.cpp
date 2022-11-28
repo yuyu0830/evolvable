@@ -45,11 +45,8 @@ void Player::update(Input* input, bool map[100][100]) {
     if (move != 0) {
         if (caterpillarNum >= 3) caterpillarNum -= 3;
         else if (caterpillarNum < 0) caterpillarNum += 3;
-        SDL_FPoint nextMove = { pos.x + (sin(caterpillarDir / RADIAN) * move) * -1 * speed , pos.y + cos(caterpillarDir / RADIAN) * move * speed };
-        //this->collisionCheck(map, nextMove);
-        pos = nextMove;
-       /* pos.x += (sin(caterpillarDir / RADIAN) * move) * -1 * speed;
-        pos.y += cos(caterpillarDir / RADIAN) * move * speed;*/
+        SDL_FPoint nextMove = { (sin(caterpillarDir / RADIAN) * move) * -1 * speed , cos(caterpillarDir / RADIAN) * move * speed };
+        this->collisionCheck(map, nextMove, move);
     }
     
     if (caterpillarDir >= 360) caterpillarDir -= 360;
@@ -68,67 +65,165 @@ void Player::draw(SDL_Renderer* renderer, bool map[100][100]) {
     drawTextureAR(renderer, caterpillarRect, (int)(inScreenPos.x - w / 2), (int)(inScreenPos.y - h / 2), caterpillarDir, caterpillar);
     drawTexture(renderer, (int)(inScreenPos.x - w / 2), (int)(inScreenPos.y - h / 2) , turret);
     drawTextureR(renderer, (int)(inScreenPos.x - fw / 2), (int)(inScreenPos.y - fh / 2), fireDir, fireDirImg);
-    int tmp;
+    SDL_RenderDrawPoint(renderer, pos.x, pos.y);
+    SDL_RenderDrawPoint(renderer, tilePos.x, tilePos.y)
+    /*int tmp;
     for (int i = 0; i < 15; i++) {
-        SDL_RenderDrawLine(renderer, i * 45, 0, i * 45, WINDOW_HEIGHT);
+        SDL_RenderDrawLine(renderer, i * 45 + 26, 0, i * 45 + 26, WINDOW_HEIGHT);
         for (int j = 0; j < 15; j++) {
-            if (i % 2 == 0) tmp = 0;
-            else tmp = 26;
-            SDL_RenderDrawLine(renderer, i * 45, j * 60 + tmp, i * 45 + 45, j * 60 + tmp);
+            if (i % 2 == 0) tmp = 26;
+            else tmp = 0;
+            SDL_RenderDrawLine(renderer, i * 45 - 19, j * 52 + tmp, i * 45 + 26, j * 52 + tmp);
+
         }
     }
     
-    int tileX = ((pos.x + 30) / 45);
-    tmp = -26;
-    if (tileX % 2 != 0) tmp = 0;
-    int tileY = ((pos.y - tmp) / 52);
-    printf("%d, %d\n", tileX, tileY);
-    if (tileX > 0) {
-        if (map[tileX - 1][tileY]) {
-            SDL_RenderDrawLine(renderer, pos.x, pos.y, (tileX - 1) * 45, tileY * 52 + tmp);
-            //printf(" 1");
+    tmp = 0;
+    if (tilePos.x % 2 == 0) tmp = 26;
+    printf("%d, %d   %f,   ", tilePos.x, tilePos.y, caterpillarDir);
+    if (tilePos.x > 0) {
+        if (tilePos.x % 2 == 0) {
+            if (map[tilePos.x - 1][tilePos.y - 1]) {
+                SDL_RenderDrawLine(renderer, pos.x, pos.y, (tilePos.x - 1) * 45, (tilePos.y - 1) * 52 + tmp);
+                printf(" 1");
+            }
+            if (tilePos.y < 100) {
+                if (map[tilePos.x - 1][tilePos.y]) {
+                    SDL_RenderDrawLine(renderer, pos.x, pos.y, (tilePos.x - 1) * 45, (tilePos.y) * 52 + tmp);
+                    printf(" 2");
+                }
+            }
         }
-        if (tileY < 100) {
-            if (map[tileX - 1][tileY + 1]) {
-                SDL_RenderDrawLine(renderer, pos.x, pos.y, (tileX - 1) * 45, (tileY + 1) * 52 + tmp);
-                //printf(" 2");
+        else {
+            if (map[tilePos.x - 1][tilePos.y]) {
+                SDL_RenderDrawLine(renderer, pos.x, pos.y, (tilePos.x - 1) * 45, tilePos.y* 52 + tmp);
+                printf(" 1");
+            }
+            if (tilePos.y < 100) {
+                if (map[tilePos.x - 1][tilePos.y + 1]) {
+                    SDL_RenderDrawLine(renderer, pos.x, pos.y, (tilePos.x - 1) * 45, (tilePos.y + 1) * 52 + tmp);
+                    printf(" 2");
+                }
             }
         }
     }
-    if (map[tileX][tileY]) {
-        SDL_RenderDrawLine(renderer, pos.x, pos.y, tileX * 45, tileY * 52 + tmp + 26);
-        //printf(" 3");
-    }
-    if (tileY < 100) {
-        if (map[tileX][tileY + 1]) {
-            SDL_RenderDrawLine(renderer, pos.x, pos.y, tileX * 45, (tileY + 1) * 52 + tmp + 26);
-            //printf(" 4");
+    if (tilePos.y > 0) {
+        if (map[tilePos.x][tilePos.y - 1]) {
+            SDL_RenderDrawLine(renderer, pos.x, pos.y, tilePos.x * 45, (tilePos.y - 1) * 52 + tmp - 26);
+            printf(" 3");
         }
     }
-    if (tileY > 0) {
-        if (map[tileX][tileY - 1]) {
-            SDL_RenderDrawLine(renderer, pos.x, pos.y, tileX * 45, (tileY - 1) * 52 + tmp + 26);
-            //printf(" 5");
+    if (map[tilePos.x][tilePos.y]) {
+        SDL_RenderDrawLine(renderer, pos.x, pos.y, tilePos.x * 45, tilePos.y * 52 + tmp - 26);
+        printf(" 4");
+    }
+    if (tilePos.y < 100) {
+        if (map[tilePos.x][tilePos.y + 1]) {
+            SDL_RenderDrawLine(renderer, pos.x, pos.y, tilePos.x * 45, (tilePos.y + 1) * 52 + tmp - 26);
+            printf(" 5");
         }
     }
-    if (tileX < 100) {
-        if (map[tileX + 1][tileY]) {
-            SDL_RenderDrawLine(renderer, pos.x, pos.y, (tileX + 1) * 45, tileY * 52 + tmp);
-            //printf("6");
+    
+    if (tilePos.x < 100) {
+        if (tilePos.x % 2 == 0) {
+            if (map[tilePos.x + 1][tilePos.y - 1]) {
+                SDL_RenderDrawLine(renderer, pos.x, pos.y, (tilePos.x + 1) * 45, (tilePos.y - 1) * 52 + tmp);
+                printf(" 6");
+            }
+            if (tilePos.y < 100) {
+                if (map[tilePos.x + 1][tilePos.y]) {
+                    SDL_RenderDrawLine(renderer, pos.x, pos.y, (tilePos.x + 1) * 45, (tilePos.y) * 52 + tmp);
+                    printf(" 7");
+                }
+            }
         }
-        if (tileY < 100) {
-            if (map[tileX + 1][tileY + 1]) {
-                SDL_RenderDrawLine(renderer, pos.x, pos.y, (tileX + 1) * 45, (tileY + 1) * 52 + tmp);
-                //printf("7");
+        else {
+            if (map[tilePos.x + 1][tilePos.y]) {
+                SDL_RenderDrawLine(renderer, pos.x, pos.y, (tilePos.x + 1) * 45, (tilePos.y)* 52 + tmp);
+                printf(" 6");
+            }
+            if (tilePos.y < 100) {
+                if (map[tilePos.x + 1][tilePos.y + 1]) {
+                    SDL_RenderDrawLine(renderer, pos.x, pos.y, (tilePos.x + 1) * 45, (tilePos.y + 1) * 52 + tmp);
+
+                    printf(" 7");
+                }
             }
         }
     }
-    //printf("\n");
+    printf("\n");*/
 }
 
 
-bool Player::collisionCheck(bool map[100][100], SDL_FPoint nextMove) {
+void Player::collisionCheck(bool map[100][100], SDL_FPoint nextMove, int move) {
+    tilePos.x = ((pos.x + nextMove.x + 15) / 45);
+    int tmp = 0;
+    if (tilePos.x % 2 == 0) tmp = -26;
+    tilePos.y = ((pos.y + nextMove.y - tmp) / 52);
+    
 
+    bool even = false;
+    if (tilePos.x % 2 == 0) even = true;
 
-    return false;
+    float dir;
+    if (move < 0) dir = caterpillarDir;
+    else dir = ((int)caterpillarDir + 180) % 360;
+    printf("%d, %d, %.2f", tilePos.x, tilePos.y, dir);
+
+    if (dir > 270 || dir < 90) {
+        if (map[tilePos.x][tilePos.y - 1]) {
+            float x = pow(pos.x - (tilePos.x * 45)) + pow(pos.y - ((tilePos.y - 1) * 52 + tmp - 26));
+            printf("  %.2f  ", x);
+            if (x < 2116) {
+                printf("up!!  ");
+            }
+        }
+    }
+    else if (map[tilePos.x][tilePos.y + 1]) {
+        if (pow(tilePos.x * 45) + pow((tilePos.y + 1) * 52 + tmp - 26) < 1296) {
+            printf("down!!  ");
+        }
+    }
+
+    if (dir > 330 || dir < 150) {
+        if (map[tilePos.x + 1][tilePos.y - even]) {
+
+        }
+    }
+    else if (map[tilePos.x - 1][tilePos.y + 1 - even]) {
+
+    }
+
+    if (dir > 210 || dir < 30) {
+        if (map[tilePos.x - 1][tilePos.y - even]) {
+
+        }
+    }
+    else if (map[tilePos.x + 1][tilePos.y + 1 - even]) {
+
+    }
+    printf("\n");
+
+    //if (map[tilePos.x - 1][tilePos.y]) { // (tilePos.x - 1) * 45, (tilePos.y - 1) * 52 + tmp);
+    //    printf(" 1"); 
+    //}
+    //if (map[tilePos.x - 1][tilePos.y + 1]) {
+    //    printf(" 2");
+    //}
+    //        
+    //if (map[tilePos.x][tilePos.y - 1]) {
+    //    printf(" 3");
+    //}
+    //if (map[tilePos.x][tilePos.y + 1]) {
+    //    printf(" 5");
+    //}
+    //
+    //if (map[tilePos.x + 1][tilePos.y - 1]) {
+    //    printf(" 6");
+    //}
+    //if (map[tilePos.x + 1][tilePos.y]) {
+    //    printf(" 7");
+    //}
+    pos.x += nextMove.x;
+    pos.y += nextMove.y;
 }
