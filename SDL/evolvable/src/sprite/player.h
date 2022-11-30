@@ -2,6 +2,7 @@
 #define PLAYER_H_
 
 #include <ostream>
+#include <utility>
 
 #include <SDL.h>
 

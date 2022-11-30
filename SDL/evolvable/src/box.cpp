@@ -125,6 +125,11 @@ float pow(float v) {
     return v * v;
 }
 
+void fpointAdd(SDL_FPoint* a, SDL_FPoint b) {
+    a->x += b.x;
+    a->y += b.y;
+}
+
 bool isin(int target, int start, int end) {
     if (target < start) return 0;
     if (target > end) return 0;
@@ -137,30 +142,10 @@ bool isin(float target, float start, float end) {
     return 1;
 }
 
-SDL_Point tileToPos(SDL_Point tile) {
-    int tmp;
-    if (tile.x % 2 == 0) tmp = 0;
-    else tmp = 26;
-    return { tile.x * 45, tile.y * 52 + tmp };
-}
-
-SDL_Point tileToPos(SDL_FPoint tile) {
-    int tmp;
-    if ((int)tile.x % 2 == 0) tmp = 0;
-    else tmp = 26;
-    return { (int)(tile.x * 45), (int)(tile.y * 52 + tmp) };
-}
-
-SDL_Point posToTile(SDL_Point pos) {
-    int tmp;
-    if (pos.x % 2 == 0) tmp = 0;
-    else tmp = 26;
-    return {(pos.x + 30) / 45, (pos.y + tmp) / 52};
-}
-
-SDL_Point posToTile(SDL_FPoint pos) {
-    int tmp;
-    if ((int)pos.x % 2 == 0) tmp = 0;
-    else tmp = 26;
-    return { (int)((pos.x + 30) / 45), (int)((pos.y + tmp) / 52) };
+SDL_FPoint collision(SDL_FPoint a, SDL_FPoint b) {
+    float len = sqrt(pow(a.x - b.x) + pow(a.y - b.y));
+    if (len < 46) {
+        return { ((a.x - b.x) / len) * (46 - len), ((a.y - b.y) / len) * (46 - len) };
+    }
+    return { 0, 0 };
 }

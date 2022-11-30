@@ -5,7 +5,7 @@ void Object::init(SDL_Renderer* renderer) {
 	player.caterpillar = loadTexture(renderer, "src/image/caterpillar.png");
 	player.fireDirImg = loadTexture(renderer, "src/image/aim.png");
 	player.bullet.bulletImg = loadTexture(renderer, "src/image/bullet.png");
-	player.init({500, 300}, 5.0f, 1.4f);
+	player.init({500, 300}, 2.f, 1.4f);
 	
 	map.backgroundImg = loadTexture(renderer, "src/image/background.png");
 	map.blueTile = loadTexture(renderer, "src/image/tile_blue.png");

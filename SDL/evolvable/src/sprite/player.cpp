@@ -76,47 +76,6 @@ void Player::draw(SDL_Renderer* renderer, bool map[100][100]) {
 
         }
     }*/
-
-    int tmp = 0;
-    if (tilePos.x % 2 == 0) tmp = 1;
-
-    tilePos.x = ((pos.x + 15) / 45);
-    tilePos.y = ((pos.y + (tmp * 26)) / 52);
-    printf("[%d, %d]\n", tilePos.x, tilePos.y);
-    for (int i = -1; i <= 1; i++) {
-        for (int j = 0; j <= 1; j++) {
-            int tmp2 = 0;
-            if (i == 0) tmp2 = 26;
-            if (map[tilePos.x + i][tilePos.y + j - tmp]) {
-                SDL_RenderDrawLine(renderer, pos.x, pos.y, (tilePos.x + i) * 45, (tilePos.y + j - tmp) * 52 + (tmp * 26) - tmp2);
-            }
-        }
-    }
-    if (map[tilePos.x][tilePos.y - 1 - tmp]) {
-        SDL_RenderDrawLine(renderer, pos.x, pos.y, (tilePos.x) * 45, (tilePos.y - 1 - tmp) * 52 + (tmp * 26) - 26);
-    }
-
-    /*if (map[tilePos.x - 1][tilePos.y - even]) {
-        SDL_RenderDrawLine(renderer, pos.x, pos.y, (tilePos.x - 1) * 45, (tilePos.y - even) * 52 + tmp);
-    }
-    if (map[tilePos.x - 1][tilePos.y - even + 1]) {
-        SDL_RenderDrawLine(renderer, pos.x, pos.y, (tilePos.x - 1) * 45, (tilePos.y - even + 1) * 52 + tmp);
-    }
-    if (map[tilePos.x][tilePos.y - 1]) {
-        SDL_RenderDrawLine(renderer, pos.x, pos.y, tilePos.x * 45, (tilePos.y - 1) * 52 + tmp + 26);
-    }
-    if (map[tilePos.x][tilePos.y]) {
-        SDL_RenderDrawLine(renderer, pos.x, pos.y, tilePos.x * 45, tilePos.y * 52 + tmp + 26);
-    }
-    if (map[tilePos.x][tilePos.y + 1]) {
-        SDL_RenderDrawLine(renderer, pos.x, pos.y, tilePos.x * 45, (tilePos.y + 1) * 52 + tmp + 26);
-    }
-    if (map[tilePos.x + 1][tilePos.y - even]) {
-        SDL_RenderDrawLine(renderer, pos.x, pos.y, (tilePos.x + 1) * 45, (tilePos.y - even) * 52 + tmp);
-    }
-    if (map[tilePos.x + 1][tilePos.y - even + 1]) {
-        SDL_RenderDrawLine(renderer, pos.x, pos.y, (tilePos.x + 1) * 45, (tilePos.y - even + 1) * 52 + tmp);
-    }*/
 }
 
 
@@ -127,84 +86,21 @@ void Player::collisionCheck(bool map[100][100], SDL_FPoint nextMove, int move) {
     tilePos.x = ((pos.x + 15) / 45);
     tilePos.y = ((pos.y + (tmp * 26)) / 52);
 
-    for (int i = -1; i <= 1; i++) {
-        for (int j = 0; j <= 1; j++) {
-            int tmp2 = 0;
-            if (i == 0) tmp2 = 26;
-            if (map[tilePos.x + i][tilePos.y + j - tmp]) {
-                float len = sqrt(pow(pos.x - (tilePos.x + i) * 45, 2) + pow(pos.y - ((tilePos.y + j - tmp) * 52 + (tmp * 26) - tmp2), 2));
-                if (len <= 46.f) {
-                    //printf("[%d, %d]", i, j);
-                }
+    int sign = 1;
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0 - tmp; j < 2 - tmp; j++) {
+            if (map[tilePos.x + sign][tilePos.y + j]) {
+                fpointAdd(&pos, collision(pos, {(float)((tilePos.x + sign) * 45), (float)((tilePos.y + j) * 52 + tmp * 26)}));
             }
         }
-    }
-    if (map[tilePos.x][tilePos.y - 1 - tmp]) {
-        float len = sqrt(pow(pos.x - (tilePos.x) * 45, 2) + pow(pos.y - ((tilePos.y - 1 - tmp) * 52 + (tmp * 26) + 26), 2));
-        if (len <= 46.f) {
-            printf("[%d, %d]", 0, -1);
-        }
-    }
-    /*tilePos.x = ((pos.x + nextMove.x + 15) / 45);
-    int tmp = 0;
-    if (tilePos.x % 2 == 0) tmp = -26;
-    tilePos.y = ((pos.y + nextMove.y - tmp) / 52);
-    
-    bool even = false;
-    if (tilePos.x % 2 == 0) even = true;
-
-    float dir;
-    if (move < 0) dir = caterpillarDir;
-    else dir = ((int)caterpillarDir + 180) % 360;
-    printf("%d, %d, %.2f", tilePos.x, tilePos.y, dir);
-    bool bx = true, by = true;
-
-    if (dir > 270 || dir < 90) {
-        if (map[tilePos.x][tilePos.y - 1]) {
-            float x = pow(pos.x - (tilePos.x * 45)) + pow(pos.y - ((tilePos.y - 1) * 52 + tmp + 26));
-            if (x <= 2120) {
-                printf("up!!  ");
-            }
-        }
-    }
-    else if (map[tilePos.x][tilePos.y + 1]) {
-        float x = pow(pos.x - (tilePos.x * 45)) + pow(pos.y - ((tilePos.y + 1) * 52 + tmp + 26));
-        if (x <= 2120) {
-            printf("down!!  ");
-        }
+        sign *= -1;
     }
 
-    if (dir > 330 || dir < 150) {
-        if (map[tilePos.x + 1][tilePos.y - even]) {
-            float x = pow(pos.x - ((tilePos.x + 1) * 45)) + pow(pos.y - ((tilePos.y - even) * 52 + tmp));
-            if (x <= 2120) {
-                printf("right up!!  ");
-            }
+    for (int i = -1; i < 2; i++) {
+        if (map[tilePos.x][tilePos.y + i]) {
+            fpointAdd(&pos, collision(pos, { (float)(tilePos.x * 45), (float)((tilePos.y + i) * 52 + (1 - tmp) * 26) }));
         }
     }
-    else if (map[tilePos.x - 1][tilePos.y + 1 - even]) {
-        float x = pow(pos.x - ((tilePos.x - 1) * 45)) + pow(pos.y - ((tilePos.y + 1 - even) * 52 + tmp));
-        if (x <= 2120) {
-            printf("left down!!  ");
-        }
-    }
-
-    if (dir > 210 || dir < 30) {
-        if (map[tilePos.x - 1][tilePos.y - even]) {
-            float x = pow(pos.x - ((tilePos.x - 1) * 45)) + pow(pos.y - ((tilePos.y - even) * 52 + tmp));
-            if (x <= 2120) {
-                printf("left up!!  ");
-            }
-        }
-    }
-    else if (map[tilePos.x + 1][tilePos.y + 1 - even]) {
-        float x = pow(pos.x - ((tilePos.x + 1) * 45)) + pow(pos.y - ((tilePos.y + 1- even) * 52 + tmp));
-        if (x <= 2120) {
-            printf("right down!!  ");
-
-        }
-    }
-    printf("\n");*/
     pos.x += nextMove.x;
     pos.y += nextMove.y;
 }
