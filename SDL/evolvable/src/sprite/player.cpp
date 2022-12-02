@@ -49,6 +49,8 @@ void Player::update(Input* input, bool map[100][100]) {
         this->collisionCheck(map, nextMove, move);
     }
     
+    tilePos = posToTile(pos);
+
     if (caterpillarDir >= 360) caterpillarDir -= 360;
     else if (caterpillarDir < 0) caterpillarDir += 360;
     caterpillarRect = { (caterpillarNum / 2) * 40,(caterpillarNum % 2) * 40 , 40, 40 };
@@ -66,39 +68,17 @@ void Player::draw(SDL_Renderer* renderer, bool map[100][100]) {
     drawTexture(renderer, (int)(inScreenPos.x - w / 2), (int)(inScreenPos.y - h / 2) , turret);
     drawTextureR(renderer, (int)(inScreenPos.x - fw / 2), (int)(inScreenPos.y - fh / 2), fireDir, fireDirImg);
     SDL_RenderDrawPoint(renderer, pos.x, pos.y);
-    /*int tmp;
-    for (int i = 0; i < 15; i++) {
-        SDL_RenderDrawLine(renderer, i * 45 + 26, 0, i * 45 + 26, WINDOW_HEIGHT);
-        for (int j = 0; j < 15; j++) {
-            if (i % 2 == 0) tmp = 26;
-            else tmp = 0;
-            SDL_RenderDrawLine(renderer, i * 45 - 19, j * 52 + tmp, i * 45 + 26, j * 52 + tmp);
-
-        }
-    }*/
 }
 
-
 void Player::collisionCheck(bool map[100][100], SDL_FPoint nextMove, int move) {
-    int tmp = 0;
-    if (tilePos.x % 2 == 0) tmp = 1;
-
-    tilePos.x = ((pos.x + 15) / 45);
-    tilePos.y = ((pos.y + (tmp * 26)) / 52);
-
-    int sign = 1;
-    for (int i = 0; i < 2; i++) {
-        for (int j = 0 - tmp; j < 2 - tmp; j++) {
-            if (map[tilePos.x + sign][tilePos.y + j]) {
-                fpointAdd(&pos, collision(pos, {(float)((tilePos.x + sign) * 45), (float)((tilePos.y + j) * 52 + tmp * 26)}));
-            }
-        }
-        sign *= -1;
-    }
-
-    for (int i = -1; i < 2; i++) {
-        if (map[tilePos.x][tilePos.y + i]) {
-            fpointAdd(&pos, collision(pos, { (float)(tilePos.x * 45), (float)((tilePos.y + i) * 52 + (1 - tmp) * 26) }));
+    SDL_Point arround[7] = { { -45, -26 }, { -45, 26 }, { 0, -52 }, { 0, 0 }, { 0, 52 }, { 45, -26 }, { 45, 26 } };
+    SDL_Point p;
+    SDL_FPoint v;
+    for (int i = 0; i < 7; i++) {
+        p = posToTile({ pos.x + arround[i].x, pos.y + arround[i].y });
+        v = tileToPos(p);
+        if (map[p.x][p.y]) {
+            fpointAdd(&pos, collision(pos, v));
         }
     }
     pos.x += nextMove.x;

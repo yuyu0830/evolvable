@@ -142,6 +142,19 @@ bool isin(float target, float start, float end) {
     return 1;
 }
 
+SDL_Point posToTile(SDL_FPoint pos) {
+    int x = (int)((pos.x + 15) / 45), tmp = 0;
+    if (x % 2 == 0) tmp = 1;
+    return { x, (int) ((pos.y + (tmp * 26)) / 52) };
+}
+
+SDL_FPoint tileToPos(SDL_Point tile) {
+    int x = tile.x * 45 - 15, tmp = 0;
+    if (tile.x % 2 == 0) tmp = 1;
+    int y = tile.y * 52 - (tmp * 26);
+    return { (float)x + 15, (float)y + 26};
+}
+
 SDL_FPoint collision(SDL_FPoint a, SDL_FPoint b) {
     float len = sqrt(pow(a.x - b.x) + pow(a.y - b.y));
     if (len < 46) {

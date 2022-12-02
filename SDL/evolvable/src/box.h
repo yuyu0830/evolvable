@@ -73,6 +73,8 @@ void fpointAdd(SDL_FPoint* a, SDL_FPoint b);
 bool isin(int target, int start, int end);
 bool isin(float target, float start, float end);
 float pow(float v);
+SDL_Point posToTile(SDL_FPoint pos);
+SDL_FPoint tileToPos(SDL_Point tile);
 SDL_FPoint collision(SDL_FPoint a, SDL_FPoint b);
 
 
