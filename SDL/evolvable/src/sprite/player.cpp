@@ -67,10 +67,11 @@ void Player::draw(SDL_Renderer* renderer, bool map[100][100]) {
     drawTextureAR(renderer, caterpillarRect, (int)(inScreenPos.x - w / 2), (int)(inScreenPos.y - h / 2), caterpillarDir, caterpillar);
     drawTexture(renderer, (int)(inScreenPos.x - w / 2), (int)(inScreenPos.y - h / 2) , turret);
     drawTextureR(renderer, (int)(inScreenPos.x - fw / 2), (int)(inScreenPos.y - fh / 2), fireDir, fireDirImg);
-    SDL_RenderDrawPoint(renderer, pos.x, pos.y);
 }
 
 void Player::collisionCheck(bool map[100][100], SDL_FPoint nextMove, int move) {
+    pos.x += nextMove.x;
+    pos.y += nextMove.y;
     SDL_Point arround[7] = { { -45, -26 }, { -45, 26 }, { 0, -52 }, { 0, 0 }, { 0, 52 }, { 45, -26 }, { 45, 26 } };
     SDL_Point p;
     SDL_FPoint v;
@@ -81,6 +82,4 @@ void Player::collisionCheck(bool map[100][100], SDL_FPoint nextMove, int move) {
             fpointAdd(&pos, collision(pos, v));
         }
     }
-    pos.x += nextMove.x;
-    pos.y += nextMove.y;
 }

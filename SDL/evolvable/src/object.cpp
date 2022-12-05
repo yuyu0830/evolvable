@@ -5,6 +5,7 @@ void Object::init(SDL_Renderer* renderer) {
 	player.caterpillar = loadTexture(renderer, "src/image/caterpillar.png");
 	player.fireDirImg = loadTexture(renderer, "src/image/aim.png");
 	player.bullet.bulletImg = loadTexture(renderer, "src/image/bullet.png");
+	player.bullet.bulletDisappearImg = loadTexture(renderer, "src/image/bulletDisappear.png");
 	player.init({500, 300}, 2.f, 1.4f);
 	
 	map.backgroundImg = loadTexture(renderer, "src/image/background.png");
@@ -18,7 +19,7 @@ void Object::init(SDL_Renderer* renderer) {
 
 void Object::update(Input* input) {
 	player.update(input, map.map);
-	player.bullet.update();
+	player.bullet.update(map.map);
 	map.update(player.pos, &player.inScreenPos);
 }
 
