@@ -28,6 +28,7 @@
     <ClCompile Include="src\sprite\bullet.cpp" />
     <ClCompile Include="src\sprite\map.cpp" />
     <ClCompile Include="src\sprite\player.cpp" />
+    <ClCompile Include="src\UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\box.h" />
@@ -38,6 +39,7 @@
     <ClInclude Include="src\sprite\bullet.h" />
     <ClInclude Include="src\sprite\map.h" />
     <ClInclude Include="src\sprite\player.h" />
+    <ClInclude Include="src\UI.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

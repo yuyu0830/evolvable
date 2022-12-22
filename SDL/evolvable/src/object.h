@@ -5,17 +5,21 @@
 #include <SDL_image.h>
 
 #include "draw.h"
+#include "UI.h"
 #include "sprite/bullet.h"
 #include "sprite/map.h"
 #include "sprite/player.h"
 
 class Object {
 public:
-	void init(SDL_Renderer* renderer);
+	Object();
+	void init();
+	void loadIngameTexture(SDL_Renderer* renderer);
 	void draw(SDL_Renderer* renderer);
 	void update(Input* input);
 
 private:
+	bool ingame;
 	Player player;
 	Map map;
 

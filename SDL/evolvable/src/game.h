@@ -14,6 +14,7 @@
 #include "input.h"
 #include "draw.h"
 #include "object.h"
+#include "UI.h"
 
 class Game {
 public:

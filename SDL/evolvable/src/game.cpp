@@ -76,19 +76,13 @@ bool Game::init() {
 
 void Game::gameLoop() {
     timer.program.start();
-    object.init(app.renderer);
-
-    blueTile = loadTexture(app.renderer, "src/image/tile_blue.png");
-    whiteTile = loadTexture(app.renderer, "src/image/tile_white.png");
+    object.init();
 
     while (running) {
         timer.frame.start();
         update();
         draw();
     }
-    SDL_DestroyTexture(blueTile);
-    SDL_DestroyTexture(whiteTile);
-
 }
 
 void Game::draw() {

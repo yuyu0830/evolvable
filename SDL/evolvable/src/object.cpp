@@ -1,13 +1,21 @@
 #include "object.h"
 
-void Object::init(SDL_Renderer* renderer) {
+
+Object::Object() {
+	ingame = false;
+}
+void Object::init() {
+
+}
+
+void Object::loadIngameTexture(SDL_Renderer* renderer) {
 	player.turret = loadTexture(renderer, "src/image/Player.png");
 	player.caterpillar = loadTexture(renderer, "src/image/caterpillar.png");
 	player.fireDirImg = loadTexture(renderer, "src/image/aim.png");
 	player.bullet.bulletImg = loadTexture(renderer, "src/image/bullet.png");
 	player.bullet.bulletDisappearImg = loadTexture(renderer, "src/image/bulletDisappear.png");
-	player.init({500, 300}, 2.f, 1.4f);
-	
+	player.init({ 500, 300 }, 2.f, 1.4f);
+
 	map.backgroundImg = loadTexture(renderer, "src/image/background.png");
 	map.blueTile = loadTexture(renderer, "src/image/tile_blue.png");
 	map.whiteTile = loadTexture(renderer, "src/image/tile_white.png");
@@ -24,7 +32,12 @@ void Object::update(Input* input) {
 }
 
 void Object::draw(SDL_Renderer* renderer) {
-	map.draw(renderer);
-	player.draw(renderer, map.map);
-	player.bullet.draw(renderer, map.cameraPos);
+	if (!ingame) {
+
+	}
+	else {
+		map.draw(renderer);
+		player.draw(renderer, map.map);
+		player.bullet.draw(renderer, map.cameraPos);
+	}
 }
