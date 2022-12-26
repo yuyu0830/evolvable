@@ -1,2 +1,15 @@
-﻿  object.cpp
+﻿  box.cpp
+  draw.cpp
+  game.cpp
+C:\Users\User\Documents\GitHub\evolvable\SDL\evolvable\src\game.cpp(17,15): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  input.cpp
+  main.cpp
+  object.cpp
+  bullet.cpp
+  map.cpp
+C:\Users\User\Documents\GitHub\evolvable\SDL\evolvable\src\sprite\map.cpp(36,27): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\User\Documents\GitHub\evolvable\SDL\evolvable\src\sprite\map.cpp(49,27): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  player.cpp
+  UI.cpp
+  코드를 생성하고 있습니다...
   evolvable.vcxproj -> C:\Users\User\Documents\GitHub\evolvable\SDL\x64\Debug\evolvable.exe

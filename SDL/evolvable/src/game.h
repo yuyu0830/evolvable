@@ -11,8 +11,8 @@
 #include <SDL_ttf.h>
 
 #include "box.h"
-#include "input.h"
 #include "draw.h"
+#include "input.h"
 #include "object.h"
 #include "UI.h"
 

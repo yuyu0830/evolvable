@@ -18,6 +18,24 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\draw.cpp" />
+    <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\graphic.cpp" />
+    <ClCompile Include="src\object.cpp" />
+    <ClCompile Include="src\test.cpp" />
+    <ClCompile Include="src\UI.cpp" />
+    <ClCompile Include="src\unit.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\def.h" />
+    <ClInclude Include="src\draw.h" />
+    <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\graphic.h" />
+    <ClInclude Include="src\object.h" />
+    <ClInclude Include="src\UI.h" />
+    <ClInclude Include="src\unit.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -141,9 +159,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="test.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

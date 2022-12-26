@@ -1,12 +1,15 @@
-﻿  test.cpp
-C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(46,15): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(176,15): warning C4244: '초기화 중': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(191,61): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(191,41): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(192,49): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(192,35): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(194,44): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(194,35): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(283,34): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\User\Documents\GitHub\evolvable\SDL\test\test.cpp(284,34): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+﻿  UI.cpp
+C:\Users\User\Documents\GitHub\evolvable\SDL\test\src\def.h(23,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 '<unnamed-enum-TAG_PLAYER>' 왼쪽은 무시됩니다.
+  game.cpp
+C:\Users\User\Documents\GitHub\evolvable\SDL\test\src\def.h(23,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 '<unnamed-enum-TAG_PLAYER>' 왼쪽은 무시됩니다.
+C:\Users\User\Documents\GitHub\evolvable\SDL\test\src\game.cpp(18,15): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  graphic.cpp
+C:\Users\User\Documents\GitHub\evolvable\SDL\test\src\def.h(23,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 '<unnamed-enum-TAG_PLAYER>' 왼쪽은 무시됩니다.
+  object.cpp
+C:\Users\User\Documents\GitHub\evolvable\SDL\test\src\def.h(23,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 '<unnamed-enum-TAG_PLAYER>' 왼쪽은 무시됩니다.
+  test.cpp
+C:\Users\User\Documents\GitHub\evolvable\SDL\test\src\def.h(23,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 '<unnamed-enum-TAG_PLAYER>' 왼쪽은 무시됩니다.
+  unit.cpp
+C:\Users\User\Documents\GitHub\evolvable\SDL\test\src\def.h(23,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 '<unnamed-enum-TAG_PLAYER>' 왼쪽은 무시됩니다.
+  코드를 생성하고 있습니다...
   test.vcxproj -> C:\Users\User\Documents\GitHub\evolvable\SDL\x64\Debug\test.exe
