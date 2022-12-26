@@ -10,7 +10,7 @@ class Graphic {
 public:
 	void load(objectData _data, SDL_Renderer* renderer, const char* file, SDL_Rect dst);
 	virtual void update() = 0;
-	virtual void draw() = 0;
+	virtual void draw(SDL_Renderer* renderer) = 0;
 
 protected:
 	objectData data;

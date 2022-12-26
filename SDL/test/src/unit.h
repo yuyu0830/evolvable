@@ -7,7 +7,7 @@
 class Unit : public Graphic {
 public:
 	virtual void update();
-	virtual void draw();
+	virtual void draw(SDL_Renderer* renderer);
 
 private:
 

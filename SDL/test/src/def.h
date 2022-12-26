@@ -13,6 +13,13 @@ struct objectData {
 	int unitNum;
 };
 
+struct Input {
+	bool keys[255];
+	bool mouseClick[3];
+	bool mouseClicked[3];
+	SDL_Point mousePos;
+};
+
 typedef enum {
 	TAG_PLAYER = 1,
 	TAG_ENEMY = 2,

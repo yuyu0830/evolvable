@@ -83,13 +83,12 @@ bool Game::init() {
     printf("Game initialize Complete!\n");
     running = true;
     object.tmp();
-
     return 1;
 }
 
 void Game::gameLoop() {
     while (running) {
-        object.update();
+        running = object.update();
         object.draw();
     }
 }

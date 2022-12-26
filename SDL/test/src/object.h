@@ -5,20 +5,24 @@
 #include <iostream>
 
 #include "graphic.h"
+#include "def.h"
 #include "unit.h"
 #include "UI.h"
 
 class Object {
 public:
 	bool init(SDL_Window* window);
-	void tmp(); //юс╫ц
-	void update();
-	void draw();
+	void tmp();
+	int update();
+	int draw();
+	bool eventHandling();
+	~Object();
 
 private:
 	SDL_Renderer* renderer;
-	UI ui[3];
-	Unit unit[3];
+	Unit* unit;
+	UI* ui;
+	Input* input;
 };
 
 
