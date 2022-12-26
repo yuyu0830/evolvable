@@ -32,12 +32,7 @@ void Object::update(Input* input) {
 }
 
 void Object::draw(SDL_Renderer* renderer) {
-	if (!ingame) {
-
-	}
-	else {
-		map.draw(renderer);
-		player.draw(renderer, map.map);
-		player.bullet.draw(renderer, map.cameraPos);
-	}
+	map.draw(renderer);
+	player.draw(renderer, map.map);
+	player.bullet.draw(renderer, map.cameraPos);
 }

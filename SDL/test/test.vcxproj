@@ -19,10 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\def.cpp" />
     <ClCompile Include="src\draw.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\graphic.cpp" />
     <ClCompile Include="src\object.cpp" />
+    <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\test.cpp" />
     <ClCompile Include="src\UI.cpp" />
     <ClCompile Include="src\unit.cpp" />
@@ -33,6 +35,7 @@
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\graphic.h" />
     <ClInclude Include="src\object.h" />
+    <ClInclude Include="src\player.h" />
     <ClInclude Include="src\UI.h" />
     <ClInclude Include="src\unit.h" />
   </ItemGroup>

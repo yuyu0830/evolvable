@@ -1,6 +1,8 @@
 #ifndef DEF_H
 #define DEF_H
 
+#include <SDL.h>
+
 const char WINDOW_TITLE[] = "test game";
 const int WINDOW_WIDTH = 1280;
 const int WINDOW_HEIGHT = 720;
@@ -20,6 +22,43 @@ struct Input {
 	SDL_Point mousePos;
 };
 
+class LTimer
+{
+public:
+	//Initializes variables
+	LTimer();
+
+	//The various clock actions
+	void start();
+	void stop();
+	void pause();
+	void unpause();
+
+	//Gets the timer's time
+	Uint32 getTicks();
+
+	//Checks the status of the timer
+	bool isStarted();
+	bool isPaused();
+
+private:
+	//The clock time when the timer started
+	Uint32 mStartTicks;
+
+	//The ticks stored when the timer was paused
+	Uint32 mPausedTicks;
+
+	//The timer status
+	bool mPaused;
+	bool mStarted;
+};
+
+struct Timer {
+	LTimer program;
+	LTimer frame;
+	LTimer game;
+};
+
 typedef enum {
 	TAG_PLAYER = 1,
 	TAG_ENEMY = 2,
@@ -27,6 +66,6 @@ typedef enum {
 	TAG_OBJECT = 4,
 	TAG_WALL = 5,
 	TAG_UI = 6
-};
+} tag;
 
 #endif

@@ -1,6 +1,12 @@
 #include "game.h"
 
 Game::Game() {
+    //Start timer
+    timer.program.start();
+    frameCounter = 0;
+    fps = 0.f;
+
+    //Initialize Game and Start Game!
     if (this->init()) {
         this->gameLoop();
     }
@@ -81,6 +87,7 @@ bool Game::init() {
     }
 
     printf("Game initialize Complete!\n");
+
     running = true;
     object.tmp();
     return 1;
@@ -88,7 +95,20 @@ bool Game::init() {
 
 void Game::gameLoop() {
     while (running) {
+        timer.frame.start();
+
         running = object.update();
         object.draw();
+
+        fpsHandling();
     }
+}
+
+void Game::fpsHandling() {
+    fps = frameCounter / (timer.program.getTicks() / 1000.0f);
+    int frameTicks = timer.frame.getTicks();
+    if (frameTicks < SCREEN_TICK_PER_FRAME) {
+        SDL_Delay(SCREEN_TICK_PER_FRAME - frameTicks);
+    }
+    frameCounter++;
 }

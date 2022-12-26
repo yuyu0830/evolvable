@@ -5,8 +5,8 @@
 
 class UI :public Graphic {
 public:
-	virtual void update();
-	virtual void draw();
+	virtual void update(Input* input);
+	virtual void draw(SDL_Renderer* renderer);
 
 private:
 

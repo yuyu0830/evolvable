@@ -8,11 +8,12 @@
 #include "def.h"
 #include "unit.h"
 #include "UI.h"
+#include "Player.h"
 
 class Object {
 public:
 	bool init(SDL_Window* window);
-	void tmp();
+	void tmp(); //юс╫ц
 	int update();
 	int draw();
 	bool eventHandling();
@@ -20,10 +21,12 @@ public:
 
 private:
 	SDL_Renderer* renderer;
-	Unit* unit;
-	UI* ui;
 	Input* input;
-};
 
+	SDL_Texture* background;
+
+	Unit* unit[1024];
+	UI* ui;
+};
 
 #endif

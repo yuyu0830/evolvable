@@ -1,11 +1,19 @@
 #include "object.h"
 
 Object::~Object() {
-    delete[] unit;
+    delete unit[0];
+    delete unit[1];
     delete input;
+
+    SDL_DestroyTexture(background);
+    SDL_DestroyRenderer(renderer);
 }
 
 bool Object::init(SDL_Window* window) {
+    //Initialize variable
+    background = NULL;
+
+    //Initialize input struct
     input = new Input;
     for (int i = 0; i < 255; i++) {
         input->keys[i] = false;
@@ -24,21 +32,27 @@ bool Object::init(SDL_Window* window) {
 }
 
 void Object::tmp() {
-    unit = new Unit[20];
+    unit[0] = new Player(2);
+    unit[1] = new Unit();
+
     objectData a;
-    strcpy_s(a.name, "unit");
-    for (int i = 0; i < 20; i++) {
-        a.tag = 1;
-        a.unitNum = i;
-        unit[i].load(a, renderer, "src/image/Player.png", { i * 20, i * 20, 0, 0 });
-    }
+    strcpy_s(a.name, "Player");
+    a.tag = 1;
+    a.unitNum = 1;
+    unit[0]->load(a, renderer, "src/image/Player.png", { 300, 100, 0, 0 });
+
+    strcpy_s(a.name, "enemy");
+    a.tag = 2;
+    a.unitNum = 2;
+    unit[1]->load(a, renderer, "src/image/bullet.png", { 600, 100, 0, 0 });
 }
 
 int Object::update() {
     if (eventHandling()) {
-        for (int i = 0; i < 20; i++) {
-            unit[i].update();
+        for (int i = 0; i < 2; i++) {
+            unit[i] -> update(input);
         }
+        return 1;
     }
     else {
         return 0;
@@ -46,8 +60,9 @@ int Object::update() {
 }
 
 int Object::draw() {
-    for (int i = 0; i < 20; i++) {
-        unit[i].draw(renderer);
+    //SDL_RenderClear(renderer);
+    for (int i = 0; i < 2; i++) {
+        unit[i] -> draw(renderer);
     }
     SDL_RenderPresent(renderer);
     return 0;

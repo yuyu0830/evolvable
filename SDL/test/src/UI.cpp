@@ -1,9 +1,9 @@
 #include "UI.h"
 
-void UI::update() {
-	printf("%s update!\n", data.name);
+void UI::update(Input* input) {
+
 }
 
-void UI::draw() {
-	printf("%s draw!\n", data.name);
+void UI::draw(SDL_Renderer* renderer) {
+
 }

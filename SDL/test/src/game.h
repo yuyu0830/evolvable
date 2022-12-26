@@ -21,6 +21,7 @@ public:
 private:
 	bool init();
 	void gameLoop();
+	void fpsHandling();
 
 	bool running;
 
@@ -28,5 +29,9 @@ private:
 
 	SDL_Window* window;
 	TTF_Font* font;
+	Timer timer;
+
+	float fps;
+	int frameCounter;
 };
 #endif
