@@ -1,17 +1,11 @@
 #include "object.h"
 
 Object::~Object() {
-    delete unit[0];
-    delete unit[1];
-    delete input;
-
-    SDL_DestroyTexture(background);
     SDL_DestroyRenderer(renderer);
 }
 
 bool Object::init(SDL_Window* window) {
     //Initialize variable
-    background = NULL;
 
     //Initialize input struct
     input = new Input;
@@ -23,35 +17,36 @@ bool Object::init(SDL_Window* window) {
         input->mouseClicked[i] = false;
     }
     input->mousePos = { 0, 0 };
-    printf("Input Struct Initialize Complete!\n");
 
     //initialize renderer
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+
+    //tmp#############################################################
+    //tmpFont = TTF_OpenFont("src/font/HBIOS-SYS.ttf", 32);
+
+    background.load(renderer, "./src/image/MainBg.png");
+    //button[0].load(renderer, "./src/image/Button_default.png", "./src/image/Button_onMouse.png", { "button1", TAG_UI, 1 }, { COLOR_BLACK, tmpFont, "New Game" });
+    //button[0].position.set(779, 621);
+    //button[0].vertexCalc();
+    //button[1].load(renderer, "./src/image/Button_default.png", "./src/image/Button_onMouse.png", { "button2", TAG_UI, 2 }, { COLOR_BLACK, tmpFont, "Load Game" });
+    //button[1].position.set(966, 513);
+    //button[1].vertexCalc();
+    //button[2].load(renderer, "./src/image/Button_default.png", "./src/image/Button_onMouse.png", { "button3", TAG_UI, 3 }, { COLOR_BLACK, tmpFont, "Option" });
+    //button[2].position.set(1154, 621);
+    //button[2].vertexCalc();
+    //button[3].load(renderer, "./src/image/Button_default.png", "./src/image/Button_onMouse.png", { "button4", TAG_UI, 4 }, { COLOR_BLACK, tmpFont, "Exit" });
+    //button[3].position.set(1341, 513);
+    //button[3].vertexCalc();
+    //player.load(renderer, "./src/image/Player.png", { "Player", TAG_PLAYER, 1}, { false, 1.f, 1.f, 1.f, 1.f });
+    //tmp#############################################################
+
     if (renderer != NULL) { return 1; }
     else { return 0; }
 }
 
-void Object::tmp() {
-    unit[0] = new Player(2);
-    unit[1] = new Unit();
-
-    objectData a;
-    strcpy_s(a.name, "Player");
-    a.tag = 1;
-    a.unitNum = 1;
-    unit[0]->load(a, renderer, "src/image/Player.png", { 300, 100, 0, 0 });
-
-    strcpy_s(a.name, "enemy");
-    a.tag = 2;
-    a.unitNum = 2;
-    unit[1]->load(a, renderer, "src/image/bullet.png", { 600, 100, 0, 0 });
-}
-
 int Object::update() {
     if (eventHandling()) {
-        for (int i = 0; i < 2; i++) {
-            unit[i] -> update(input);
-        }
+        //player.update(input);
         return 1;
     }
     else {
@@ -60,10 +55,9 @@ int Object::update() {
 }
 
 int Object::draw() {
-    //SDL_RenderClear(renderer);
-    for (int i = 0; i < 2; i++) {
-        unit[i] -> draw(renderer);
-    }
+    SDL_RenderClear(renderer);
+    background.draw(renderer);
+    //player.draw(renderer);
     SDL_RenderPresent(renderer);
     return 0;
 }

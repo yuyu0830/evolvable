@@ -10,7 +10,7 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
-#include "def.h"
+#include "util.h"
 #include "object.h"
 
 class Game {

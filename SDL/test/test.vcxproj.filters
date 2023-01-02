@@ -9,9 +9,11 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Sprite src">
+      <UniqueIdentifier>{686202fd-4438-4c9e-be1c-e1ac6f02e786}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sprite h">
+      <UniqueIdentifier>{cbdb291e-2070-4501-b628-c60df73fc2be}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -21,32 +23,41 @@
     <ClCompile Include="src\game.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\test.cpp">
+    <ClCompile Include="src\main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="src\object.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphic.cpp">
+    <ClCompile Include="src\util.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\unit.cpp">
+    <ClCompile Include="src\sprite\graphic.cpp">
+      <Filter>Sprite src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprite\player.cpp">
+      <Filter>Sprite src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprite\unit.cpp">
+      <Filter>Sprite src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\timer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\UI.cpp">
+    <ClCompile Include="src\position.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\player.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="src\sprite\UI.cpp">
+      <Filter>Sprite src</Filter>
     </ClCompile>
-    <ClCompile Include="src\def.cpp">
+    <ClCompile Include="src\sprite\background.cpp">
+      <Filter>Sprite src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collider.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\def.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="src\draw.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -56,16 +67,31 @@
     <ClInclude Include="src\object.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphic.h">
+    <ClInclude Include="src\util.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="src\unit.h">
+    <ClInclude Include="src\sprite\graphic.h">
+      <Filter>sprite h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sprite\player.h">
+      <Filter>sprite h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sprite\unit.h">
+      <Filter>sprite h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\timer.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="src\UI.h">
+    <ClInclude Include="src\position.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="src\player.h">
+    <ClInclude Include="src\sprite\UI.h">
+      <Filter>sprite h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sprite\background.h">
+      <Filter>sprite h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collider.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

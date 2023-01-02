@@ -41,6 +41,15 @@ bool Game::init() {
         return 0;
     }
 
+    //initialize TTF
+    if (TTF_Init() == 0) {
+        printf("Font Initialize Success!\n");
+    }
+    else {
+        printf("Font initialize failed! error code : %s\n", TTF_GetError());
+        return 0;
+    }
+
     if (object.init(window)) {
         printf("Renderer Initialize Success!\n");
     }
@@ -67,15 +76,6 @@ bool Game::init() {
         return 0;
     }
 
-    //initialize TTF
-    if (TTF_Init() == 0) {
-        printf("Font Initialize Success!\n");
-    }
-    else {
-        printf("Font initialize failed! error code : %s\n", TTF_GetError());
-        return 0;
-    }
-
     //initialize font
     font = TTF_OpenFont("src/font/HBIOS-SYS.ttf", 32);
     if (font != NULL) {
@@ -89,7 +89,6 @@ bool Game::init() {
     printf("Game initialize Complete!\n");
 
     running = true;
-    object.tmp();
     return 1;
 }
 

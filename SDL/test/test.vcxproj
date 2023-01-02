@@ -19,25 +19,33 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\def.cpp" />
+    <ClCompile Include="src\collider.cpp" />
     <ClCompile Include="src\draw.cpp" />
     <ClCompile Include="src\game.cpp" />
-    <ClCompile Include="src\graphic.cpp" />
     <ClCompile Include="src\object.cpp" />
-    <ClCompile Include="src\player.cpp" />
-    <ClCompile Include="src\test.cpp" />
-    <ClCompile Include="src\UI.cpp" />
-    <ClCompile Include="src\unit.cpp" />
+    <ClCompile Include="src\position.cpp" />
+    <ClCompile Include="src\sprite\background.cpp" />
+    <ClCompile Include="src\sprite\graphic.cpp" />
+    <ClCompile Include="src\sprite\player.cpp" />
+    <ClCompile Include="src\sprite\UI.cpp" />
+    <ClCompile Include="src\sprite\unit.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\timer.cpp" />
+    <ClCompile Include="src\util.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\def.h" />
+    <ClInclude Include="src\collider.h" />
     <ClInclude Include="src\draw.h" />
     <ClInclude Include="src\game.h" />
-    <ClInclude Include="src\graphic.h" />
     <ClInclude Include="src\object.h" />
-    <ClInclude Include="src\player.h" />
-    <ClInclude Include="src\UI.h" />
-    <ClInclude Include="src\unit.h" />
+    <ClInclude Include="src\position.h" />
+    <ClInclude Include="src\sprite\background.h" />
+    <ClInclude Include="src\sprite\graphic.h" />
+    <ClInclude Include="src\sprite\player.h" />
+    <ClInclude Include="src\sprite\UI.h" />
+    <ClInclude Include="src\sprite\unit.h" />
+    <ClInclude Include="src\timer.h" />
+    <ClInclude Include="src\util.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

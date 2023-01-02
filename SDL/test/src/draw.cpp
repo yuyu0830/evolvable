@@ -62,3 +62,20 @@ SDL_Texture* loadTexture(SDL_Renderer* renderer, const char* file) {
 
     return texture;
 }
+
+SDL_Texture* textToTexture(SDL_Renderer* renderer, TTF_Font* font, const char* text, SDL_Color color) {
+    SDL_Surface* surface;
+    SDL_Texture* texture;
+
+    surface = TTF_RenderText_Blended(font, text, color);
+    if (surface == NULL) {
+        printf("fail to make surface with text '%s'\n", text);
+        return NULL;
+    }
+
+    texture = SDL_CreateTextureFromSurface(renderer, surface);
+    if (texture == NULL)  printf("unable to create texture.\n");
+    SDL_FreeSurface(surface);
+
+    return texture;
+}
