@@ -3,11 +3,13 @@
 
 #include <SDL.h>
 
+#include "util.h"
+
 class Collider {
 public:
 
-private:
-
+protected:
+	int type;
 };
 
 #endif

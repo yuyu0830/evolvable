@@ -6,7 +6,12 @@ Object::~Object() {
 
 bool Object::init(SDL_Window* window) {
     //Initialize variable
-
+    for (int i = 0; i < SHAPE_NUMBER; i++) {
+        for (int j = 0; j < SHAPE_NUMBER; j++) {
+            colliderTriggerTable[i][j] = false;
+        }
+    }
+    
     //Initialize input struct
     input = new Input;
     for (int i = 0; i < 255; i++) {

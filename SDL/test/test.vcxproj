@@ -20,6 +20,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\collider.cpp" />
+    <ClCompile Include="src\collider\circle.cpp" />
+    <ClCompile Include="src\collider\hexagon.cpp" />
+    <ClCompile Include="src\collider\point.cpp" />
+    <ClCompile Include="src\collider\square.cpp" />
+    <ClCompile Include="src\collider\squareEx.cpp" />
     <ClCompile Include="src\draw.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\object.cpp" />
@@ -35,6 +40,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\collider.h" />
+    <ClInclude Include="src\collider\circle.h" />
+    <ClInclude Include="src\collider\hexagon.h" />
+    <ClInclude Include="src\collider\point.h" />
+    <ClInclude Include="src\collider\square.h" />
+    <ClInclude Include="src\collider\squareEx.h" />
     <ClInclude Include="src\draw.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\object.h" />

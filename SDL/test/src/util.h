@@ -71,4 +71,12 @@ typedef enum {
 	TAG_BACKGROUND = 7
 } tag;
 
+typedef enum {
+	SHAPE_CIRCLE = 0,
+	SHAPE_SQUARE = 1,
+	SHAPE_HEXAGON = 2,
+	SHAPE_POINT = 3,
+	SHAPE_SQUAREEX = 4,
+	SHAPE_NUMBER = 5
+} shape;
 #endif

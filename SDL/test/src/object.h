@@ -28,6 +28,8 @@ private:
 	TTF_Font* tmpFont;
 	SDL_Renderer* renderer;
 	Input* input;
+
+	bool colliderTriggerTable[SHAPE_NUMBER][SHAPE_NUMBER];
 };
 
 #endif
