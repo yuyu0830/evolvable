@@ -1,4 +1,5 @@
 #include "object.h"
+#include <SDL2_gfxPrimitives.h>
 
 int Object::update() {
     if (eventHandling()) {
@@ -12,42 +13,29 @@ int Object::update() {
 
 int Object::draw() {
     SDL_RenderClear(renderer);
-
+    Sint16 x[6] = { 100, 75, 100, 150, 175, 150 };
+    Sint16 y[6] = { 100, 126, 152, 152, 126, 100 };
     background.draw(renderer);
 
+    filledPolygonColor(renderer, x, y, 6, 0xFFFFFF00);
 
     SDL_RenderPresent(renderer);
     return 0;
 }
 
+void Object::collisionCheck() {
+    if (isInGame) {
+        
+    }
+    else {
 
-bool Object::init(SDL_Window* window) {
-    //Initialize variable
-    for (int i = 0; i < SHAPE_NUMBER; i++) {
-        for (int j = 0; j < SHAPE_NUMBER; j++) {
-            colliderTriggerTable[i][j] = false;
-        }
     }
 
-    //Initialize input struct
-    initInput();
-
-    //initialize renderer
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-
-    //tmp#############################################################
-
-    background.load(renderer, "./src/image/MainBg.png");
-
-    //tmp#############################################################
-
-    if (renderer != NULL) { return 1; }
-    else { return 0; }
 }
 
 bool Object::eventHandling() {
     SDL_Event event;
-    while(SDL_PollEvent(&event)) {
+    while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) return 0;
         switch (event.type) {
             //keyboard
@@ -90,6 +78,37 @@ bool Object::eventHandling() {
     return 1;
 }
 
+bool Object::init(SDL_Window* window) {
+    //Initialize variable
+    initVariable();
+
+    //Initialize input struct
+    initInput();
+
+    //initialize renderer
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+
+    //tmp#############################################################
+
+    background.load(renderer, "./src/image/MainBg.png");
+
+    //tmp#############################################################
+
+    if (renderer != NULL) { return 1; }
+    else { return 0; }
+}
+
+void Object::initVariable() {
+    isInGame = false;
+
+    for (int i = 0; i < TAG_NUMBER; i++) {
+        for (int j = 0; j < TAG_NUMBER; j++) {
+            colliderTriggerTable[i][j] = false;
+        }
+        graphic[i] = NULL;
+    }
+}
+
 void Object::initInput() {
     input = new Input;
     for (int i = 0; i < 255; i++) {
@@ -105,5 +124,5 @@ void Object::initInput() {
 Object::~Object() {
     SDL_DestroyRenderer(renderer);
     delete input;
-    delete[] colliderPointer;
+    delete[] graphic;
 }

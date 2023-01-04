@@ -19,15 +19,15 @@ public:
 	int update();
 	int draw();
 
+	//반복 사용
+	void collisionCheck();
+	bool eventHandling();
+
 	//한번 사용
 	bool init(SDL_Window* window);
-
-	//반복 사용
 	void initInput();
-	void boom();
-	bool eventHandling();
-	
-	
+	void initVariable();
+
 	~Object();
 
 private:
@@ -35,8 +35,9 @@ private:
 	Input* input;
 
 	Background background;
-	Collider* colliderPointer[TAG_NUMBER];
+	Graphic* graphic[TAG_NUMBER];
 
+	bool isInGame;
 	bool colliderTriggerTable[TAG_NUMBER][TAG_NUMBER];
 };
 

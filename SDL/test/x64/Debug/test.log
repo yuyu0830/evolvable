@@ -1,23 +1,5 @@
-﻿  collider.cpp
-  circle.cpp
-  hexagon.cpp
-  point.cpp
-  square.cpp
-  squareEx.cpp
-  draw.cpp
-  game.cpp
-C:\Users\User\Documents\GitHub\evolvable\SDL\test\src\game.cpp(24,15): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  object.cpp
-  position.cpp
-C:\Users\User\Documents\GitHub\evolvable\SDL\test\src\position.cpp(18,32): warning C4244: '+=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\User\Documents\GitHub\evolvable\SDL\test\src\position.cpp(19,30): warning C4244: '+=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  background.cpp
-  graphic.cpp
-  player.cpp
-  UI.cpp
-  unit.cpp
-  main.cpp
-  timer.cpp
-  util.cpp
-  코드를 생성하고 있습니다...
-  test.vcxproj -> C:\Users\User\Documents\GitHub\evolvable\SDL\x64\Debug\test.exe
+﻿  object.cpp
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\object.cpp(125,21): warning C4154: 배열 식을 삭제했습니다. 포인터로 변환이 제공됩니다.
+object.obj : error LNK2019: filledPolygonColor"public: int __cdecl Object::draw(void)" (?draw@Object@@QEAAHXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\lib\SDL2_gfx-1.0.4\lib\x64\SDL2_gfx.lib : warning LNK4272: 'x86' 라이브러리 컴퓨터 종류가 'x64' 대상 컴퓨터 종류와 충돌합니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\x64\Debug\test.exe : fatal error LNK1120: 1개의 확인할 수 없는 외부 참조입니다.
