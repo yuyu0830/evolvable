@@ -12,24 +12,32 @@
 #include "./sprite/player.h"
 #include "./sprite/background.h"
 
+#include "collider.h"
+
 class Object {
 public:
-	bool init(SDL_Window* window);
 	int update();
 	int draw();
+
+	//한번 사용
+	bool init(SDL_Window* window);
+
+	//반복 사용
+	void initInput();
+	void boom();
 	bool eventHandling();
+	
+	
 	~Object();
 
 private:
-	Player player;
-	UI button[4];
-	Background background;
-
-	TTF_Font* tmpFont;
 	SDL_Renderer* renderer;
 	Input* input;
 
-	bool colliderTriggerTable[SHAPE_NUMBER][SHAPE_NUMBER];
+	Background background;
+	Collider* colliderPointer[TAG_NUMBER];
+
+	bool colliderTriggerTable[TAG_NUMBER][TAG_NUMBER];
 };
 
 #endif

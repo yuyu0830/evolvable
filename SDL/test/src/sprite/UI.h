@@ -7,6 +7,7 @@
 
 class UI : public Graphic {
 public:
+	~UI();
 	virtual void load(SDL_Renderer* renderer, const char* fileDir, const char* onMouseFileDir, ObjectData data , TextContainer tc);
 	virtual void update(Input* input);
 	virtual void draw(SDL_Renderer* renderer);

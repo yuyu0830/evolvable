@@ -1,5 +1,11 @@
 #include "UI.h"
 
+UI::~UI() {
+	SDL_DestroyTexture(onMouseTexture);
+	SDL_DestroyTexture(textTexture);
+	TTF_CloseFont(font);
+}
+
 void UI::load(SDL_Renderer* renderer, const char* fileDir, const char* onMouseFileDir, ObjectData data, TextContainer tc) {
 	onMouse = false;
 
