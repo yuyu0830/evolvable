@@ -1,9 +1,10 @@
 #include "object.h"
-#include <SDL2_gfxPrimitives.h>
+
 
 int Object::update() {
     if (eventHandling()) {
-        
+        button[0]->update(input);
+        button[1]->update(input);
         return 1;
     }
     else {
@@ -13,11 +14,11 @@ int Object::update() {
 
 int Object::draw() {
     SDL_RenderClear(renderer);
-    Sint16 x[6] = { 100, 75, 100, 150, 175, 150 };
-    Sint16 y[6] = { 100, 126, 152, 152, 126, 100 };
-    background.draw(renderer);
 
-    filledPolygonColor(renderer, x, y, 6, 0xFFFFFF00);
+    button[0]->draw(renderer);
+    button[1]->draw(renderer);
+
+    //background.draw(renderer);
 
     SDL_RenderPresent(renderer);
     return 0;
@@ -55,23 +56,26 @@ bool Object::eventHandling() {
             break;
 
         case SDL_MOUSEBUTTONDOWN:
-            if (event.button.button == SDL_BUTTON_LEFT) {
+            /*if (event.button.button == SDL_BUTTON_LEFT) {
                 input->mouseClick[0] = true;
             }
             else if (event.button.button == SDL_BUTTON_RIGHT) {
                 input->mouseClick[1] = true;
-            }
+            }*/
+            input->mouseClick[event.button.button] = true;
             break;
 
         case SDL_MOUSEBUTTONUP:
-            if (event.button.button == SDL_BUTTON_LEFT) {
+            /*if (event.button.button == SDL_BUTTON_LEFT) {
                 input->mouseClick[0] = 0;
                 input->mouseClicked[0] = false;
             }
             else if (event.button.button == SDL_BUTTON_RIGHT) {
                 input->mouseClick[1] = 0;
                 input->mouseClicked[1] = false;
-            }
+            }*/
+            input->mouseClick[event.button.button] = false;
+            input->mouseClicked[event.button.button] = false;
             break;
         }
     }
@@ -89,9 +93,20 @@ bool Object::init(SDL_Window* window) {
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
     //tmp#############################################################
+    
+    tmpFont = TTF_OpenFont("./src/font/HBIOS-SYS.ttf", 32);
 
     background.load(renderer, "./src/image/MainBg.png");
 
+    button[0] = new UI();
+    button[1] = new UI();
+    button[0]->load(renderer, "./src/image/Button_default.png", "./src/image/Button_onMouse.png", { "button1", TAG_UI, 1 }, { COLOR_BLACK, tmpFont, "New Game" });
+    button[1]->load(renderer, "./src/image/Button_default.png", "./src/image/Button_onMouse.png", { "button2", TAG_UI, 2 }, { COLOR_BLACK, tmpFont, "Load Game" });
+    button[0]->position.set(100, 100);
+    button[1]->position.set(500, 100);
+    button[0]->vertexCalc();
+    button[1]->vertexCalc();
+    
     //tmp#############################################################
 
     if (renderer != NULL) { return 1; }
@@ -114,7 +129,7 @@ void Object::initInput() {
     for (int i = 0; i < 255; i++) {
         input->keys[i] = false;
     }
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 6; i++) {
         input->mouseClick[i] = false;
         input->mouseClicked[i] = false;
     }
@@ -124,5 +139,5 @@ void Object::initInput() {
 Object::~Object() {
     SDL_DestroyRenderer(renderer);
     delete input;
-    delete[] graphic;
+    //delete[] graphic;
 }

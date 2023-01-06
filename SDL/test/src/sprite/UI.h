@@ -12,6 +12,7 @@ public:
 	virtual void update(Input* input);
 	virtual void draw(SDL_Renderer* renderer);
 	void vertexCalc();
+	bool isOnMouse(Input* input);
 
 private:
 	SDL_Texture* onMouseTexture;

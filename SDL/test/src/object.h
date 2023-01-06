@@ -1,8 +1,10 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#include <SDL_Image.h>
 #include <iostream>
+
+#include <SDL_Image.h>
+#include <SDL_ttf.h>
 
 #include "util.h"
 
@@ -33,6 +35,11 @@ public:
 private:
 	SDL_Renderer* renderer;
 	Input* input;
+
+	//tmp//
+	UI* button[2];
+	TTF_Font* tmpFont;
+	//tmp
 
 	Background background;
 	Graphic* graphic[TAG_NUMBER];

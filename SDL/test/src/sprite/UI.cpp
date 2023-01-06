@@ -26,22 +26,9 @@ void UI::load(SDL_Renderer* renderer, const char* fileDir, const char* onMouseFi
 }
 
 void UI::update(Input* input) {
-	int cnt = 0;
-	for (int i = 0; i < 2; i++) {
-		for (int j = 0; j <= 3; j += 3) {
-			if ((vertex[i + j].y > input->mousePos.y) != (vertex[i + j + 1].y > input->mousePos.y)) {
-				double atX = (vertex[i + j + 1].x - vertex[i + j].x) * (input->mousePos.y - vertex[i + j].y) / (vertex[i + j + 1].y - vertex[i + j].y) + vertex[i + j].x;
-				if (input->mousePos.x < atX)
-					cnt++;
-			}
-		}
-	}
-
-	if (cnt == 1) {
-		onMouse = true;
-	}
-	else {
-		onMouse = false;
+	onMouse = isOnMouse(input);
+	if (onMouse && input->mouseClick[SDL_BUTTON_LEFT]) {
+		printf("%s\n", name);
 	}
 }
 
@@ -56,12 +43,33 @@ void UI::draw(SDL_Renderer* renderer) {
 	drawTexture(renderer, (int)(pos.x - textSize.width / 2), (int)(pos.y - textSize.height / 2), textTexture);
 } 
 
+bool UI::isOnMouse(Input* input) {
+	// 점의 다각형 내부 외부 판단 알고리즘
+	int cnt = 0;
+	for (int i = 0; i < 2; i++) {
+		for (int j = 0; j <= 3; j += 3) {
+			if ((vertex[i + j].y > input->mousePos.y) != (vertex[i + j + 1].y > input->mousePos.y)) {
+				double atX = (vertex[i + j + 1].x - vertex[i + j].x) * (input->mousePos.y - vertex[i + j].y) / (vertex[i + j + 1].y - vertex[i + j].y) + vertex[i + j].x;
+				if (input->mousePos.x < atX)
+					cnt++;
+			}
+		}
+	}
+	printf("%d\n", cnt);
+	if (cnt == 1) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 void UI::vertexCalc() {
 	SDL_FPoint pos = position.get();
-	vertex[0] = { (int) pos.x + 59, (int) pos.y - 102 };
-	vertex[1] = { (int)pos.x + 118, (int)pos.y};
+	vertex[0] = { (int)pos.x + 59, (int)pos.y - 102 };
+	vertex[1] = { (int)pos.x + 118, (int)pos.y };
 	vertex[2] = { (int)pos.x + 59, (int)pos.y + 102 };
 	vertex[3] = { (int)pos.x - 59, (int)pos.y + 102 };
-	vertex[4] = { (int)pos.x - 118, (int)pos.y};
+	vertex[4] = { (int)pos.x - 118, (int)pos.y };
 	vertex[5] = { (int)pos.x - 59, (int)pos.y - 102 };
 }

@@ -7,8 +7,8 @@
 #include "timer.h"
 
 const char WINDOW_TITLE[] = "test game";
-const int WINDOW_WIDTH = 1600;
-const int WINDOW_HEIGHT = 900;
+const int WINDOW_WIDTH = 1280;
+const int WINDOW_HEIGHT = 720;
 const int SCREEN_FPS = 60;
 const int SCREEN_TICK_PER_FRAME = 1000 / SCREEN_FPS;
 const float RADIAN = 57.295791f;
@@ -42,8 +42,8 @@ struct UnitData {
 
 struct Input {
 	bool keys[255];
-	bool mouseClick[3];
-	bool mouseClicked[3];
+	bool mouseClick[6];
+	bool mouseClicked[6];
 	SDL_Point mousePos;
 };
 
