@@ -14,6 +14,11 @@ void Position::set(int _x, int _y) {
 	y = (float) _y;
 }
 
+void Position::set(SDL_Point pos) {
+	x = (float)pos.x;
+	y = (float)pos.y;
+}
+
 void Position::move(float angle, float speed) {
 	x += sin(angle / RADIAN) * -1 * speed;
     y += cos(angle / RADIAN) * speed ;

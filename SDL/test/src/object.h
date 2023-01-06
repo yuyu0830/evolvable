@@ -7,12 +7,12 @@
 #include <SDL_ttf.h>
 
 #include "util.h"
+#include "menu.h"
 
 #include "./sprite/UI.h"
 #include "./sprite/graphic.h"
 #include "./sprite/unit.h"
 #include "./sprite/player.h"
-#include "./sprite/background.h"
 
 #include "collider.h"
 
@@ -36,13 +36,8 @@ private:
 	SDL_Renderer* renderer;
 	Input* input;
 
-	//tmp//
-	UI* button[2];
-	TTF_Font* tmpFont;
-	//tmp
-
-	Background background;
-	Graphic* graphic[TAG_NUMBER];
+	Menu* menu;
+	//Graphic* graphic[TAG_NUMBER];
 
 	bool isInGame;
 	bool colliderTriggerTable[TAG_NUMBER][TAG_NUMBER];

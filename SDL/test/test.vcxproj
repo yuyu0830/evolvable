@@ -27,9 +27,9 @@
     <ClCompile Include="src\collider\squareEx.cpp" />
     <ClCompile Include="src\draw.cpp" />
     <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\menu.cpp" />
     <ClCompile Include="src\object.cpp" />
     <ClCompile Include="src\position.cpp" />
-    <ClCompile Include="src\sprite\background.cpp" />
     <ClCompile Include="src\sprite\graphic.cpp" />
     <ClCompile Include="src\sprite\player.cpp" />
     <ClCompile Include="src\sprite\UI.cpp" />
@@ -47,9 +47,9 @@
     <ClInclude Include="src\collider\squareEx.h" />
     <ClInclude Include="src\draw.h" />
     <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\menu.h" />
     <ClInclude Include="src\object.h" />
     <ClInclude Include="src\position.h" />
-    <ClInclude Include="src\sprite\background.h" />
     <ClInclude Include="src\sprite\graphic.h" />
     <ClInclude Include="src\sprite\player.h" />
     <ClInclude Include="src\sprite\UI.h" />

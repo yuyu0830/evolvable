@@ -1,30 +1,5 @@
 #include "UI.h"
 
-UI::~UI() {
-	SDL_DestroyTexture(onMouseTexture);
-	SDL_DestroyTexture(textTexture);
-	TTF_CloseFont(font);
-}
-
-void UI::load(SDL_Renderer* renderer, const char* fileDir, const char* onMouseFileDir, ObjectData data, TextContainer tc) {
-	onMouse = false;
-
-	texture = loadTexture(renderer, fileDir);
-	onMouseTexture = loadTexture(renderer, onMouseFileDir);
-	SDL_QueryTexture(texture, NULL, NULL, &size.width, &size.height);
-
-	strcpy_s(name, data.name);
-	tag = data.tag;
-	unitNum = data.unitNum;
-
-	strcpy_s(text, tc.text);
-	textColor = tc.color;
-	font = tc.font;
-	//TTF_SizeText(font, text, &textSize.width, &textSize.height);
-	textTexture = textToTexture(renderer, font, text, textColor);
-	SDL_QueryTexture(textTexture, NULL, NULL, &textSize.width, &textSize.height);
-}
-
 void UI::update(Input* input) {
 	onMouse = isOnMouse(input);
 	if (onMouse && input->mouseClick[SDL_BUTTON_LEFT]) {
@@ -35,13 +10,57 @@ void UI::update(Input* input) {
 void UI::draw(SDL_Renderer* renderer) {
 	SDL_FPoint pos = position.get();
 	if (onMouse) {
-		drawTexture(renderer, (int)(pos.x - size.width / 2), (int)(pos.y - size.height / 2), onMouseTexture);
+		drawTexture(renderer, (int)(pos.x - size.width / 2), (int)(pos.y - size.height / 2), onMouseButton);
 	}
 	else {
-		drawTexture(renderer, (int)(pos.x - size.width / 2), (int)(pos.y - size.height / 2), texture);
+		drawTexture(renderer, (int)(pos.x - size.width / 2), (int)(pos.y - size.height / 2), defaultButton);
 	}
 	drawTexture(renderer, (int)(pos.x - textSize.width / 2), (int)(pos.y - textSize.height / 2), textTexture);
-} 
+}
+
+//###############################################################################################
+//initailize
+
+UI::UI(ObjectData data, TextContainer tc, SDL_Renderer* renderer, SDL_Texture* _defaultButton, SDL_Texture* _onMouseButton, SDL_Point _position) {
+	onMouse = false;
+	
+	dataInput(data);
+	textDataInput(tc);
+	imageInput(renderer, _defaultButton, _onMouseButton);
+	vertexCalc(_position);
+}
+
+void UI::textDataInput(TextContainer tc) {
+	strcpy_s(text, tc.text);
+	textColor = tc.color;
+	font = tc.font;
+}
+
+void UI::imageInput(SDL_Renderer* renderer, SDL_Texture* _defaultButton, SDL_Texture* _onMouseButton) {
+	defaultButton = _defaultButton;
+	onMouseButton = _onMouseButton;
+
+	SDL_QueryTexture(defaultButton, NULL, NULL, &size.width, &size.height);
+
+	textTexture = textToTexture(renderer, font, text, textColor);
+	SDL_QueryTexture(textTexture, NULL, NULL, &textSize.width, &textSize.height);
+
+}
+
+void UI::vertexCalc(SDL_Point _position) {
+	position.set(_position);
+
+	vertex[0] = { (int)_position.x + 59, (int)_position.y - 102 };
+	vertex[1] = { (int)_position.x + 118, (int)_position.y };
+	vertex[2] = { (int)_position.x + 59, (int)_position.y + 102 };
+	vertex[3] = { (int)_position.x - 59, (int)_position.y + 102 };
+	vertex[4] = { (int)_position.x - 118, (int)_position.y };
+	vertex[5] = { (int)_position.x - 59, (int)_position.y - 102 };
+}
+
+
+//###############################################################################################
+
 
 bool UI::isOnMouse(Input* input) {
 	// 점의 다각형 내부 외부 판단 알고리즘
@@ -64,12 +83,10 @@ bool UI::isOnMouse(Input* input) {
 	}
 }
 
-void UI::vertexCalc() {
-	SDL_FPoint pos = position.get();
-	vertex[0] = { (int)pos.x + 59, (int)pos.y - 102 };
-	vertex[1] = { (int)pos.x + 118, (int)pos.y };
-	vertex[2] = { (int)pos.x + 59, (int)pos.y + 102 };
-	vertex[3] = { (int)pos.x - 59, (int)pos.y + 102 };
-	vertex[4] = { (int)pos.x - 118, (int)pos.y };
-	vertex[5] = { (int)pos.x - 59, (int)pos.y - 102 };
+
+UI::~UI() {
+	SDL_DestroyTexture(defaultButton);
+	SDL_DestroyTexture(onMouseButton);
+	SDL_DestroyTexture(textTexture);
+	TTF_CloseFont(font);
 }

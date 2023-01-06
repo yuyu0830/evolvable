@@ -3,8 +3,12 @@
 
 int Object::update() {
     if (eventHandling()) {
-        button[0]->update(input);
-        button[1]->update(input);
+        if (isInGame) {
+
+        }
+        else {
+
+        }
         return 1;
     }
     else {
@@ -15,10 +19,12 @@ int Object::update() {
 int Object::draw() {
     SDL_RenderClear(renderer);
 
-    button[0]->draw(renderer);
-    button[1]->draw(renderer);
+    if (isInGame) {
 
-    //background.draw(renderer);
+    }
+    else {
+
+    }
 
     SDL_RenderPresent(renderer);
     return 0;
@@ -31,7 +37,6 @@ void Object::collisionCheck() {
     else {
 
     }
-
 }
 
 bool Object::eventHandling() {
@@ -94,19 +99,6 @@ bool Object::init(SDL_Window* window) {
 
     //tmp#############################################################
     
-    tmpFont = TTF_OpenFont("./src/font/HBIOS-SYS.ttf", 32);
-
-    background.load(renderer, "./src/image/MainBg.png");
-
-    button[0] = new UI();
-    button[1] = new UI();
-    button[0]->load(renderer, "./src/image/Button_default.png", "./src/image/Button_onMouse.png", { "button1", TAG_UI, 1 }, { COLOR_BLACK, tmpFont, "New Game" });
-    button[1]->load(renderer, "./src/image/Button_default.png", "./src/image/Button_onMouse.png", { "button2", TAG_UI, 2 }, { COLOR_BLACK, tmpFont, "Load Game" });
-    button[0]->position.set(100, 100);
-    button[1]->position.set(500, 100);
-    button[0]->vertexCalc();
-    button[1]->vertexCalc();
-    
     //tmp#############################################################
 
     if (renderer != NULL) { return 1; }
@@ -120,7 +112,6 @@ void Object::initVariable() {
         for (int j = 0; j < TAG_NUMBER; j++) {
             colliderTriggerTable[i][j] = false;
         }
-        graphic[i] = NULL;
     }
 }
 

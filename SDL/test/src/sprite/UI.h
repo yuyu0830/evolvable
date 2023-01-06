@@ -7,15 +7,23 @@
 
 class UI : public Graphic {
 public:
+	UI(ObjectData data, TextContainer tc, SDL_Renderer* renderer, SDL_Texture* defaultButton, SDL_Texture* onMouseButton, SDL_Point _position);
 	~UI();
-	virtual void load(SDL_Renderer* renderer, const char* fileDir, const char* onMouseFileDir, ObjectData data , TextContainer tc);
-	virtual void update(Input* input);
-	virtual void draw(SDL_Renderer* renderer);
-	void vertexCalc();
+	void update(Input* input);
+	void draw(SDL_Renderer* renderer);
+
+	//반복 사용
 	bool isOnMouse(Input* input);
 
+	//한번 사용
+	void textDataInput(TextContainer tc);
+	void imageInput(SDL_Renderer* renderer, SDL_Texture* defaultButton, SDL_Texture* onMouseButton);
+	void vertexCalc(SDL_Point _position);
+	
+
 private:
-	SDL_Texture* onMouseTexture;
+	SDL_Texture* defaultButton;
+	SDL_Texture* onMouseButton;
 	SDL_Point vertex[6];
 	bool onMouse;
 

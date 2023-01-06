@@ -10,6 +10,7 @@ public:
 	SDL_FPoint get();
 	void set(float _x, float _y);
 	void set(int _x, int _y);
+	void set(SDL_Point pos);
 	void move(float angle, float speed);
 
 private:
