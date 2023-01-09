@@ -1,8 +1,8 @@
 #include "graphic.h"
 
-Graphic::~Graphic() {
-
-}
+//Graphic::~Graphic() {
+//
+//}
 
 void Graphic::dataInput(ObjectData data) {
 	strcpy_s(name, data.name);

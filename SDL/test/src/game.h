@@ -12,6 +12,10 @@
 
 #include "util.h"
 #include "object.h"
+#include "timer.h"
+
+#include "graphic/renderer.h"
+#include "graphic/font.h"
 
 class Game {
 public:
@@ -21,15 +25,10 @@ public:
 private:
 	bool init();
 	void gameLoop();
-	void fpsHandling();
 
 	bool running;
 
 	Object object;
-
-	SDL_Window* window;
-	TTF_Font* font;
-	Timer timer;
 
 	float fps;
 	int frameCounter;

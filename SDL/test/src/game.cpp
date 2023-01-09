@@ -1,11 +1,6 @@
 #include "game.h"
 
 Game::Game() {
-    //Start timer
-    timer.program.start();
-    frameCounter = 0;
-    fps = 0.f;
-
     //Initialize Game and Start Game!
     if (this->init()) {
         this->gameLoop();
@@ -16,58 +11,22 @@ Game::Game() {
 }
 
 Game::~Game() {
-    SDL_DestroyWindow(window);
-    TTF_CloseFont(font);
+
 }
 
 bool Game::init() {
-    srand(time(NULL));
-    //initialize video
+    // ##############################################################################################
+    // Library Initialize
+    // initialize video library
     if (SDL_Init(SDL_INIT_VIDEO) == 0) {
-        printf("Video Initialize Success!\n");
+        printf("SDL library Initialize Success!\n");
     }
     else {
-        printf("Video Initialize failed! error code : %s\n", (SDL_GetError()));
+        printf("SDL library Initialize failed! error code : %s\n", (SDL_GetError()));
         return 0;
     }
 
-    //initialize window
-    window = SDL_CreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL);
-    if (window != NULL) {
-        printf("Create Window Success!\n");
-    }
-    else {
-        printf("Create window failed! error code : %s\n", (SDL_GetError()));
-        return 0;
-    }
-
-    //initialize TTF
-    if (TTF_Init() == 0) {
-        printf("Font Initialize Success!\n");
-    }
-    else {
-        printf("Font initialize failed! error code : %s\n", TTF_GetError());
-        return 0;
-    }
-
-    if (object.init(window)) {
-        printf("Renderer Initialize Success!\n");
-    }
-    else {
-        printf("Renderer Initialize failed! error code : %s\n", (SDL_GetError()));
-    }
-    ////initialize renderer
-    //renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    //if (renderer != NULL)
-    //{
-    //    printf("Renderer Initialize Success!\n");
-    //}
-    //else {
-    //    printf("Renderer Initialize failed! error code : %s\n", (SDL_GetError()));
-    //    return 0;
-    //}
-
-    //initialize IMG
+    // initialize IMG library
     if ((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) == IMG_INIT_PNG) {
         printf("Image library Initialize Success!\n");
     }
@@ -76,38 +35,43 @@ bool Game::init() {
         return 0;
     }
 
-    //initialize font
-    font = TTF_OpenFont("src/font/HBIOS-SYS.ttf", 32);
-    if (font != NULL) {
-        printf("Load Font Success!\n");
+    // initialize TTF library
+    if (TTF_Init() == 0) {
+        printf("Font library Initialize Success!\n");
     }
     else {
-        printf("Failed to load font!\n");
+        printf("Font library initialize failed! error code : %s\n", TTF_GetError());
         return 0;
     }
 
-    printf("Game initialize Complete!\n");
+
+    // ##############################################################################################
+    // Class Initialize
+    // initialize renderer
+    if (!Renderer::getInstance()->set()) { return 0; }
+
+    // initialize font
+    if (!Font::set()) { return 0; }
+
+    // initialize object
+    object.init();
+
+    Timer::start(TIMER_PROGRAM);
 
     running = true;
+    srand(time(NULL));
+
+    printf("Game initialize Complete!\n");
     return 1;
 }
 
 void Game::gameLoop() {
     while (running) {
-        timer.frame.start();
+        Timer::start(TIMER_FRAME);
 
         running = object.update();
         object.draw();
 
-        fpsHandling();
+        Timer::frameSynchronization();
     }
-}
-
-void Game::fpsHandling() {
-    fps = frameCounter / (timer.program.getTicks() / 1000.0f);
-    int frameTicks = timer.frame.getTicks();
-    if (frameTicks < SCREEN_TICK_PER_FRAME) {
-        SDL_Delay(SCREEN_TICK_PER_FRAME - frameTicks);
-    }
-    frameCounter++;
 }

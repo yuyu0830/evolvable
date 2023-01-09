@@ -30,6 +30,15 @@
     <Filter Include="Shape\Shape src">
       <UniqueIdentifier>{e238366d-240b-4e08-8407-ea5e11444281}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphic">
+      <UniqueIdentifier>{0f1d4114-5e8e-4ca6-88c9-90261a7cfc1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphic\src">
+      <UniqueIdentifier>{583f3b85-e71a-4819-98fa-a7250cfbe083}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphic\h">
+      <UniqueIdentifier>{b29acf68-1397-405f-ba03-e1b78bfc442d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\draw.cpp">
@@ -86,6 +95,15 @@
     <ClCompile Include="src\menu.cpp">
       <Filter>Main\src</Filter>
     </ClCompile>
+    <ClCompile Include="src\graphic\renderer.cpp">
+      <Filter>Graphic\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphic\font.cpp">
+      <Filter>Graphic\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\input.cpp">
+      <Filter>Main\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\draw.h">
@@ -137,6 +155,18 @@
       <Filter>Shape\Shape h</Filter>
     </ClInclude>
     <ClInclude Include="src\menu.h">
+      <Filter>Main\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphic\renderer.h">
+      <Filter>Graphic\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphic\font.h">
+      <Filter>Graphic\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\input.h">
+      <Filter>Main\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\singleton.h">
       <Filter>Main\h</Filter>
     </ClInclude>
   </ItemGroup>

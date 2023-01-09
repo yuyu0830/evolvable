@@ -1,6 +1,6 @@
 #include "draw.h"
 
-void drawTexture(SDL_Renderer* renderer, int x, int y, SDL_Texture* texture) {
+void drawTexture(int x, int y, SDL_Texture* texture) {
     SDL_Rect src;
     SDL_Rect dst;
 
@@ -13,14 +13,14 @@ void drawTexture(SDL_Renderer* renderer, int x, int y, SDL_Texture* texture) {
     dst.w = src.w;
     dst.h = src.h;
 
-    SDL_RenderCopy(renderer, texture, NULL, &dst);
+    SDL_RenderCopy(Renderer::getInstance()->getRenderer(), texture, NULL, &dst);
 }
 
-void drawTextureOption(SDL_Renderer* renderer, SDL_Rect src, SDL_Rect dst, SDL_Texture* texture) {
-    SDL_RenderCopy(renderer, texture, &src, &dst);
+void drawTextureOption(SDL_Rect src, SDL_Rect dst, SDL_Texture* texture) {
+    SDL_RenderCopy(Renderer::getInstance()->getRenderer(), texture, &src, &dst);
 }
 
-void drawTextureEx(SDL_Renderer* renderer, int x, int y, float angle, SDL_Texture* texture) {
+void drawTextureEx(int x, int y, float angle, SDL_Texture* texture) {
     SDL_Rect src;
     SDL_Rect dst;
     SDL_Point center;
@@ -35,18 +35,18 @@ void drawTextureEx(SDL_Renderer* renderer, int x, int y, float angle, SDL_Textur
     dst.h = src.h;
     center.x = dst.w / 2;
     center.y = src.h / 2;
-    SDL_RenderCopyEx(renderer, texture, &src, &dst, angle, &center, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(Renderer::getInstance()->getRenderer(), texture, &src, &dst, angle, &center, SDL_FLIP_NONE);
 }
 
-void drawTextureExOption(SDL_Renderer* renderer, SDL_Rect src, SDL_Rect dst, float angle, SDL_Texture* texture) {
+void drawTextureExOption(SDL_Rect src, SDL_Rect dst, float angle, SDL_Texture* texture) {
     SDL_Point center;
     center.x = dst.w / 2;
     center.y = src.h / 2;
 
-    SDL_RenderCopyEx(renderer, texture, &src, &dst, angle, &center, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(Renderer::getInstance()->getRenderer(), texture, &src, &dst, angle, &center, SDL_FLIP_NONE);
 }
 
-SDL_Texture* loadTexture(SDL_Renderer* renderer, const char* file) {
+SDL_Texture* loadTexture(const char* file) {
     SDL_Surface* surface;
     SDL_Texture* texture;
 
@@ -56,14 +56,14 @@ SDL_Texture* loadTexture(SDL_Renderer* renderer, const char* file) {
         return NULL;
     }
 
-    texture = SDL_CreateTextureFromSurface(renderer, surface);
+    texture = SDL_CreateTextureFromSurface(Renderer::getInstance()->getRenderer(), surface);
     if (texture == NULL)  printf("unable to create texture.\n");
     SDL_FreeSurface(surface);
 
     return texture;
 }
 
-SDL_Texture* textToTexture(SDL_Renderer* renderer, TTF_Font* font, const char* text, SDL_Color color) {
+SDL_Texture* textToTexture(TTF_Font* font, const char* text, SDL_Color color) {
     SDL_Surface* surface;
     SDL_Texture* texture;
 
@@ -73,7 +73,7 @@ SDL_Texture* textToTexture(SDL_Renderer* renderer, TTF_Font* font, const char* t
         return NULL;
     }
 
-    texture = SDL_CreateTextureFromSurface(renderer, surface);
+    texture = SDL_CreateTextureFromSurface(Renderer::getInstance()->getRenderer(), surface);
     if (texture == NULL)  printf("unable to create texture.\n");
     SDL_FreeSurface(surface);
 

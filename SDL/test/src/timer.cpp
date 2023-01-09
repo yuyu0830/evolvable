@@ -1,104 +1,91 @@
 ﻿#include "timer.h"
 
-LTimer::LTimer()
-{
-    //Initialize the variables
-    mStartTicks = 0;
-    mPausedTicks = 0;
+Uint32 Timer::startTicks[TIMER_NUMBER];
+Uint32 Timer::pausedTicks[TIMER_NUMBER];
 
-    mPaused = false;
-    mStarted = false;
+bool Timer::paused[TIMER_NUMBER];
+bool Timer::started[TIMER_NUMBER];
+
+int Timer::frameCounter = 0;
+float Timer::fps = 0.f;
+
+Timer::Timer() {
+    for (int i = 0; i < 3; i++) {
+        startTicks[i] = 0;
+        pausedTicks[i] = 0;
+
+        paused[i] = false;
+        started[i] = false;
+    }
+}
+    
+void Timer::start(timer timerType) {
+    started[timerType] = true;
+    paused[timerType] = false;
+
+    startTicks[timerType] = SDL_GetTicks();
+    pausedTicks[timerType] = 0;
 }
 
-void LTimer::start()
-{
-    //Start the timer
-    mStarted = true;
+void Timer::stop(timer timerType) {
+    started[timerType] = false;
+    paused[timerType] = false;
 
-    //Unpause the timer
-    mPaused = false;
-
-    //Get the current clock time
-    mStartTicks = SDL_GetTicks();
-    mPausedTicks = 0;
+    startTicks[timerType] = 0;
+    pausedTicks[timerType] = 0;
 }
 
-void LTimer::stop()
-{
-    //Stop the timer
-    mStarted = false;
-
-    //Unpause the timer
-    mPaused = false;
-
-    //Clear tick variables
-    mStartTicks = 0;
-    mPausedTicks = 0;
-}
-
-void LTimer::pause()
-{
-    //If the timer is running and isn't already paused
-    if (mStarted && !mPaused)
+void Timer::pause(timer timerType) {
+    if (started[timerType] && !paused[timerType])
     {
-        //Pause the timer
-        mPaused = true;
-
-        //Calculate the paused ticks
-        mPausedTicks = SDL_GetTicks() - mStartTicks;
-        mStartTicks = 0;
+        paused[timerType] = true;
+        pausedTicks[timerType] = SDL_GetTicks() - startTicks[timerType];
+        startTicks[timerType] = 0;
     }
 }
 
-void LTimer::unpause()
-{
-    //If the timer is running and paused
-    if (mStarted && mPaused)
+void Timer::unpause(timer timerType) {
+    if (started[timerType] && paused[timerType])
     {
-        //Unpause the timer
-        mPaused = false;
-
-        //Reset the starting ticks
-        mStartTicks = SDL_GetTicks() - mPausedTicks;
-
-        //Reset the paused ticks
-        mPausedTicks = 0;
+        paused[timerType] = false;
+        startTicks[timerType] = SDL_GetTicks() - pausedTicks[timerType];
+        pausedTicks[timerType] = 0;
     }
 }
 
-Uint32 LTimer::getTicks()
-{
-    //The actual timer time
+void Timer::frameSynchronization() {
+    fps = frameCounter / (getTicks(TIMER_PROGRAM) / 1000.0f);
+    int frameTicks = getTicks(TIMER_FRAME);
+    if (frameTicks < SCREEN_TICK_PER_FRAME) {
+        SDL_Delay(SCREEN_TICK_PER_FRAME - frameTicks);
+    }
+    frameCounter++;
+}
+
+Uint32 Timer::getTicks(timer timerType) {
     Uint32 time = 0;
-
-    //If the timer is running
-    if (mStarted)
+    if (started[timerType])
     {
-        //If the timer is paused
-        if (mPaused)
+        if (paused[timerType])
         {
-            //Return the number of ticks when the timer was paused
-            time = mPausedTicks;
+            time = pausedTicks[timerType];
         }
         else
         {
-            //Return the current time minus the start time
-            time = SDL_GetTicks() - mStartTicks;
+            time = SDL_GetTicks() - startTicks[timerType];
         }
     }
-
     return time;
 }
 
-
-bool LTimer::isStarted()
-{
-    //Timer is running and paused or unpaused
-    return mStarted;
+float Timer::getFps() {
+    return fps;
 }
 
-bool LTimer::isPaused()
-{
-    //Timer is running and paused
-    return mPaused && mStarted;
+bool Timer::isStarted(timer timerType) {
+    return started[timerType];
+}
+
+bool Timer::isPaused(timer timerType) {
+    return paused[timerType] && started[timerType];
 }

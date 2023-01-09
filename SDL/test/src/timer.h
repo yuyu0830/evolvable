@@ -3,35 +3,32 @@
 
 #include <SDL.h>
 
-class LTimer
-{
+#include "util.h"
+
+class Timer {
 public:
-	//Initializes variables
-	LTimer();
+	Timer();
+	static void start(timer timerType);
+	static void stop(timer timerType);
+	static void pause(timer timerType);
+	static void unpause(timer timerType);
 
-	//The various clock actions
-	void start();
-	void stop();
-	void pause();
-	void unpause();
+	static void frameSynchronization();
 
-	//Gets the timer's time
-	Uint32 getTicks();
-
-	//Checks the status of the timer
-	bool isStarted();
-	bool isPaused();
+	static Uint32 getTicks(timer timerType);
+	static float getFps();
+	
+	static bool isStarted(timer timerType);
+	static bool isPaused(timer timerType);
 
 private:
-	//The clock time when the timer started
-	Uint32 mStartTicks;
+	static Uint32 startTicks[TIMER_NUMBER];
+	static Uint32 pausedTicks[TIMER_NUMBER];
 
-	//The ticks stored when the timer was paused
-	Uint32 mPausedTicks;
-
-	//The timer status
-	bool mPaused;
-	bool mStarted;
+	static bool paused[TIMER_NUMBER];
+	static bool started[TIMER_NUMBER];
+	static int frameCounter;
+	static float fps;
 };
 
 #endif

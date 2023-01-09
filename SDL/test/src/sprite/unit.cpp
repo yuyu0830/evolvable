@@ -1,12 +1,10 @@
 #include "unit.h"
 
 void Unit::load(SDL_Renderer* renderer, const char* fileDir, ObjectData data, UnitData udata) {
-	texture = loadTexture(renderer, fileDir);
-
 	strcpy_s(name, data.name);
 	tag = data.tag;
 	unitNum = data.unitNum;
-	SDL_QueryTexture(texture, NULL, NULL, &size.width, &size.height);
+	/*SDL_QueryTexture(texture, NULL, NULL, &size.width, &size.height);*/
 
 	invincible = udata.invincible;
 	atk = udata.atk;
@@ -14,12 +12,11 @@ void Unit::load(SDL_Renderer* renderer, const char* fileDir, ObjectData data, Un
 	curHP = udata.curHP;
 	speed = udata.speed;
 
-	
 }
 
-void Unit::update(Input* input) {
-
-}
+//void Unit::update(Input* input) {
+//
+//}
 
 //void Unit::draw(SDL_Renderer* renderer) {
 //	SDL_FPoint pos = position.get();

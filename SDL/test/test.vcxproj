@@ -27,6 +27,9 @@
     <ClCompile Include="src\collider\squareEx.cpp" />
     <ClCompile Include="src\draw.cpp" />
     <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\graphic\font.cpp" />
+    <ClCompile Include="src\graphic\renderer.cpp" />
+    <ClCompile Include="src\input.cpp" />
     <ClCompile Include="src\menu.cpp" />
     <ClCompile Include="src\object.cpp" />
     <ClCompile Include="src\position.cpp" />
@@ -47,9 +50,13 @@
     <ClInclude Include="src\collider\squareEx.h" />
     <ClInclude Include="src\draw.h" />
     <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\graphic\font.h" />
+    <ClInclude Include="src\graphic\renderer.h" />
+    <ClInclude Include="src\input.h" />
     <ClInclude Include="src\menu.h" />
     <ClInclude Include="src\object.h" />
     <ClInclude Include="src\position.h" />
+    <ClInclude Include="src\singleton.h" />
     <ClInclude Include="src\sprite\graphic.h" />
     <ClInclude Include="src\sprite\player.h" />
     <ClInclude Include="src\sprite\UI.h" />
@@ -155,13 +162,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\lib\SDL2-2.24.2\include;$(SolutionDir)\lib\SDL2_image-2.6.2\include;$(SolutionDir)\lib\SDL2_ttf-2.20.1\include;$(SolutionDir)lib\SDL2_gfx-1.0.4\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\lib\SDL2-2.24.2\include;$(SolutionDir)\lib\SDL2_image-2.6.2\include;$(SolutionDir)\lib\SDL2_ttf-2.20.1\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\lib\SDL2-2.24.2\lib\x64;$(SolutionDir)\lib\SDL2_image-2.6.2\lib\x64;$(SolutionDir)\lib\SDL2_ttf-2.20.1\lib\x64;$(SolutionDir)lib\SDL2_gfx-1.0.4\lib\x64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_gfx.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\lib\SDL2-2.24.2\lib\x64;$(SolutionDir)\lib\SDL2_image-2.6.2\lib\x64;$(SolutionDir)\lib\SDL2_ttf-2.20.1\lib\x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

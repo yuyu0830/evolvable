@@ -4,7 +4,7 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
-#include "timer.h"
+#include <SDL_mouse.h>
 
 const char WINDOW_TITLE[] = "test game";
 const int WINDOW_WIDTH = 1280;
@@ -40,26 +40,12 @@ struct UnitData {
 	float speed;
 };
 
-struct Input {
-	bool keys[255];
-	bool mouseClick[6];
-	bool mouseClicked[6];
-	SDL_Point mousePos;
-};
-
 struct TextContainer {
 	SDL_Color color;
 	TTF_Font* font;
 
 	char text[20];
 };
-
-struct Timer {
-	LTimer program;
-	LTimer frame;
-	LTimer game;
-};
-
 
 typedef enum {
 	TAG_PLAYER,
@@ -81,4 +67,11 @@ typedef enum {
 	SHAPE_SQUAREEX,
 	SHAPE_NUMBER
 } shape;
+
+typedef enum {
+	TIMER_PROGRAM,
+	TIMER_FRAME,
+	TIMER_INGAME,
+	TIMER_NUMBER
+} timer;
 #endif
