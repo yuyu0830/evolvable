@@ -18,7 +18,7 @@ int Object::update() {
 int Object::draw() {
     SDL_RenderClear(Renderer::getInstance()->getRenderer());
     if (!isInGame) {
-
+        menu->draw();
     }
     else {
 
@@ -40,6 +40,7 @@ void Object::collisionCheck() {
 void Object::init() {
     //Initialize variable
     initVariable();
+    menu = new Menu();
 }
 
 void Object::initVariable() {

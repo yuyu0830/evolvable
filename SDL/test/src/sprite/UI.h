@@ -9,8 +9,8 @@ class UI : public Graphic {
 public:
 	UI(ObjectData data, TextContainer tc, SDL_Renderer* renderer, SDL_Texture* defaultButton, SDL_Texture* onMouseButton, SDL_Point _position);
 	~UI();
-	//void update(Input* input);
-	void draw(SDL_Renderer* renderer);
+	void update();
+	void draw();
 
 	//반복 사용
 	//bool isOnMouse(Input* input);

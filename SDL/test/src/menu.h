@@ -13,13 +13,15 @@ class Menu {
 public:
 	Menu();
 
-	//void update(Input* input);
-	void draw(SDL_Texture* renderer);
-	void scenceChange(int nextScence);
+	void update();
+	void draw();
+
+	void drawBackgroundColor(SDL_Color color);
+	void scenceChange(menuScene scene);
 
 protected:
 	int scence;
-
+	
 	SDL_Texture* tile[5];
 };
 

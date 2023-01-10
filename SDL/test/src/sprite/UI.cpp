@@ -1,13 +1,10 @@
 #include "UI.h"
 
-//void UI::update(Input* input) {
-//	onMouse = isOnMouse(input);
-//	if (onMouse && input->mouseClick[SDL_BUTTON_LEFT]) {
-//		printf("%s\n", name);
-//	}
-//}
+void UI::update() {
 
-void UI::draw(SDL_Renderer* renderer) {
+}
+
+void UI::draw() {
 	SDL_FPoint pos = position.get();
 	if (onMouse) {
 		drawTexture((int)(pos.x - size.width / 2), (int)(pos.y - size.height / 2), onMouseButton);

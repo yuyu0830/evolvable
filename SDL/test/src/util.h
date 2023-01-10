@@ -74,4 +74,10 @@ typedef enum {
 	TIMER_INGAME,
 	TIMER_NUMBER
 } timer;
+
+typedef enum {
+	MENU_MAIN_SCENE,
+	MENU_SETTING_SCENE,
+	MENU_MAP_SELECT_SCENE
+} menuScene;
 #endif
