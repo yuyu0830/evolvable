@@ -10,15 +10,22 @@
 
 class Graphic {
 public:
-	void dataInput(ObjectData data);
+	Graphic* create(Position p, type type, );
+	Graphic* getNextPtr();
+	Graphic* getPriviousPtr();
+	void setNextPtr(Graphic* ptr);
+	void setPriviousPtr(Graphic* ptr);
+
 	Position position;
+
 
 protected:
 	Size size;
+	Graphic* nextPtr = NULL;
+	Graphic* priviousPtr = NULL;
 
-	char name[20];
-	int tag;
-	int unitNum;
+	type type;
+	static int nuitNum;
 };
 
 #endif

@@ -8,7 +8,6 @@
 #include <SDL_ttf.h>
 
 #include "util.h"
-#include "menu.h"
 
 #include "./sprite/UI.h"
 #include "./sprite/graphic.h"
@@ -31,7 +30,6 @@ public:
 	void initVariable();
 
 private:
-	Menu* menu;
 
 	bool isInGame;
 	bool colliderTriggerTable[TAG_NUMBER][TAG_NUMBER];

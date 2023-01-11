@@ -13,7 +13,7 @@ public:
 	void draw();
 
 	//반복 사용
-	//bool isOnMouse(Input* input);
+	bool isOnMouse();
 
 	//한번 사용
 	void textDataInput(TextContainer tc);
@@ -26,6 +26,7 @@ private:
 	SDL_Texture* onMouseButton;
 	SDL_Point vertex[6];
 	bool onMouse;
+	bool isClickable;
 
 	//text
 	TTF_Font* font;

@@ -7,8 +7,8 @@
 #include <SDL_mouse.h>
 
 const char WINDOW_TITLE[] = "test game";
-const int WINDOW_WIDTH = 1280;
-const int WINDOW_HEIGHT = 720;
+const int WINDOW_WIDTH = 1600;
+const int WINDOW_HEIGHT = 900;
 const int SCREEN_FPS = 60;
 const int SCREEN_TICK_PER_FRAME = 1000 / SCREEN_FPS;
 const float RADIAN = 57.295791f;
@@ -58,6 +58,11 @@ typedef enum {
 	TAG_BACKGROUND,
 	TAG_NUMBER
 } tag;
+
+typedef enum {
+	TYPE_PLAYER_DEFAULT = 1,
+	TYPE_ENEMY_DEFAULT = 21
+} type;
 
 typedef enum {
 	SHAPE_CIRCLE,

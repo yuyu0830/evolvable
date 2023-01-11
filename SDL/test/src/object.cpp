@@ -2,12 +2,7 @@
 
 int Object::update() {
     if (Input::eventHandling()) {
-        if (isInGame) {
-
-        }
-        else {
-
-        }
+        
         return 1;
     }
     else {
@@ -17,12 +12,7 @@ int Object::update() {
 
 int Object::draw() {
     SDL_RenderClear(Renderer::getInstance()->getRenderer());
-    if (!isInGame) {
-        menu->draw();
-    }
-    else {
-
-    }
+    
 
     SDL_RenderPresent(Renderer::getInstance()->getRenderer());
     return 0;
@@ -38,9 +28,7 @@ void Object::collisionCheck() {
 }
 
 void Object::init() {
-    //Initialize variable
     initVariable();
-    menu = new Menu();
 }
 
 void Object::initVariable() {

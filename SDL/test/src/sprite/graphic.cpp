@@ -1,11 +1,17 @@
 #include "graphic.h"
 
-//Graphic::~Graphic() {
-//
-//}
+Graphic* Graphic::getNextPtr() {
+	return nextPtr;
+}
 
-void Graphic::dataInput(ObjectData data) {
-	strcpy_s(name, data.name);
-	tag = data.tag;
-	unitNum = data.unitNum;
+Graphic* Graphic::getPriviousPtr() {
+	return priviousPtr;
+}
+
+void Graphic::setNextPtr(Graphic* ptr) {
+	nextPtr = ptr;
+}
+
+void Graphic::setPriviousPtr(Graphic* ptr) {
+	priviousPtr = ptr;
 }

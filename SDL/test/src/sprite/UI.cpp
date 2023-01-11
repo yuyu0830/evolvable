@@ -24,7 +24,6 @@ UI::UI(ObjectData data, TextContainer tc, SDL_Renderer* renderer, SDL_Texture* _
 	dataInput(data);
 	textDataInput(tc);
 	imageInput(renderer, _defaultButton, _onMouseButton);
-	vertexCalc(_position);
 }
 
 void UI::textDataInput(TextContainer tc) {

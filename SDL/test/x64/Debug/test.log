@@ -1,2 +1,16 @@
-﻿  menu.cpp
-  test.vcxproj -> C:\Users\User\Documents\GitHub\evolvable\SDL\x64\Debug\test.exe
+﻿  game.cpp
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\object.h(11,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'menu.h': No such file or directory
+  object.cpp
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\object.h(11,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'menu.h': No such file or directory
+  background.cpp
+  graphic.cpp
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\sprite\graphic.cpp(6,2): error C2065: 'unitNum': 선언되지 않은 식별자입니다.
+  player.cpp
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\sprite\player.cpp(8,2): error C2065: 'unitNum': 선언되지 않은 식별자입니다.
+  tile.cpp
+  UI.cpp
+  unit.cpp
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\sprite\unit.cpp(6,2): error C2065: 'unitNum': 선언되지 않은 식별자입니다.
+  main.cpp
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\object.h(11,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'menu.h': No such file or directory
+  코드를 생성하고 있습니다...
