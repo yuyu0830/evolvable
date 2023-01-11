@@ -1,42 +1,29 @@
 #include "object.h"
 
-int Object::update() {
-    if (Input::eventHandling()) {
-        
-        return 1;
-    }
-    else {
-        return 0;
-    }
+void Object::createObject(int x, int y, type _type) {
+	position.set(x, y);
+
 }
 
-int Object::draw() {
-    SDL_RenderClear(Renderer::getInstance()->getRenderer());
-    
-
-    SDL_RenderPresent(Renderer::getInstance()->getRenderer());
-    return 0;
+void Object::load(type _type) {
+	switch (_type) {
+	case UI_BUTTON:
+		Graphic* g;
+	}
 }
 
-void Object::collisionCheck() {
-    if (isInGame) {
-        
-    }
-    else {
-
-    }
+Object* Object::getNextPtr() {
+	return nextPtr;
 }
 
-void Object::init() {
-    initVariable();
+Object* Object::getPriviousPtr() {
+	return priviousPtr;
 }
 
-void Object::initVariable() {
-    isInGame = false;
+void Object::setNextPtr(Object* ptr) {
+	nextPtr = ptr;
+}
 
-    for (int i = 0; i < TAG_NUMBER; i++) {
-        for (int j = 0; j < TAG_NUMBER; j++) {
-            colliderTriggerTable[i][j] = false;
-        }
-    }
+void Object::setPriviousPtr(Object* ptr) {
+	priviousPtr = ptr;
 }

@@ -1,17 +1,6 @@
 #include "graphic.h"
 
-Graphic* Graphic::getNextPtr() {
-	return nextPtr;
-}
+Graphic* Graphic::create(int x, int y, type type) {
+	Graphic g;
 
-Graphic* Graphic::getPriviousPtr() {
-	return priviousPtr;
-}
-
-void Graphic::setNextPtr(Graphic* ptr) {
-	nextPtr = ptr;
-}
-
-void Graphic::setPriviousPtr(Graphic* ptr) {
-	priviousPtr = ptr;
 }

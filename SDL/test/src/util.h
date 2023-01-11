@@ -61,7 +61,9 @@ typedef enum {
 
 typedef enum {
 	TYPE_PLAYER_DEFAULT = 1,
-	TYPE_ENEMY_DEFAULT = 21
+	TYPE_ENEMY_DEFAULT = 21,
+	UI_BUTTON = 41,
+	UI_BACKGROUND
 } type;
 
 typedef enum {

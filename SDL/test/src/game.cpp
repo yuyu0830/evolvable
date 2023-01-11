@@ -10,9 +10,30 @@ Game::Game() {
     }
 }
 
-Game::~Game() {
+void Game::gameLoop() {
+    while (running) {
+        Timer::start(TIMER_FRAME);
+
+        update();
+        draw();
+
+        Timer::frameSynchronization();
+    }
+}
+
+int Game::update() {
 
 }
+
+int Game::draw() {
+
+}
+
+
+
+
+
+
 
 bool Game::init() {
     // ##############################################################################################
@@ -65,13 +86,3 @@ bool Game::init() {
     return 1;
 }
 
-void Game::gameLoop() {
-    while (running) {
-        Timer::start(TIMER_FRAME);
-
-        running = object.update();
-        object.draw();
-
-        Timer::frameSynchronization();
-    }
-}

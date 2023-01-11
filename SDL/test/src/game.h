@@ -20,17 +20,13 @@
 class Game {
 public:
 	Game();
-	~Game();
 
 private:
 	bool init();
 	void gameLoop();
+	int draw();
+	int update();
 
 	bool running;
-
-	Object object;
-
-	float fps;
-	int frameCounter;
 };
 #endif

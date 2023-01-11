@@ -2,37 +2,41 @@
 #define OBJECT_H
 
 #include <iostream>
-#include <new>
+#include <vector>
 
 #include <SDL_Image.h>
 #include <SDL_ttf.h>
 
 #include "util.h"
-
-#include "./sprite/UI.h"
-#include "./sprite/graphic.h"
-#include "./sprite/unit.h"
-#include "./sprite/player.h"
-
+#include "Position.h"
 #include "collider.h"
 #include "input.h"
 
+#include "sprite/graphic.h"
+
 class Object {
 public:
-	int update();
-	int draw();
+	void createObject(int x, int y, type _type);
 
-	//반복 사용
-	void collisionCheck();
+	void load(type _type);
 
-	//한번 사용
-	void init();
-	void initVariable();
+	Object* getNextPtr();
+	Object* getPriviousPtr();
+	void setNextPtr(Object* ptr);
+	void setPriviousPtr(Object* ptr);
+
+	Position position;
+	Size size;
 
 private:
+	std::vector<Graphic*> graphic;
+	Object* nextPtr = NULL;
+	Object* priviousPtr = NULL;
 
-	bool isInGame;
-	bool colliderTriggerTable[TAG_NUMBER][TAG_NUMBER];
+	type objType;
+	int objNum;
+
+	static int staticObjNum;
 };
 
 #endif
