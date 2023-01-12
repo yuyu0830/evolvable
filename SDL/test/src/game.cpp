@@ -22,11 +22,18 @@ void Game::gameLoop() {
 }
 
 int Game::update() {
-
+    Input::eventHandling();
+    o->update();
+    return 0;
 }
 
 int Game::draw() {
+    SDL_RenderClear(Renderer::getInstance()->getRenderer());
 
+    o->draw();
+
+    SDL_RenderPresent(Renderer::getInstance()->getRenderer());
+    return 0;
 }
 
 
@@ -73,9 +80,8 @@ bool Game::init() {
 
     // initialize font
     if (!Font::set()) { return 0; }
-
-    // initialize object
-    object.init();
+    char b[5][20] = { "Main_tile1", "Main_tile2", "Main_tile3", "", ""};
+    o = Object::createObject(200, 300, UI_BUTTON);
 
     Timer::start(TIMER_PROGRAM);
 

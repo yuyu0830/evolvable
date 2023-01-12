@@ -10,12 +10,13 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
+#include "renderer.h"
+#include "font.h"
 #include "util.h"
 #include "object.h"
 #include "timer.h"
 
-#include "graphic/renderer.h"
-#include "graphic/font.h"
+#include "sprite/graphic.h"
 
 class Game {
 public:
@@ -26,6 +27,8 @@ private:
 	void gameLoop();
 	int draw();
 	int update();
+
+	Object* o;
 
 	bool running;
 };

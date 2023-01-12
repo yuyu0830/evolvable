@@ -1,19 +1,8 @@
 #include "player.h"
 
-void Player::load(SDL_Renderer* renderer, const char* fileDir, ObjectData data, UnitData udata) {
-	//texture = loadTexture(renderer, fileDir);
-
-	strcpy_s(name, data.name);
-	tag = data.tag;
-	unitNum = data.unitNum;
-	//SDL_QueryTexture(texture, NULL, NULL, &size.width, &size.height);
-
-	invincible = udata.invincible;
-	atk = udata.atk;
-	maxHP = udata.maxHP;
-	curHP = udata.curHP;
-	speed = udata.speed;
-}
+//void Player::load() {
+//
+//}
 
 //void Player::update(Input* input) {
 //	if (input->keys[SDL_SCANCODE_W]) {

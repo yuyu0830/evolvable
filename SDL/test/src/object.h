@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <new>
 
 #include <SDL_Image.h>
 #include <SDL_ttf.h>
@@ -16,25 +17,32 @@
 
 class Object {
 public:
-	void createObject(int x, int y, type _type);
-
+	static Object* createObject(int x, int y, type _type);
 	void load(type _type);
+
+	void draw();
+	void update();
 
 	Object* getNextPtr();
 	Object* getPriviousPtr();
 	void setNextPtr(Object* ptr);
 	void setPriviousPtr(Object* ptr);
 
+	void setPtrNull();
+
+	~Object();
+
 	Position position;
 	Size size;
 
-private:
-	std::vector<Graphic*> graphic;
+protected:
+	Graphic* graphic[10];
 	Object* nextPtr = NULL;
 	Object* priviousPtr = NULL;
 
 	type objType;
 	int objNum;
+	int graphicNum;
 
 	static int staticObjNum;
 };

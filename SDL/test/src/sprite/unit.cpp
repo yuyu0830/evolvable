@@ -1,16 +1,16 @@
 #include "unit.h"
 
 void Unit::load(SDL_Renderer* renderer, const char* fileDir, ObjectData data, UnitData udata) {
-	strcpy_s(name, data.name);
-	tag = data.tag;
-	unitNum = data.unitNum;
-	/*SDL_QueryTexture(texture, NULL, NULL, &size.width, &size.height);*/
+	//strcpy_s(name, data.name);
+	//tag = data.tag;
+	//unitNum = data.unitNum;
+	///*SDL_QueryTexture(texture, NULL, NULL, &size.width, &size.height);*/
 
-	invincible = udata.invincible;
-	atk = udata.atk;
-	maxHP = udata.maxHP;
-	curHP = udata.curHP;
-	speed = udata.speed;
+	//invincible = udata.invincible;
+	//atk = udata.atk;
+	//maxHP = udata.maxHP;
+	//curHP = udata.curHP;
+	//speed = udata.speed;
 
 }
 

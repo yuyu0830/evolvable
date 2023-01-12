@@ -63,6 +63,10 @@ Uint32 Input::getMouseClicked(Uint8 button) {
     return mouseClicked[button];
 }
 
+void Input::setMouseClicked(Uint8 button) {
+    mouseClicked[button] = true;
+}
+
 SDL_Point Input::getMousePosition() {
     return mousePosition;
 }

@@ -1,42 +1,17 @@
 ﻿#include <iostream>
 
-class P {
-public:
-    static int num;
+void print(const char c[20][5], int n) {
     
-    static void up() {
-        num++;
-    }
-    static void print() {
-        printf("%d\n", num);
-    }
-    
-};
-
-int P::num = 1;
-
-class C : public P {
-
-};
+    for (int i = 0; i < n; i++) {
+        char a[30] = "dddd";
+        strcat_s(a, c[i]);
+        printf("%s\n", a);
+    };
+}
 
 int main(int argv, char** args) {
-    P* p2 = new P();
-    P* pc = new C();
-    
-    P::print();
-    P::up();
-    P::print();
-    p2->print();
-    p2->up();
-    p2->print();
-    P::print();
-    C::up();
-    C::print();
-    pc->print();
-    pc->up();
-    pc->print();
-    P::print();
-    C::print();
+    char a[20][5] = { "abc", "bbb", "ccc", "ddd", ""};
+    print(a, 3);
     return 0;
 }
 

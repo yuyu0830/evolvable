@@ -16,6 +16,26 @@ void drawTexture(int x, int y, SDL_Texture* texture) {
     SDL_RenderCopy(Renderer::getInstance()->getRenderer(), texture, NULL, &dst);
 }
 
+void drawTexture(SDL_FPoint pos, SDL_Texture* texture) {
+    SDL_Rect src;
+    SDL_Rect dst;
+
+    src.x = 0;
+    src.y = 0;
+    SDL_QueryTexture(texture, NULL, NULL, &src.w, &src.h);
+
+    int x = pos.x;
+    int y = pos.y;
+
+    dst.x = x;
+    dst.y = y;
+    dst.w = src.w;
+    dst.h = src.h;
+
+    SDL_RenderCopy(Renderer::getInstance()->getRenderer(), texture, NULL, &dst);
+}
+
+
 void drawTextureOption(SDL_Rect src, SDL_Rect dst, SDL_Texture* texture) {
     SDL_RenderCopy(Renderer::getInstance()->getRenderer(), texture, &src, &dst);
 }
@@ -49,8 +69,10 @@ void drawTextureExOption(SDL_Rect src, SDL_Rect dst, float angle, SDL_Texture* t
 SDL_Texture* loadTexture(const char* file) {
     SDL_Surface* surface;
     SDL_Texture* texture;
-
-    surface = IMG_Load(file);
+    char dir[50] = "src\\image\\";
+    strcat_s(dir, file);
+    strcat_s(dir, ".png");
+    surface = IMG_Load(dir);
     if (surface == NULL) {
         printf("fail to read %s\n", file);
         return NULL;

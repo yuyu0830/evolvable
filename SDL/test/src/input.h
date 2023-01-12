@@ -12,6 +12,7 @@ public:
 	static Uint32 getKeys(SDL_Scancode key);
 	static Uint32 getMouseClick(Uint8 button);
 	static Uint32 getMouseClicked(Uint8 button);
+	static void setMouseClicked(Uint8 button);
 	static SDL_Point getMousePosition();
 
 private:

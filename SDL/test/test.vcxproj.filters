@@ -21,22 +21,13 @@
     <Filter Include="2. Sprite\Sprite h">
       <UniqueIdentifier>{cbdb291e-2070-4501-b628-c60df73fc2be}</UniqueIdentifier>
     </Filter>
-    <Filter Include="3. Graphic">
-      <UniqueIdentifier>{0f1d4114-5e8e-4ca6-88c9-90261a7cfc1f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3. Graphic\src">
-      <UniqueIdentifier>{583f3b85-e71a-4819-98fa-a7250cfbe083}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3. Graphic\h">
-      <UniqueIdentifier>{b29acf68-1397-405f-ba03-e1b78bfc442d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="4. Shape">
+    <Filter Include="3. Shape">
       <UniqueIdentifier>{b1dbe5e3-5e02-4457-8534-e9282b45a890}</UniqueIdentifier>
     </Filter>
-    <Filter Include="4. Shape\Shape h">
+    <Filter Include="3. Shape\Shape h">
       <UniqueIdentifier>{812ccd55-627e-413c-93a7-8ec63df3cfb9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="4. Shape\Shape src">
+    <Filter Include="3. Shape\Shape src">
       <UniqueIdentifier>{e238366d-240b-4e08-8407-ea5e11444281}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -78,25 +69,19 @@
       <Filter>1. Main\src</Filter>
     </ClCompile>
     <ClCompile Include="src\collider\circle.cpp">
-      <Filter>4. Shape\Shape src</Filter>
+      <Filter>3. Shape\Shape src</Filter>
     </ClCompile>
     <ClCompile Include="src\collider\hexagon.cpp">
-      <Filter>4. Shape\Shape src</Filter>
+      <Filter>3. Shape\Shape src</Filter>
     </ClCompile>
     <ClCompile Include="src\collider\point.cpp">
-      <Filter>4. Shape\Shape src</Filter>
+      <Filter>3. Shape\Shape src</Filter>
     </ClCompile>
     <ClCompile Include="src\collider\square.cpp">
-      <Filter>4. Shape\Shape src</Filter>
+      <Filter>3. Shape\Shape src</Filter>
     </ClCompile>
     <ClCompile Include="src\collider\squareEx.cpp">
-      <Filter>4. Shape\Shape src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphic\renderer.cpp">
-      <Filter>3. Graphic\src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphic\font.cpp">
-      <Filter>3. Graphic\src</Filter>
+      <Filter>3. Shape\Shape src</Filter>
     </ClCompile>
     <ClCompile Include="src\input.cpp">
       <Filter>1. Main\src</Filter>
@@ -106,6 +91,12 @@
     </ClCompile>
     <ClCompile Include="src\sprite\tile.cpp">
       <Filter>2. Sprite\Sprite src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\font.cpp">
+      <Filter>1. Main\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderer.cpp">
+      <Filter>1. Main\src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -143,25 +134,19 @@
       <Filter>1. Main\h</Filter>
     </ClInclude>
     <ClInclude Include="src\collider\circle.h">
-      <Filter>4. Shape\Shape h</Filter>
+      <Filter>3. Shape\Shape h</Filter>
     </ClInclude>
     <ClInclude Include="src\collider\hexagon.h">
-      <Filter>4. Shape\Shape h</Filter>
+      <Filter>3. Shape\Shape h</Filter>
     </ClInclude>
     <ClInclude Include="src\collider\point.h">
-      <Filter>4. Shape\Shape h</Filter>
+      <Filter>3. Shape\Shape h</Filter>
     </ClInclude>
     <ClInclude Include="src\collider\square.h">
-      <Filter>4. Shape\Shape h</Filter>
+      <Filter>3. Shape\Shape h</Filter>
     </ClInclude>
     <ClInclude Include="src\collider\squareEx.h">
-      <Filter>4. Shape\Shape h</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphic\renderer.h">
-      <Filter>3. Graphic\h</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphic\font.h">
-      <Filter>3. Graphic\h</Filter>
+      <Filter>3. Shape\Shape h</Filter>
     </ClInclude>
     <ClInclude Include="src\input.h">
       <Filter>1. Main\h</Filter>
@@ -174,6 +159,12 @@
     </ClInclude>
     <ClInclude Include="src\sprite\tile.h">
       <Filter>2. Sprite\Sprite h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\font.h">
+      <Filter>1. Main\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer.h">
+      <Filter>1. Main\h</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

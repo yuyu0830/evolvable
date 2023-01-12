@@ -11,7 +11,11 @@ const int WINDOW_WIDTH = 1600;
 const int WINDOW_HEIGHT = 900;
 const int SCREEN_FPS = 60;
 const int SCREEN_TICK_PER_FRAME = 1000 / SCREEN_FPS;
+const int MAX_FRAME_NUMBER = 5;
+
+
 const float RADIAN = 57.295791f;
+
 const SDL_Color COLOR_BLACK = { 0x00, 0x00, 0x00 };
 const SDL_Color COLOR_WHITE = { 0xFF, 0xFF, 0xFF };
 const SDL_Color COLOR_RED = { 0xFC, 0x00, 0x00 };
