@@ -17,26 +17,29 @@
 
 class Object {
 public:
-	static Object* createObject(int x, int y, type _type);
+	//void createObject(int x, int y, type _type);
 	void load(type _type);
 
 	void draw();
-	void update();
+	virtual void update() = 0;
 
 	Object* getNextPtr();
 	Object* getPriviousPtr();
 	void setNextPtr(Object* ptr);
 	void setPriviousPtr(Object* ptr);
 
+	SDL_FPoint getCenterPoint();
+
 	void setPtrNull();
 
-	~Object();
+	Object(int x, int y, type _type);
+	virtual ~Object();
 
 	Position position;
 	Size size;
 
 protected:
-	Graphic* graphic[10];
+	Graphic* graphic[MAX_GRAPHIC_NUMBER];
 	Object* nextPtr = NULL;
 	Object* priviousPtr = NULL;
 

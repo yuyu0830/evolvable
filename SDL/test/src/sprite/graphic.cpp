@@ -3,20 +3,24 @@
 Graphic* Graphic::create(int x, int y, const char fileDir[MAX_FRAME_NUMBER][20], int fileNum, bool _activate, int _frame) {
 	Graphic* g = new Graphic();
 
-
 	g->position.set(x, y);
 	g->setFrameNull();
-
+	for (int i = 0; i < fileNum; i++) {
+		g->setTexture(fileDir[i], i);
+	}
 	g->activate = _activate;
-	g->currentFrame = _frame;
-
+	g->currentFrameNum = _frame;
 
 	SDL_QueryTexture(g->frame[0], NULL, NULL, &g->size.width, &g->size.height);
 	return g;
 }
 
 SDL_Texture* Graphic::getTexture() {
-	return frame[currentFrame];
+	return frame[currentFrameNum];
+}
+
+void Graphic::setTexture(const char* _fileDir, int _frameNum) {
+	frame[_frameNum] = loadTexture(_fileDir);
 }
 
 bool Graphic::getactivate() {
@@ -31,12 +35,12 @@ void Graphic::setDisabled() {
 	activate = false;
 }
 
-int Graphic::getFrame() {
-	return currentFrame;
+int Graphic::getFrameNum() {
+	return currentFrameNum;
 }
 
-void Graphic::setFrame(int _frame) {
-	currentFrame = _frame;
+void Graphic::setFrameNum(int _frame) {
+	currentFrameNum = _frame;
 }
 
 void Graphic::setFrameNull() {
@@ -46,7 +50,9 @@ void Graphic::setFrameNull() {
 }
 
 Graphic::~Graphic() {
+	printf("        Graphic º“∏Í¿⁄ Ω√¿€!\n");
 	for (int i = 0; i < frameNum; i++) {
 		SDL_DestroyTexture(frame[i]);
 	}
+	printf("        Graphic º“∏Í¿⁄ ≥°!\n");
 }

@@ -3,37 +3,23 @@
 
 #include <SDL_ttf.h>
 
-#include "graphic.h"
+#include "../object.h"
 
-class UI : public Graphic {
+class UI : public Object{
 public:
-	//UI(ObjectData data, TextContainer tc, SDL_Renderer* renderer, SDL_Texture* defaultButton, SDL_Texture* onMouseButton, SDL_Point _position);
-	//~UI();
-	//void update();
-	//void draw();
+	UI(int x, int y, type _type) : Object(x, y, _type) {
+		isOnMouse = false;
+		UINum = staticUINum++;
+	};
 
-	////반복 사용
-	//bool isOnMouse();
+	~UI();
 
-	////한번 사용
-	//void textDataInput(TextContainer tc);
-	//void imageInput(SDL_Renderer* renderer, SDL_Texture* defaultButton, SDL_Texture* onMouseButton);
-	//void vertexCalc(SDL_Point _position);
-	
+	void update();
 
 private:
-	SDL_Texture* defaultButton;
-	SDL_Texture* onMouseButton;
-	SDL_Point vertex[6];
-	bool onMouse;
-	bool isClickable;
-
-	//text
-	TTF_Font* font;
-	Size textSize;
-	SDL_Texture* textTexture;
-	SDL_Color textColor;
-	char text[20];
+	int UINum;
+	static int staticUINum;
+	bool isOnMouse;
 };
 
 #endif

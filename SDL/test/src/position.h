@@ -7,7 +7,12 @@
 
 class Position {
 public:
+	static SDL_FPoint add(SDL_FPoint a, SDL_FPoint b);
+
 	SDL_FPoint get();
+	float getX();
+	float getY();
+	
 	void set(float _x, float _y);
 	void set(int _x, int _y);
 	void set(SDL_Point pos);

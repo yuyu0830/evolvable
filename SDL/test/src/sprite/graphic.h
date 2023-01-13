@@ -21,13 +21,14 @@ public:
 	);
 
 	SDL_Texture* getTexture();
+	void setTexture(const char* _fileDir, int _frameNum);
 
 	bool getactivate();
 	void setactivate();
 	void setDisabled();
 
-	int getFrame();
-	void setFrame(int _frame);
+	int getFrameNum();
+	void setFrameNum(int _frameNum);
 
 	void setFrameNull();
 
@@ -37,7 +38,7 @@ public:
 protected:
 	SDL_Texture* frame[MAX_FRAME_NUMBER];
 	int frameNum;
-	int currentFrame;
+	int currentFrameNum;
 
 	bool activate;
 };

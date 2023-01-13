@@ -19,18 +19,40 @@ void Game::gameLoop() {
 
         Timer::frameSynchronization();
     }
+    delete o;
 }
 
 int Game::update() {
-    Input::eventHandling();
-    o->update();
+    if (!Input::eventHandling()) {
+        running = false;
+        return 0;
+    }
+
+    tmp = o;
+    if (tmp) {
+        do {
+            tmp->update();
+            tmp = tmp->getNextPtr();
+        } while (tmp);
+    }
+    
+    tmp = NULL;
+
     return 0;
 }
 
 int Game::draw() {
     SDL_RenderClear(Renderer::getInstance()->getRenderer());
 
-    o->draw();
+    tmp = o;
+    if (tmp) {
+        do {
+            tmp->draw();
+            tmp = tmp->getNextPtr();
+        } while (tmp);
+    }
+
+    tmp = NULL;
 
     SDL_RenderPresent(Renderer::getInstance()->getRenderer());
     return 0;
@@ -80,8 +102,15 @@ bool Game::init() {
 
     // initialize font
     if (!Font::set()) { return 0; }
-    char b[5][20] = { "Main_tile1", "Main_tile2", "Main_tile3", "", ""};
-    o = Object::createObject(200, 300, UI_BUTTON);
+
+    o = new UI(200, 300, UI_BUTTON);
+
+    UI* u = new UI(399, 413, UI_BUTTON);
+    o->setNextPtr(u);
+
+    u = NULL;
+    delete u;
+
 
     Timer::start(TIMER_PROGRAM);
 

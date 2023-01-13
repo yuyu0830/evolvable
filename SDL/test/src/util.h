@@ -11,8 +11,9 @@ const int WINDOW_WIDTH = 1600;
 const int WINDOW_HEIGHT = 900;
 const int SCREEN_FPS = 60;
 const int SCREEN_TICK_PER_FRAME = 1000 / SCREEN_FPS;
-const int MAX_FRAME_NUMBER = 5;
 
+const int MAX_FRAME_NUMBER = 5;      // 한 Graphic 개체가 가질 수 있는 Texture 개수
+const int MAX_GRAPHIC_NUMBER = 5;    // 한 Object 개체가 가질 수 있는 Graphic 개수 
 
 const float RADIAN = 57.295791f;
 

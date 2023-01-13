@@ -17,6 +17,7 @@
 #include "timer.h"
 
 #include "sprite/graphic.h"
+#include "sprite/UI.h"
 
 class Game {
 public:
@@ -28,7 +29,8 @@ private:
 	int draw();
 	int update();
 
-	Object* o;
+	UI* o;
+	Object* tmp;
 
 	bool running;
 };

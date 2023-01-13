@@ -1,17 +1,27 @@
 ﻿#include <iostream>
 
-void print(const char c[20][5], int n) {
-    
-    for (int i = 0; i < n; i++) {
-        char a[30] = "dddd";
-        strcat_s(a, c[i]);
-        printf("%s\n", a);
-    };
-}
+const int SIZE = 10;
+
+void reverse(int* arr, int num);
+void print(int* arr, int num);
 
 int main(int argv, char** args) {
-    char a[20][5] = { "abc", "bbb", "ccc", "ddd", ""};
-    print(a, 3);
-    return 0;
+    int a[SIZE] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+    reverse(a, SIZE);
+    print(a, SIZE);
 }
 
+void reverse(int* arr, int num) {
+    int tmp = 0;
+    for (int i = 0; i < num / 2; i++) {
+        tmp = arr[i];
+        arr[i] = arr[num - i - 1];
+        arr[num - i - 1] = tmp;
+    }
+}
+
+void print(int* arr, int num) {
+    for (int i = 0; i < num; i++) {
+        printf("%d  ", arr[i]);
+    }
+}
