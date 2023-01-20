@@ -28,6 +28,7 @@
     <ClCompile Include="src\draw.cpp" />
     <ClCompile Include="src\font.cpp" />
     <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\graphicManager.cpp" />
     <ClCompile Include="src\input.cpp" />
     <ClCompile Include="src\object.cpp" />
     <ClCompile Include="src\position.cpp" />
@@ -52,6 +53,7 @@
     <ClInclude Include="src\draw.h" />
     <ClInclude Include="src\font.h" />
     <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\graphicManager.h" />
     <ClInclude Include="src\input.h" />
     <ClInclude Include="src\object.h" />
     <ClInclude Include="src\position.h" />

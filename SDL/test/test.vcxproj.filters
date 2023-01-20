@@ -98,6 +98,9 @@
     <ClCompile Include="src\renderer.cpp">
       <Filter>1. Main\src</Filter>
     </ClCompile>
+    <ClCompile Include="src\graphicManager.cpp">
+      <Filter>1. Main\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\draw.h">
@@ -164,6 +167,9 @@
       <Filter>1. Main\h</Filter>
     </ClInclude>
     <ClInclude Include="src\renderer.h">
+      <Filter>1. Main\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphicManager.h">
       <Filter>1. Main\h</Filter>
     </ClInclude>
   </ItemGroup>

@@ -12,6 +12,7 @@
 #include "Position.h"
 #include "collider.h"
 #include "input.h"
+#include "graphicManager.h"
 
 #include "sprite/graphic.h"
 
@@ -25,8 +26,11 @@ public:
 
 	Object* getNextPtr();
 	Object* getPriviousPtr();
+	Object* getLastPtr();
+	
 	void setNextPtr(Object* ptr);
 	void setPriviousPtr(Object* ptr);
+	void addLastPtr(Object* ptr);
 
 	SDL_FPoint getCenterPoint();
 

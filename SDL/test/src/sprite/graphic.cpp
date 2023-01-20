@@ -15,6 +15,7 @@ Graphic* Graphic::create(int x, int y, const char fileDir[MAX_FRAME_NUMBER][20],
 	return g;
 }
 
+
 SDL_Texture* Graphic::getTexture() {
 	return frame[currentFrameNum];
 }
@@ -23,17 +24,19 @@ void Graphic::setTexture(const char* _fileDir, int _frameNum) {
 	frame[_frameNum] = loadTexture(_fileDir);
 }
 
-bool Graphic::getactivate() {
+
+bool Graphic::getActivate() {
 	return activate;
 }
 
-void Graphic::setactivate() {
+void Graphic::setActivate() {
 	activate = true;
 }
 
 void Graphic::setDisabled() {
 	activate = false;
 }
+
 
 int Graphic::getFrameNum() {
 	return currentFrameNum;
@@ -47,6 +50,11 @@ void Graphic::setFrameNull() {
 	for (int i = 0; i < MAX_FRAME_NUMBER; i++) {
 		frame[i] = NULL;
 	}
+}
+
+
+Graphic::Graphic() {
+
 }
 
 Graphic::~Graphic() {

@@ -19,8 +19,10 @@ void Game::gameLoop() {
 
         Timer::frameSynchronization();
     }
-    delete o;
+    delete button;
 }
+
+
 
 int Game::update() {
     if (!Input::eventHandling()) {
@@ -28,7 +30,9 @@ int Game::update() {
         return 0;
     }
 
-    tmp = o;
+    Object* tmp;
+
+    tmp = button;
     if (tmp) {
         do {
             tmp->update();
@@ -43,8 +47,18 @@ int Game::update() {
 
 int Game::draw() {
     SDL_RenderClear(Renderer::getInstance()->getRenderer());
+    background.draw();
+    Object* tmp;
 
-    tmp = o;
+    tmp = button;
+    if (tmp) {
+        do {
+            tmp->draw();
+            tmp = tmp->getNextPtr();
+        } while (tmp);
+    }
+
+    tmp = tile;
     if (tmp) {
         do {
             tmp->draw();
@@ -57,12 +71,6 @@ int Game::draw() {
     SDL_RenderPresent(Renderer::getInstance()->getRenderer());
     return 0;
 }
-
-
-
-
-
-
 
 bool Game::init() {
     // ##############################################################################################
@@ -103,13 +111,7 @@ bool Game::init() {
     // initialize font
     if (!Font::set()) { return 0; }
 
-    o = new UI(200, 300, UI_BUTTON);
-
-    UI* u = new UI(399, 413, UI_BUTTON);
-    o->setNextPtr(u);
-
-    u = NULL;
-    delete u;
+    tmpset();
 
 
     Timer::start(TIMER_PROGRAM);
@@ -121,3 +123,36 @@ bool Game::init() {
     return 1;
 }
 
+void Game::tmpset() {
+    UI* u = new UI(800, 500, UI_BUTTON);
+    button = u;
+    u = NULL;
+    
+    u = new UI(1000, 615, UI_BUTTON);
+    button->addLastPtr(u);
+    u = NULL;
+
+    u = new UI(1200, 500, UI_BUTTON);
+    button->addLastPtr(u);
+    u = NULL;
+
+    u = new UI(1400, 615, UI_BUTTON);
+    button->addLastPtr(u);
+    u = NULL;
+
+    Tile* t = new Tile(200, 615, UI_TILE);
+    tile = t;
+    t = NULL;
+
+    t = new Tile(400, 500, UI_TILE);
+    tile->addLastPtr(t);
+    t = NULL;
+
+    t = new Tile(600, 615, UI_TILE);
+    tile->addLastPtr(t);
+    t = NULL;
+
+
+    delete u;
+
+}

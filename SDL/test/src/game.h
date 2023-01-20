@@ -18,6 +18,8 @@
 
 #include "sprite/graphic.h"
 #include "sprite/UI.h"
+#include "sprite/background.h"
+#include "sprite/tile.h"
 
 class Game {
 public:
@@ -26,11 +28,16 @@ public:
 private:
 	bool init();
 	void gameLoop();
+
 	int draw();
 	int update();
 
-	UI* o;
-	Object* tmp;
+	void tmpset();
+
+	Tile* tile;
+	UI* button;
+	Background background;
+
 
 	bool running;
 };

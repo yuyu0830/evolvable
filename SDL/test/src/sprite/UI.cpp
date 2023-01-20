@@ -37,6 +37,5 @@ void UI::update() {
 
 UI::~UI() {
 	printf("UI %d 소멸자 시작!\n", UINum);
-	delete nextPtr;
 	printf("UI %d 소멸자 끝!\n", UINum);
 }

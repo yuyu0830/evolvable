@@ -10,6 +10,7 @@
 
 class Graphic {
 public:
+	Graphic();
 	~Graphic();
 	static Graphic* create(
 		int x,
@@ -23,8 +24,8 @@ public:
 	SDL_Texture* getTexture();
 	void setTexture(const char* _fileDir, int _frameNum);
 
-	bool getactivate();
-	void setactivate();
+	bool getActivate();
+	void setActivate();
 	void setDisabled();
 
 	int getFrameNum();
@@ -37,6 +38,7 @@ public:
 
 protected:
 	SDL_Texture* frame[MAX_FRAME_NUMBER];
+
 	int frameNum;
 	int currentFrameNum;
 

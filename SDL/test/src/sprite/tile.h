@@ -3,16 +3,20 @@
 
 #include "graphic.h"
 
-class Tile : public Graphic {
+#include "../object.h"
+
+class Tile : public Object {
 public:
-	Graphic* next();
+	Tile(int x, int y, type _type) : Object(x, y, _type) {
+		tileNum = staticTileNum++;
+	};
+	~Tile();
+
+	void update();
 
 protected:
-	bool invincible;
-	float atk;
-	float maxHP;
-	float curHP;
-	float speed;
+	int tileNum;
+	static int staticTileNum;
 };
 
 #endif

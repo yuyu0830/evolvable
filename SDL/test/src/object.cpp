@@ -4,6 +4,7 @@ int Object::staticObjNum = 0;
 
 Object::Object(int x, int y, type _type) {
 	position.set(x, y);
+	objType = _type;
 	setPtrNull();
 	load(_type);
 	objNum = staticObjNum++;
@@ -17,26 +18,18 @@ Object::Object(int x, int y, type _type) {
 
 void Object::load(type _type) {
 	switch (_type) {
-	case UI_BUTTON:
-		char tmp[5][20] = {
-			"Main_button_default",
-			"Main_button_onMouse",
-			"",
-			"",
-			""
-		};
-		Graphic* g1 = new Graphic();
-
-		g1 = Graphic::create(0, 0, tmp, 2);
-		graphic[0] = g1;
+	case(UI_BUTTON):
+		graphic[0] = GraphicManager::getGraphic(BUTTON);
 		graphicNum = 1;
-
-		size.width = graphic[0]->size.width;
-		size.height = graphic[0]->size.height;
-
-		g1 = NULL;
-		delete g1;
+		break;
+	case(UI_TILE):
+		graphic[0] = GraphicManager::getGraphic(TILE);
+		graphicNum = 1;
+		break;
 	}
+	printf("%p\n", graphic[0]);
+	size.width = graphic[0]->size.width;
+	size.height = graphic[0]->size.height;
 }
 
 void Object::draw() {
@@ -53,12 +46,31 @@ Object* Object::getPriviousPtr() {
 	return priviousPtr;
 }
 
+Object* Object::getLastPtr() {
+	if (nextPtr) {
+		return getNextPtr()->getLastPtr();
+	}
+	else {
+		return this;
+	}
+	//미완성
+}
+
 void Object::setNextPtr(Object* ptr) {
 	nextPtr = ptr;
 }
 
 void Object::setPriviousPtr(Object* ptr) {
 	priviousPtr = ptr;
+}
+
+void Object::addLastPtr(Object* ptr) {
+	if (nextPtr) {
+		getNextPtr()->addLastPtr(ptr);
+	}
+	else {
+		nextPtr = ptr;
+	}
 }
 
 SDL_FPoint Object::getCenterPoint() {
@@ -76,6 +88,6 @@ Object::~Object() {
 	for (int i = 0; i < graphicNum; i++) {
 		delete graphic[i];
 	}
+	delete nextPtr;
 	printf("    Object %d 소멸자 끝!\n", objNum);
-	
 }

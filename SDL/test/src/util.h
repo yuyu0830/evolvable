@@ -65,11 +65,19 @@ typedef enum {
 } tag;
 
 typedef enum {
-	TYPE_PLAYER_DEFAULT = 1,
-	TYPE_ENEMY_DEFAULT = 21,
-	UI_BUTTON = 41,
-	UI_BACKGROUND
+	PLAYER_DEFAULT,
+	ENEMY_DEFAULT,
+	UI_BUTTON,
+	UI_TILE,
+	UI_BACKGROUND,
+	TYPENUM
 } type;
+
+typedef enum {
+	BUTTON,
+	TILE,
+	PARTSNUM
+} parts;
 
 typedef enum {
 	SHAPE_CIRCLE,
