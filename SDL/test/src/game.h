@@ -38,7 +38,6 @@ private:
 	UI* button;
 	Background background;
 
-
 	bool running;
 };
 #endif

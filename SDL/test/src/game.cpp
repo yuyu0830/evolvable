@@ -20,6 +20,7 @@ void Game::gameLoop() {
         Timer::frameSynchronization();
     }
     delete button;
+    GraphicManager::deleteAll();
 }
 
 
@@ -153,6 +154,34 @@ void Game::tmpset() {
     t = NULL;
 
 
-    delete u;
+    t = new Tile(200, 385, UI_TILE);
+    tile->addLastPtr(t);
+    t = NULL;
 
+    t = new Tile(400, 270, UI_TILE);
+    tile->addLastPtr(t);
+    t = NULL;
+
+    t = new Tile(600, 385, UI_TILE);
+    tile->addLastPtr(t);
+    t = NULL;
+
+    t = new Tile(800, 270, UI_TILE);
+    tile->addLastPtr(t);
+    t = NULL;
+
+    t = new Tile(1000, 385, UI_TILE);
+    tile->addLastPtr(t);
+    t = NULL;
+
+    t = new Tile(1200, 270, UI_TILE);
+    tile->addLastPtr(t);
+    t = NULL;
+
+    t = new Tile(1400, 385, UI_TILE);
+    tile->addLastPtr(t);
+    t = NULL;
+
+    delete u;
+    delete t;
 }

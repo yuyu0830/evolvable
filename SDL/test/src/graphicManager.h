@@ -8,19 +8,20 @@
 class GraphicManager {
 public:
 	GraphicManager();
-	static Graphic* getGraphic(parts part);
+	~GraphicManager();
+	static SDL_Texture* get(parts part);
 	
-	static bool checkGraphic(parts part);
+	static bool check(parts part);
 
-	static void loadGraphic(parts part);
-	static void loadGraphic(parts part[]);
+	static void load(parts part);
+	static void load(parts part[]);
 
-	static void deleteGraphic(parts part);
-	static void deleteGraphic(parts part[]);
+	static void deleteOne(parts part);
+	static void deleteOne(parts part[]);
 
-	static void deleteAllGraphic();
+	static void deleteAll();
 
 private:
-	static Graphic* graphic[PARTSNUM];
+	static SDL_Texture* texture[PARTSNUM];
 };
 #endif

@@ -10,31 +10,28 @@ Object::Object(int x, int y, type _type) {
 	objNum = staticObjNum++;
 }
 
-//void Object::createObject(int x, int y, type _type) {
-//	position.set(x, y);
-//	setPtrNull();
-//	load(_type);
-//}
-
 void Object::load(type _type) {
 	switch (_type) {
 	case(UI_BUTTON):
 		graphic[0] = GraphicManager::getGraphic(BUTTON);
+		graphicFrameNum[0] = 0;
 		graphicNum = 1;
 		break;
+
 	case(UI_TILE):
 		graphic[0] = GraphicManager::getGraphic(TILE);
+		graphicFrameNum[0] = rand() % 5;
 		graphicNum = 1;
 		break;
 	}
-	printf("%p\n", graphic[0]);
+
 	size.width = graphic[0]->size.width;
 	size.height = graphic[0]->size.height;
 }
 
 void Object::draw() {
 	for (int i = 0; i < graphicNum; i++) {
-		drawTexture(Position::add(getCenterPoint(), graphic[i]->position.get()), graphic[i]->getTexture());
+		drawTexture(Position::add(getCenterPoint(), graphic[i]->position.get()), graphic[i]->getTexture(graphicFrameNum[i]));
 	}
 }
 
@@ -85,9 +82,6 @@ void Object::setPtrNull() {
 
 Object::~Object() {
 	printf("    Object %d 소멸자 시작!\n", objNum);
-	for (int i = 0; i < graphicNum; i++) {
-		delete graphic[i];
-	}
 	delete nextPtr;
 	printf("    Object %d 소멸자 끝!\n", objNum);
 }

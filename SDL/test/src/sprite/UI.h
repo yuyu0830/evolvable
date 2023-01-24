@@ -4,10 +4,11 @@
 #include <SDL_ttf.h>
 
 #include "../object.h"
+#include "../font.h"
 
 class UI : public Object{
 public:
-	UI(int x, int y, type _type) : Object(x, y, _type) {
+	UI(int x, int y, type _type, const char* _text) : Object(x, y, _type) {
 		isOnMouse = false;
 		UINum = staticUINum++;
 	};
@@ -17,6 +18,7 @@ public:
 	void update();
 
 private:
+
 	int UINum;
 	static int staticUINum;
 	bool isOnMouse;

@@ -101,6 +101,9 @@
     <ClCompile Include="src\graphicManager.cpp">
       <Filter>1. Main\src</Filter>
     </ClCompile>
+    <ClCompile Include="src\sprite\text.cpp">
+      <Filter>2. Sprite\Sprite src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\draw.h">
@@ -171,6 +174,9 @@
     </ClInclude>
     <ClInclude Include="src\graphicManager.h">
       <Filter>1. Main\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sprite\text.h">
+      <Filter>2. Sprite\Sprite h</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,3 +1,3 @@
-﻿  graphicManager.cpp
-C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\graphicManager.cpp(66,18): warning C4154: 배열 식을 삭제했습니다. 포인터로 변환이 제공됩니다.
+﻿  game.cpp
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\game.cpp(120,15): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   test.vcxproj -> C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\x64\Debug\test.exe

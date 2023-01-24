@@ -15,21 +15,18 @@ public:
 	static Graphic* create(
 		int x,
 		int y,
+		parts _part,
 		const char fileDir[5][20],
 		int fileNum,
-		bool _activate = true,
-		int _frame = 0
+		bool _activate = true
 	);
 
-	SDL_Texture* getTexture();
+	SDL_Texture* getTexture(int _frameNum);
 	void setTexture(const char* _fileDir, int _frameNum);
 
 	bool getActivate();
 	void setActivate();
 	void setDisabled();
-
-	int getFrameNum();
-	void setFrameNum(int _frameNum);
 
 	void setFrameNull();
 
@@ -39,8 +36,9 @@ public:
 protected:
 	SDL_Texture* frame[MAX_FRAME_NUMBER];
 
-	int frameNum;
-	int currentFrameNum;
+	parts part;
+
+	int frameNum; // 프레임 개수
 
 	bool activate;
 };

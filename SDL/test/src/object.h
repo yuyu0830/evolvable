@@ -48,8 +48,10 @@ protected:
 	Object* priviousPtr = NULL;
 
 	type objType;
-	int objNum;
-	int graphicNum;
+
+	int objNum; //오브젝트 넘버링
+	int graphicNum; //그래픽 개수
+	int graphicFrameNum[MAX_GRAPHIC_NUMBER]; //n번째 그래픽의 현재 프레임 개수
 
 	static int staticObjNum;
 };

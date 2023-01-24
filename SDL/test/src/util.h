@@ -75,8 +75,15 @@ typedef enum {
 
 typedef enum {
 	BUTTON,
+	BUTTON_MOUSE_ON,
+	BUTTON_MOUSE_OFF,
 	TILE,
-	PARTSNUM
+	TILE_1,
+	TILE_2,
+	TILE_3,
+	TILE_4,
+	TILE_5,
+	PARTSNUM = 20
 } parts;
 
 typedef enum {

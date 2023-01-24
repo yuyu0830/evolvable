@@ -26,11 +26,11 @@ void UI::update() {
 
 	if (cnt == 1) {
 		isOnMouse = true;
-		graphic[0]->setFrameNum(1);
+		graphicFrameNum[0] = 1;
 	}
 	else {
 		isOnMouse = false;
-		graphic[0]->setFrameNum(0);
+		graphicFrameNum[0] = 0;
 	}
 }
 

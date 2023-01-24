@@ -1,23 +1,26 @@
 ﻿#include "graphicManager.h"
 
-Graphic* GraphicManager::graphic[PARTSNUM];
+SDL_Texture* GraphicManager::texture[PARTSNUM];
 
 GraphicManager::GraphicManager() {
 	for (int i = 0; i < TYPENUM; i++) {
-		graphic[i] = NULL;
+		texture[i] = NULL;
 	}
 }
 
-Graphic* GraphicManager::getGraphic(parts part) {
-	if (!graphic[part]) {
-		loadGraphic(part);
-	}
-	printf("%p\n", graphic[part]);
-	return graphic[part];
+GraphicManager::~GraphicManager() {
+	printf("GraphicManager 소멸자\n");
 }
 
-bool GraphicManager::checkGraphic(parts part) {
-	if (graphic[part]) {
+SDL_Texture* GraphicManager::get(parts part) {
+	if (!texture[part]) {
+		load(part);
+	}
+	return texture[part];
+}
+
+bool GraphicManager::check(parts part) {
+	if (texture[part]) {
 		return true;
 	}
 	else {
@@ -26,42 +29,43 @@ bool GraphicManager::checkGraphic(parts part) {
 }
 
 
-void GraphicManager::loadGraphic(parts part) {
+void GraphicManager::load(parts part) {
 	char fileDir[5][20] = { "", "", "", "", "" };
 	switch (part) {
 	case BUTTON:
-		strcpy_s(fileDir[0], "Main_button_default");
-		strcpy_s(fileDir[1], "Main_button_onMouse");
-
-		graphic[BUTTON] = Graphic::create(0, 0, fileDir, 2);
+	case BUTTON_MOUSE_ON:
+	case BUTTON_MOUSE_OFF:
+		texture[BUTTON_MOUSE_ON] = loadTexture("Main_button_onMouse");
+		texture[BUTTON_MOUSE_OFF] = loadTexture("Main_button_default");
 		break;
 
 	case TILE:
-		strcpy_s(fileDir[0], "Main_tile1");
-		strcpy_s(fileDir[1], "Main_tile2");
-		strcpy_s(fileDir[2], "Main_tile3");
-		strcpy_s(fileDir[3], "Main_tile4");
-		strcpy_s(fileDir[4], "Main_tile5");
-
-		graphic[TILE] = Graphic::create(0, 0, fileDir, 5, true, rand() % 5);
+		texture[TILE_1] = loadTexture("Main_tile1");
+		texture[TILE_2] = loadTexture("Main_tile2");
+		texture[TILE_3] = loadTexture("Main_tile3");
+		texture[TILE_4] = loadTexture("Main_tile4");
+		texture[TILE_5] = loadTexture("Main_tile5");
 		break;
 	}
 }
 
-void GraphicManager::loadGraphic(parts part[]) {
+void GraphicManager::load(parts part[]) {
 	;
 }
 
 
-void GraphicManager::deleteGraphic(parts part) {
+void GraphicManager::deleteOne(parts part) {
 
 }
 
-void GraphicManager::deleteGraphic(parts part[]) {
+void GraphicManager::deleteOne(parts part[]) {
 
 }
 
 
-void GraphicManager::deleteAllGraphic() {
-	delete[] graphic;
+void GraphicManager::deleteAll() {
+	for (int i = 0; i < PARTSNUM; i++) {
+		SDL_DestroyTexture(texture[i]);
+	}
+	printf("GraphicManager : Texture 삭제 완료!\n");
 }

@@ -36,6 +36,7 @@
     <ClCompile Include="src\sprite\background.cpp" />
     <ClCompile Include="src\sprite\graphic.cpp" />
     <ClCompile Include="src\sprite\player.cpp" />
+    <ClCompile Include="src\sprite\text.cpp" />
     <ClCompile Include="src\sprite\tile.cpp" />
     <ClCompile Include="src\sprite\UI.cpp" />
     <ClCompile Include="src\sprite\unit.cpp" />
@@ -62,6 +63,7 @@
     <ClInclude Include="src\sprite\background.h" />
     <ClInclude Include="src\sprite\graphic.h" />
     <ClInclude Include="src\sprite\player.h" />
+    <ClInclude Include="src\sprite\text.h" />
     <ClInclude Include="src\sprite\tile.h" />
     <ClInclude Include="src\sprite\UI.h" />
     <ClInclude Include="src\sprite\unit.h" />
