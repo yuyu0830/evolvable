@@ -14,12 +14,10 @@ public:
 	static bool check(parts part);
 
 	static void load(parts part);
-	static void load(parts part[]);
 
-	static void deleteOne(parts part);
-	static void deleteOne(parts part[]);
+	static void unload(parts part);
 
-	static void deleteAll();
+	static void unloadAll();
 
 private:
 	static SDL_Texture* texture[PARTSNUM];

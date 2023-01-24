@@ -5,8 +5,8 @@
 
 #include "../draw.h"
 #include "../util.h"
+#include "../graphicManager.h"
 #include "../position.h"
-
 
 class Graphic {
 public:
@@ -15,14 +15,13 @@ public:
 	static Graphic* create(
 		int x,
 		int y,
-		parts _part,
-		const char fileDir[5][20],
-		int fileNum,
-		bool _activate = true
+		parts part[],
+		int _frameAmount,
+		bool _activate = true,
+		int _currentFrameNum = 0
 	);
 
-	SDL_Texture* getTexture(int _frameNum);
-	void setTexture(const char* _fileDir, int _frameNum);
+	SDL_Texture* getTexture();
 
 	bool getActivate();
 	void setActivate();
@@ -36,9 +35,8 @@ public:
 protected:
 	SDL_Texture* frame[MAX_FRAME_NUMBER];
 
-	parts part;
-
-	int frameNum; // 프레임 개수
+	int frameAmount; // 프레임 개수
+	int currentFrameNum;
 
 	bool activate;
 };

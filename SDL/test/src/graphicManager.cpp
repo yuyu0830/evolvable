@@ -30,7 +30,6 @@ bool GraphicManager::check(parts part) {
 
 
 void GraphicManager::load(parts part) {
-	char fileDir[5][20] = { "", "", "", "", "" };
 	switch (part) {
 	case BUTTON:
 	case BUTTON_MOUSE_ON:
@@ -40,6 +39,11 @@ void GraphicManager::load(parts part) {
 		break;
 
 	case TILE:
+	case TILE_1:
+	case TILE_2:
+	case TILE_3:
+	case TILE_4:
+	case TILE_5:
 		texture[TILE_1] = loadTexture("Main_tile1");
 		texture[TILE_2] = loadTexture("Main_tile2");
 		texture[TILE_3] = loadTexture("Main_tile3");
@@ -49,21 +53,32 @@ void GraphicManager::load(parts part) {
 	}
 }
 
-void GraphicManager::load(parts part[]) {
-	;
+void GraphicManager::unload(parts part) {
+	switch (part) {
+	case BUTTON:
+	case BUTTON_MOUSE_ON:
+	case BUTTON_MOUSE_OFF:
+		SDL_DestroyTexture(texture[BUTTON_MOUSE_ON]);
+		SDL_DestroyTexture(texture[BUTTON_MOUSE_OFF]);
+		break;
+
+	case TILE:
+	case TILE_1:
+	case TILE_2:
+	case TILE_3:
+	case TILE_4:
+	case TILE_5:
+		SDL_DestroyTexture(texture[TILE_1]);
+		SDL_DestroyTexture(texture[TILE_2]);
+		SDL_DestroyTexture(texture[TILE_3]);
+		SDL_DestroyTexture(texture[TILE_4]);
+		SDL_DestroyTexture(texture[TILE_5]);
+		break;
+	}
 }
 
 
-void GraphicManager::deleteOne(parts part) {
-
-}
-
-void GraphicManager::deleteOne(parts part[]) {
-
-}
-
-
-void GraphicManager::deleteAll() {
+void GraphicManager::unloadAll() {
 	for (int i = 0; i < PARTSNUM; i++) {
 		SDL_DestroyTexture(texture[i]);
 	}

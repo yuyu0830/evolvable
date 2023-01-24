@@ -74,6 +74,7 @@ typedef enum {
 } type;
 
 typedef enum {
+	NULL_PART,
 	BUTTON,
 	BUTTON_MOUSE_ON,
 	BUTTON_MOUSE_OFF,

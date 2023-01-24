@@ -1,30 +1,25 @@
 #include "graphic.h"
 
-Graphic* Graphic::create(int x, int y, parts _part, const char fileDir[MAX_FRAME_NUMBER][20], int fileNum, bool _activate) {
+Graphic* Graphic::create(int x, int y, parts part[], int _frameAmount, bool _activate, int _currentFrameNum) {
 	Graphic* g = new Graphic();
 	
 	g->position.set(x, y);
 	g->setFrameNull();
-	g->part = _part;
-	for (int i = 0; i < fileNum; i++) {
-		g->setTexture(fileDir[i], i);
+	for (int i = 0; i < _frameAmount; i++) {
+		g->frame[i] = GraphicManager::get(part[i]);
 	}
 	g->activate = _activate;
-	g->frameNum = fileNum;
+	g->frameAmount = _frameAmount;
+	g->currentFrameNum = _currentFrameNum;
 
 	SDL_QueryTexture(g->frame[0], NULL, NULL, &g->size.width, &g->size.height);
 	return g;
 }
 
 
-SDL_Texture* Graphic::getTexture(int _frameNum) {
-	return frame[_frameNum];
+SDL_Texture* Graphic::getTexture() {
+	return frame[currentFrameNum];
 }
-
-void Graphic::setTexture(const char* _fileDir, int _frameNum) {
-	frame[_frameNum] = loadTexture(_fileDir);
-}
-
 
 bool Graphic::getActivate() {
 	return activate;
@@ -51,9 +46,10 @@ Graphic::Graphic() {
 }
 
 Graphic::~Graphic() {
-	printf("        Graphic %d 模資濠 衛濛!\n", part);
-	for (int i = 0; i < frameNum; i++) {
-		SDL_DestroyTexture(frame[i]);
+	printf("        Graphic 模資濠 衛濛!\n");
+	for (int i = 0; i < frameAmount; i++) {
+		frame[i] = NULL;
 	}
-	printf("        Graphic %d 模資濠 部!\n", part);
+	delete[] frame;
+	printf("        Graphic 模資濠 部!\n");
 }

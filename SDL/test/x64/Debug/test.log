@@ -1,3 +1,45 @@
-﻿  game.cpp
-C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\game.cpp(120,15): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  test.vcxproj -> C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\x64\Debug\test.exe
+﻿  collider.cpp
+  circle.cpp
+  hexagon.cpp
+  point.cpp
+  square.cpp
+  squareEx.cpp
+  draw.cpp
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\draw.cpp(27,11): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\draw.cpp(28,11): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  game.cpp
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\game.cpp(121,15): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\game.cpp(128,40): error C2661: 'UI::UI': 오버로드된 함수에서 3개의 인수를 사용하지 않습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\game.cpp(132,37): error C2661: 'UI::UI': 오버로드된 함수에서 3개의 인수를 사용하지 않습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\game.cpp(136,37): error C2661: 'UI::UI': 오버로드된 함수에서 3개의 인수를 사용하지 않습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\game.cpp(140,37): error C2661: 'UI::UI': 오버로드된 함수에서 3개의 인수를 사용하지 않습니다.
+  graphicManager.cpp
+  input.cpp
+  object.cpp
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\object.cpp(16,32): error C2039: 'getGraphic': 'GraphicManager'의 멤버가 아닙니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\graphicManager.h(8): message : 'GraphicManager' 선언을 참조하십시오.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\object.cpp(16,42): error C3861: 'getGraphic': 식별자를 찾을 수 없습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\object.cpp(22,32): error C2039: 'getGraphic': 'GraphicManager'의 멤버가 아닙니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\graphicManager.h(8): message : 'GraphicManager' 선언을 참조하십시오.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\object.cpp(22,42): error C3861: 'getGraphic': 식별자를 찾을 수 없습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\object.cpp(34,117): error C2660: 'Graphic::getTexture': 함수는 1개의 인수를 사용하지 않습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\sprite\graphic.h(24,15): message : 'Graphic::getTexture' 선언을 참조하십시오.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\object.cpp(34,118): error C2661: 'drawTexture': 오버로드된 함수에서 1개의 인수를 사용하지 않습니다.
+  position.cpp
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\position.cpp(37,32): warning C4244: '+=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\position.cpp(38,30): warning C4244: '+=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  renderer.cpp
+  background.cpp
+  graphic.cpp
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\sprite\graphic.cpp(53,16): warning C4154: 배열 식을 삭제했습니다. 포인터로 변환이 제공됩니다.
+  player.cpp
+  text.cpp
+  tile.cpp
+  UI.cpp
+  unit.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  main.cpp
+  timer.cpp
+  util.cpp
+  코드를 생성하고 있습니다...

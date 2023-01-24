@@ -13,15 +13,15 @@ Object::Object(int x, int y, type _type) {
 void Object::load(type _type) {
 	switch (_type) {
 	case(UI_BUTTON):
-		graphic[0] = GraphicManager::getGraphic(BUTTON);
+		graphic[0] = Graphic::create(0, 0, { BUTTON_MOUSE_OFF, BUTTON_MOUSE_ON }, 2);
 		graphicFrameNum[0] = 0;
-		graphicNum = 1;
+		graphicAmount = 1;
 		break;
 
 	case(UI_TILE):
 		graphic[0] = GraphicManager::getGraphic(TILE);
 		graphicFrameNum[0] = rand() % 5;
-		graphicNum = 1;
+		graphicAmount = 1;
 		break;
 	}
 
@@ -30,7 +30,7 @@ void Object::load(type _type) {
 }
 
 void Object::draw() {
-	for (int i = 0; i < graphicNum; i++) {
+	for (int i = 0; i < graphicAmount; i++) {
 		drawTexture(Position::add(getCenterPoint(), graphic[i]->position.get()), graphic[i]->getTexture(graphicFrameNum[i]));
 	}
 }
