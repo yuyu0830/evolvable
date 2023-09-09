@@ -41,6 +41,10 @@
     <ClInclude Include="src\sprite\player.h" />
     <ClInclude Include="src\UI.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="input.txt" />
+    <Text Include="output.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

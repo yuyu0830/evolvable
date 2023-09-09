@@ -10,16 +10,20 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
-#include "renderer.h"
 #include "font.h"
 #include "util.h"
-#include "object.h"
+#include "input.h"
 #include "timer.h"
 
-#include "sprite/graphic.h"
-#include "sprite/UI.h"
-#include "sprite/background.h"
-#include "sprite/tile.h"
+#include "./graphic/renderer.h"
+#include "./graphic/draw.h"
+
+//#include "sprite/frame/object.h"
+//#include "sprite/frame/graphic.h"
+//#include "sprite/frame/UI.h"
+
+//#include "sprite/UI/background.h"
+//#include "sprite/UI/tile.h"
 
 class Game {
 public:
@@ -33,10 +37,6 @@ private:
 	int update();
 
 	void tmpset();
-
-	Tile* tile;
-	UI* button;
-	Background background;
 
 	bool running;
 };

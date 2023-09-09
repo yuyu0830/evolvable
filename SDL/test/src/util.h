@@ -12,8 +12,7 @@ const int WINDOW_HEIGHT = 900;
 const int SCREEN_FPS = 60;
 const int SCREEN_TICK_PER_FRAME = 1000 / SCREEN_FPS;
 
-const int MAX_FRAME_NUMBER = 5;      // 한 Graphic 개체가 가질 수 있는 Texture 개수
-const int MAX_GRAPHIC_NUMBER = 5;    // 한 Object 개체가 가질 수 있는 Graphic 개수 
+const int MAX_PARTS_NUMBER = 5;    // 한 Graphic 개체가 가질 수 있는 Parts 개수 
 
 const float RADIAN = 57.295791f;
 
@@ -27,8 +26,8 @@ const SDL_Color COLOR_VIOLET = { 0xB8, 0x01, 0xF9 };
 const SDL_Color COLOR_PINK = { 0xF4, 0x73, 0x25 };
 
 struct Size {
-	int width;
-	int height;
+	int w;
+	int h;
 };
 
 struct ObjectData {
@@ -52,6 +51,13 @@ struct TextContainer {
 	char text[20];
 };
 
+struct partsInfo {
+	int frameAmount;
+	int maxFrameNumber;
+	parts part;
+	Size size;
+};
+
 typedef enum {
 	TAG_PLAYER,
 	TAG_ENEMY,
@@ -61,7 +67,7 @@ typedef enum {
 	TAG_BULLET,
 	TAG_UI,
 	TAG_BACKGROUND,
-	TAG_NUMBER
+	TAG_AMOUNT
 } tag;
 
 typedef enum {
@@ -70,7 +76,7 @@ typedef enum {
 	UI_BUTTON,
 	UI_TILE,
 	UI_BACKGROUND,
-	TYPENUM
+	TYPE_AMOUNT
 } type;
 
 typedef enum {
@@ -84,7 +90,7 @@ typedef enum {
 	TILE_3,
 	TILE_4,
 	TILE_5,
-	PARTSNUM = 20
+	PARTS_AMOUNT
 } parts;
 
 typedef enum {
@@ -93,14 +99,14 @@ typedef enum {
 	SHAPE_HEXAGON,
 	SHAPE_POINT,
 	SHAPE_SQUAREEX,
-	SHAPE_NUMBER
+	SHAPE_AMOUNT
 } shape;
 
 typedef enum {
 	TIMER_PROGRAM,
 	TIMER_FRAME,
 	TIMER_INGAME,
-	TIMER_NUMBER
+	TIMER_AMOUNT
 } timer;
 
 typedef enum {

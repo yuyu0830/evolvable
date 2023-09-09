@@ -1,10 +1,10 @@
 ﻿#include "timer.h"
 
-Uint32 Timer::startTicks[TIMER_NUMBER];
-Uint32 Timer::pausedTicks[TIMER_NUMBER];
+Uint32 Timer::startTicks[TIMER_AMOUNT];
+Uint32 Timer::pausedTicks[TIMER_AMOUNT];
 
-bool Timer::paused[TIMER_NUMBER];
-bool Timer::started[TIMER_NUMBER];
+bool Timer::paused[TIMER_AMOUNT];
+bool Timer::started[TIMER_AMOUNT];
 
 int Timer::frameCounter = 0;
 float Timer::fps = 0.f;

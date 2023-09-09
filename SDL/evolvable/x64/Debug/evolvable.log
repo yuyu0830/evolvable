@@ -1,1 +1,4 @@
-﻿  evolvable.vcxproj -> C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\x64\Debug\evolvable.exe
+﻿  main.cpp
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\evolvable\src\main.cpp(16,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 'node' 왼쪽은 무시됩니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\evolvable\src\main.cpp(100): warning C4715: 'f': 모든 제어 경로에서 값을 반환하지는 않습니다.
+  evolvable.vcxproj -> C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\x64\Debug\evolvable.exe

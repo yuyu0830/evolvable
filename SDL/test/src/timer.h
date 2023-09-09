@@ -22,11 +22,11 @@ public:
 	static bool isPaused(timer timerType);
 
 private:
-	static Uint32 startTicks[TIMER_NUMBER];
-	static Uint32 pausedTicks[TIMER_NUMBER];
+	static Uint32 startTicks[TIMER_AMOUNT];
+	static Uint32 pausedTicks[TIMER_AMOUNT];
 
-	static bool paused[TIMER_NUMBER];
-	static bool started[TIMER_NUMBER];
+	static bool paused[TIMER_AMOUNT];
+	static bool started[TIMER_AMOUNT];
 	static int frameCounter;
 	static float fps;
 };

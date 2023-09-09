@@ -130,17 +130,17 @@ void fpointAdd(SDL_FPoint* a, SDL_FPoint b) {
     a->y += b.y;
 }
 
-bool isin(int target, int start, int end) {
-    if (target < start) return 0;
-    if (target > end) return 0;
-    return 1;
-}
-
-bool isin(float target, float start, float end) {
-    if (target < start) return 0;
-    if (target > end) return 0;
-    return 1;
-}
+//bool isin(int target, int start, int end) {
+//    if (target < start) return 0;
+//    if (target > end) return 0;
+//    return 1;
+//}
+//
+//bool isin(float target, float start, float end) {
+//    if (target < start) return 0;
+//    if (target > end) return 0;
+//    return 1;
+//}
 
 SDL_Point posToTile(SDL_FPoint pos) {
     int x = (int)((pos.x + 15) / 45), tmp = 0;

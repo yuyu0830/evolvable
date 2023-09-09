@@ -1,182 +1,171 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="1. Main">
+    <Filter Include="1. Game">
       <UniqueIdentifier>{fa82ddd8-5b47-48b5-a392-429bf1ebb5d8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="1. Main\src">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="1. Main\h">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="2. Sprite">
-      <UniqueIdentifier>{de8105db-64eb-473a-a931-8a1ad5ce3f87}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="2. Sprite\Sprite src">
-      <UniqueIdentifier>{686202fd-4438-4c9e-be1c-e1ac6f02e786}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="2. Sprite\Sprite h">
-      <UniqueIdentifier>{cbdb291e-2070-4501-b628-c60df73fc2be}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3. Shape">
+    <Filter Include="5. Shape">
       <UniqueIdentifier>{b1dbe5e3-5e02-4457-8534-e9282b45a890}</UniqueIdentifier>
     </Filter>
-    <Filter Include="3. Shape\Shape h">
-      <UniqueIdentifier>{812ccd55-627e-413c-93a7-8ec63df3cfb9}</UniqueIdentifier>
+    <Filter Include="2. Class">
+      <UniqueIdentifier>{b0142414-5253-43cf-a8fb-1ef6b9ff5b5b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="3. Shape\Shape src">
-      <UniqueIdentifier>{e238366d-240b-4e08-8407-ea5e11444281}</UniqueIdentifier>
+    <Filter Include="3. Static Class">
+      <UniqueIdentifier>{6f1b019c-1e8c-45ce-acb2-f79cb5e4f1ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4. Sprite">
+      <UniqueIdentifier>{de8105db-64eb-473a-a931-8a1ad5ce3f87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4. Sprite\Unit">
+      <UniqueIdentifier>{686202fd-4438-4c9e-be1c-e1ac6f02e786}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4. Sprite\UI">
+      <UniqueIdentifier>{cbdb291e-2070-4501-b628-c60df73fc2be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4. Sprite\Frame">
+      <UniqueIdentifier>{e6559df8-a0ae-43ec-ad9b-9f2344c7ea5c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\draw.cpp">
-      <Filter>1. Main\src</Filter>
-    </ClCompile>
     <ClCompile Include="src\game.cpp">
-      <Filter>1. Main\src</Filter>
+      <Filter>1. Game</Filter>
     </ClCompile>
     <ClCompile Include="src\main.cpp">
-      <Filter>1. Main\src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\object.cpp">
-      <Filter>1. Main\src</Filter>
+      <Filter>1. Game</Filter>
     </ClCompile>
     <ClCompile Include="src\util.cpp">
-      <Filter>1. Main\src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sprite\graphic.cpp">
-      <Filter>2. Sprite\Sprite src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sprite\player.cpp">
-      <Filter>2. Sprite\Sprite src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sprite\unit.cpp">
-      <Filter>2. Sprite\Sprite src</Filter>
+      <Filter>1. Game</Filter>
     </ClCompile>
     <ClCompile Include="src\timer.cpp">
-      <Filter>1. Main\src</Filter>
+      <Filter>3. Static Class</Filter>
     </ClCompile>
     <ClCompile Include="src\position.cpp">
-      <Filter>1. Main\src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sprite\UI.cpp">
-      <Filter>2. Sprite\Sprite src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\collider.cpp">
-      <Filter>1. Main\src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\collider\circle.cpp">
-      <Filter>3. Shape\Shape src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\collider\hexagon.cpp">
-      <Filter>3. Shape\Shape src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\collider\point.cpp">
-      <Filter>3. Shape\Shape src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\collider\square.cpp">
-      <Filter>3. Shape\Shape src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\collider\squareEx.cpp">
-      <Filter>3. Shape\Shape src</Filter>
+      <Filter>2. Class</Filter>
     </ClCompile>
     <ClCompile Include="src\input.cpp">
-      <Filter>1. Main\src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sprite\background.cpp">
-      <Filter>2. Sprite\Sprite src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sprite\tile.cpp">
-      <Filter>2. Sprite\Sprite src</Filter>
+      <Filter>3. Static Class</Filter>
     </ClCompile>
     <ClCompile Include="src\font.cpp">
-      <Filter>1. Main\src</Filter>
+      <Filter>3. Static Class</Filter>
     </ClCompile>
-    <ClCompile Include="src\renderer.cpp">
-      <Filter>1. Main\src</Filter>
+    <ClCompile Include="src\collider.cpp">
+      <Filter>2. Class</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphicManager.cpp">
-      <Filter>1. Main\src</Filter>
+    <ClCompile Include="src\graphic\draw.cpp">
+      <Filter>1. Game</Filter>
     </ClCompile>
-    <ClCompile Include="src\sprite\text.cpp">
-      <Filter>2. Sprite\Sprite src</Filter>
+    <ClCompile Include="src\graphic\renderer.cpp">
+      <Filter>3. Static Class</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprite\frame\UI.cpp">
+      <Filter>4. Sprite\Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprite\frame\unit.cpp">
+      <Filter>4. Sprite\Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collider\circle.cpp">
+      <Filter>5. Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collider\hexagon.cpp">
+      <Filter>5. Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collider\point.cpp">
+      <Filter>5. Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collider\square.cpp">
+      <Filter>5. Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collider\squareEx.cpp">
+      <Filter>5. Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprite\frame\graphic.cpp">
+      <Filter>4. Sprite\Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprite\frame\object.cpp">
+      <Filter>4. Sprite\Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprite\frame\partsManager.cpp">
+      <Filter>4. Sprite\Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprite\frame\parts.cpp">
+      <Filter>4. Sprite\Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprite\UI\background.cpp">
+      <Filter>4. Sprite\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprite\UI\text.cpp">
+      <Filter>4. Sprite\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\draw.h">
-      <Filter>1. Main\h</Filter>
-    </ClInclude>
     <ClInclude Include="src\game.h">
-      <Filter>1. Main\h</Filter>
-    </ClInclude>
-    <ClInclude Include="src\object.h">
-      <Filter>1. Main\h</Filter>
-    </ClInclude>
-    <ClInclude Include="src\util.h">
-      <Filter>1. Main\h</Filter>
-    </ClInclude>
-    <ClInclude Include="src\sprite\graphic.h">
-      <Filter>2. Sprite\Sprite h</Filter>
-    </ClInclude>
-    <ClInclude Include="src\sprite\player.h">
-      <Filter>2. Sprite\Sprite h</Filter>
-    </ClInclude>
-    <ClInclude Include="src\sprite\unit.h">
-      <Filter>2. Sprite\Sprite h</Filter>
-    </ClInclude>
-    <ClInclude Include="src\timer.h">
-      <Filter>1. Main\h</Filter>
-    </ClInclude>
-    <ClInclude Include="src\position.h">
-      <Filter>1. Main\h</Filter>
-    </ClInclude>
-    <ClInclude Include="src\sprite\UI.h">
-      <Filter>2. Sprite\Sprite h</Filter>
-    </ClInclude>
-    <ClInclude Include="src\collider.h">
-      <Filter>1. Main\h</Filter>
-    </ClInclude>
-    <ClInclude Include="src\collider\circle.h">
-      <Filter>3. Shape\Shape h</Filter>
-    </ClInclude>
-    <ClInclude Include="src\collider\hexagon.h">
-      <Filter>3. Shape\Shape h</Filter>
-    </ClInclude>
-    <ClInclude Include="src\collider\point.h">
-      <Filter>3. Shape\Shape h</Filter>
-    </ClInclude>
-    <ClInclude Include="src\collider\square.h">
-      <Filter>3. Shape\Shape h</Filter>
-    </ClInclude>
-    <ClInclude Include="src\collider\squareEx.h">
-      <Filter>3. Shape\Shape h</Filter>
-    </ClInclude>
-    <ClInclude Include="src\input.h">
-      <Filter>1. Main\h</Filter>
+      <Filter>1. Game</Filter>
     </ClInclude>
     <ClInclude Include="src\singleton.h">
-      <Filter>1. Main\h</Filter>
+      <Filter>1. Game</Filter>
     </ClInclude>
-    <ClInclude Include="src\sprite\background.h">
-      <Filter>2. Sprite\Sprite h</Filter>
+    <ClInclude Include="src\util.h">
+      <Filter>1. Game</Filter>
     </ClInclude>
-    <ClInclude Include="src\sprite\tile.h">
-      <Filter>2. Sprite\Sprite h</Filter>
+    <ClInclude Include="src\timer.h">
+      <Filter>3. Static Class</Filter>
+    </ClInclude>
+    <ClInclude Include="src\position.h">
+      <Filter>2. Class</Filter>
     </ClInclude>
     <ClInclude Include="src\font.h">
-      <Filter>1. Main\h</Filter>
+      <Filter>3. Static Class</Filter>
     </ClInclude>
-    <ClInclude Include="src\renderer.h">
-      <Filter>1. Main\h</Filter>
+    <ClInclude Include="src\input.h">
+      <Filter>3. Static Class</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphicManager.h">
-      <Filter>1. Main\h</Filter>
+    <ClInclude Include="src\collider.h">
+      <Filter>2. Class</Filter>
     </ClInclude>
-    <ClInclude Include="src\sprite\text.h">
-      <Filter>2. Sprite\Sprite h</Filter>
+    <ClInclude Include="src\graphic\draw.h">
+      <Filter>1. Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphic\renderer.h">
+      <Filter>3. Static Class</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sprite\frame\UI.h">
+      <Filter>4. Sprite\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sprite\frame\unit.h">
+      <Filter>4. Sprite\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collider\circle.h">
+      <Filter>5. Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collider\hexagon.h">
+      <Filter>5. Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collider\point.h">
+      <Filter>5. Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collider\square.h">
+      <Filter>5. Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collider\squareEx.h">
+      <Filter>5. Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sprite\frame\graphic.h">
+      <Filter>4. Sprite\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sprite\frame\object.h">
+      <Filter>4. Sprite\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sprite\frame\partsManager.h">
+      <Filter>4. Sprite\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sprite\frame\parts.h">
+      <Filter>4. Sprite\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sprite\UI\background.h">
+      <Filter>4. Sprite\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sprite\UI\text.h">
+      <Filter>4. Sprite\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

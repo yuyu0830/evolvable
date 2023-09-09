@@ -9,8 +9,8 @@ Font::~Font() {
 }
 
 bool Font::set() {
-	HBIOS_SYS_32 = TTF_OpenFont("src/font/HBIOS-SYS.ttf", 32);
-	HBIOS_SYS_16 = TTF_OpenFont("src/font/HBIOS-SYS.ttf", 16);
+	HBIOS_SYS_32 = TTF_OpenFont("font/HBIOS-SYS.ttf", 32);
+	HBIOS_SYS_16 = TTF_OpenFont("font/HBIOS-SYS.ttf", 16);
 	if (HBIOS_SYS_32 && HBIOS_SYS_16) {
 		printf("Font initialize Success!\n");
 		return 1;

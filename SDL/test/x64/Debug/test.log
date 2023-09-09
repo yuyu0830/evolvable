@@ -4,42 +4,44 @@
   point.cpp
   square.cpp
   squareEx.cpp
-  draw.cpp
-C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\draw.cpp(27,11): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\draw.cpp(28,11): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  font.cpp
   game.cpp
-C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\game.cpp(121,15): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\game.cpp(128,40): error C2661: 'UI::UI': 오버로드된 함수에서 3개의 인수를 사용하지 않습니다.
-C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\game.cpp(132,37): error C2661: 'UI::UI': 오버로드된 함수에서 3개의 인수를 사용하지 않습니다.
-C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\game.cpp(136,37): error C2661: 'UI::UI': 오버로드된 함수에서 3개의 인수를 사용하지 않습니다.
-C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\game.cpp(140,37): error C2661: 'UI::UI': 오버로드된 함수에서 3개의 인수를 사용하지 않습니다.
-  graphicManager.cpp
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\game.cpp(87,15): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  draw.cpp
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\graphic\draw.cpp(17,16): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\graphic\draw.cpp(18,16): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\graphic\draw.cpp(42,16): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\graphic\draw.cpp(43,16): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  renderer.cpp
   input.cpp
-  object.cpp
-C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\object.cpp(16,32): error C2039: 'getGraphic': 'GraphicManager'의 멤버가 아닙니다.
-C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\graphicManager.h(8): message : 'GraphicManager' 선언을 참조하십시오.
-C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\object.cpp(16,42): error C3861: 'getGraphic': 식별자를 찾을 수 없습니다.
-C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\object.cpp(22,32): error C2039: 'getGraphic': 'GraphicManager'의 멤버가 아닙니다.
-C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\graphicManager.h(8): message : 'GraphicManager' 선언을 참조하십시오.
-C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\object.cpp(22,42): error C3861: 'getGraphic': 식별자를 찾을 수 없습니다.
-C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\object.cpp(34,117): error C2660: 'Graphic::getTexture': 함수는 1개의 인수를 사용하지 않습니다.
-C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\sprite\graphic.h(24,15): message : 'Graphic::getTexture' 선언을 참조하십시오.
-C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\object.cpp(34,118): error C2661: 'drawTexture': 오버로드된 함수에서 1개의 인수를 사용하지 않습니다.
   position.cpp
 C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\position.cpp(37,32): warning C4244: '+=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\position.cpp(38,30): warning C4244: '+=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  renderer.cpp
-  background.cpp
   graphic.cpp
-C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\sprite\graphic.cpp(53,16): warning C4154: 배열 식을 삭제했습니다. 포인터로 변환이 제공됩니다.
-  player.cpp
-  text.cpp
-  tile.cpp
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\sprite\frame\graphic.cpp(6,22): error C2039: 'create': 'Graphic'의 멤버가 아닙니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\sprite\frame\graphic.h(14): message : 'Graphic' 선언을 참조하십시오.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\sprite\frame\graphic.cpp(6,28): error C3861: 'create': 식별자를 찾을 수 없습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\sprite\frame\graphic.cpp(7,3): error C2065: 'graphicFrameNum': 선언되지 않은 식별자입니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\sprite\frame\graphic.cpp(8,3): error C2065: 'graphicAmount': 선언되지 않은 식별자입니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\sprite\frame\graphic.cpp(12,3): error C2065: 'graphic': 선언되지 않은 식별자입니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\sprite\frame\graphic.cpp(12,16): error C2653: 'GraphicManager': 클래스 또는 네임스페이스 이름이 아닙니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\sprite\frame\graphic.cpp(12,32): error C3861: 'getGraphic': 식별자를 찾을 수 없습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\sprite\frame\graphic.cpp(13,3): error C2065: 'graphicFrameNum': 선언되지 않은 식별자입니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\sprite\frame\graphic.cpp(14,3): error C2065: 'graphicAmount': 선언되지 않은 식별자입니다.
+  object.cpp
+  parts.cpp
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\sprite\frame\graphic.h(24,8): error C3646: 'part': 알 수 없는 재정의 지정자입니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\sprite\frame\graphic.h(24,12): error C2143: 구문 오류: ','이(가) '[' 앞에 없습니다.
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\sprite\frame\graphic.h(24,30): error C2238: ';' 앞에 예기치 않은 토큰이 있습니다.
+  partsManager.cpp
   UI.cpp
   unit.cpp
+  main.cpp
+  background.cpp
   코드를 생성하고 있습니다...
   컴파일하고 있습니다...
-  main.cpp
+  text.cpp
+C:\Users\Amadeus\Documents\GitHub\evolvable\SDL\test\src\sprite\UI\text.h(8,10): fatal error C1083: 포함 파일을 열 수 없습니다. '../util.h': No such file or directory
   timer.cpp
   util.cpp
   코드를 생성하고 있습니다...

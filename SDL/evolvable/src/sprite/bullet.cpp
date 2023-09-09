@@ -24,7 +24,7 @@ void Bullet::init(char _owner[], float _speed) {
 }
 
 void Bullet::draw(SDL_Renderer* renderer, SDL_FPoint cameraPos) {
-	for (int i = 0; i < BULLETSIZE; i++) {
+	/*for (int i = 0; i < BULLETSIZE; i++) {
 		if (active[i]) {
 			if (isin(pos[i].x, cameraPos.x, cameraPos.x + WINDOW_WIDTH) && isin(pos[i].y, cameraPos.y, cameraPos.y + WINDOW_HEIGHT)) {
 				int x = (int)(pos[i].x - cameraPos.x - w / 2);
@@ -39,7 +39,7 @@ void Bullet::draw(SDL_Renderer* renderer, SDL_FPoint cameraPos) {
 				}
 			}
 		}
-	}
+	}*/
 }
 
 void Bullet::create(float _dir, SDL_FPoint _pos) {
